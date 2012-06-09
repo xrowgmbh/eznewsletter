@@ -1,0 +1,1 @@
+{$contentobject.name|wash}

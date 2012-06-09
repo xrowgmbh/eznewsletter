@@ -1,0 +1,26 @@
+Changelog Newsletter 1.5.2 -> 1.6.0
+-------------------------------------------------
+
+Bugs:
+- #016926 issue fixed
+- #014839 issue fixed
+- #015022 issue fixed
+- #015084 issue fixed
+- #015369 issue fixed
+- #014495 issue fixed
+- #014591 issue fixed
+- #014495 issue fixed
+- #009280 issue fixed
+- fixed Offset/Limit bug in Bouncemanagment
+- fixed "Send Preview" button functionality
+- fixed autoloads bug
+- link to frontpage fixed
+
+
+
+Design:
+- added Admin2 Design
+
+
+Feature:
+- create Newslettertype for certain siteaccesses

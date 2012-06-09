@@ -1,0 +1,8 @@
+Update 1.6.0beta to 1.6.0
+=========================
+
+* Please don't forget to update your database.
+  You will find the update script in your
+  eznewsletter extension at:
+
+    update/database/mysql/dbupdate-1_6_0beta-to-1_6_0.sql

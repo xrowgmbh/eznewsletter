@@ -1,0 +1,89 @@
+/* Stylesheet newsletter design list preview  */
+
+div.right-subscriber
+{
+    float: right;
+}
+
+.NewsletterDesignList {
+    list-style: none;
+    margin: 0;
+}
+
+.NewsletterDesignList li {
+    border: 1px solid #C0C0C0;
+    display: inline;
+    float: left;
+    margin-right: 1em;
+}
+
+.NewsletterDesignList img {
+    display: block;
+    border: 0;
+}
+
+.NewsletterDesignList input {
+    text-align: left;
+}
+
+.float-break
+{
+ /*     height: 1%; */ /* #TODO# */
+}
+
+
+.float-break:after
+{
+    content: "-";
+    height: 0;
+    visibility: hidden;
+    display: block; 
+    clear: both; 
+}
+
+.overflow-table {
+    overflow: auto;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+pre {
+    overflow: auto;
+}
+
+form.inline {
+    display:inline;
+}
+
+.doubleTable {
+    display: block;
+    clear: both;
+    width: 100%;
+}
+
+.doubleTableClean {
+    clear: both;
+}
+
+.leftTable {
+    display: inline;
+    float: left;
+    width: 49%;
+    overflow: auto;
+    overflow-x: scroll;
+}
+
+.rightTable {
+    display: inline;
+    float: right;
+    width: 49%;
+    overflow: auto;
+    overflow-x: scroll;
+}
+
+div.context-attributes input.enabledbutton {
+    background-image: url(../images/inputbutton-enabled-bg.gif); 
+    color: #FFF;
+}
+
+
