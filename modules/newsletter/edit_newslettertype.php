@@ -101,17 +101,6 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
         $newsletterType->setAttribute( 'contentclass_list', eZNewsletterType::serializeArray( $http->postVariable( 'ValidContentClassIDArray' ) ) );
     }
 
-    if( $http->hasPostVariable( 'AllowedOutputFormats' ) &&
-        is_array( $http->postVariable( 'AllowedOutputFormats' ) ) &&
-        0 < count( $http->postVariable( 'AllowedOutputFormats' ) ) )
-    {
-        $newsletterType->setAttribute( 'allowed_output_formats', eZNewsletterType::serializeArray( $http->postVariable( 'AllowedOutputFormats' ) ) );
-    }
-    else
-    {
-        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'You have to select at least one allowed output format.' );
-    }
-
     if( $http->hasPostVariable( 'AllowedDesigns' ) &&
         0 < count( $http->postVariable( 'AllowedDesigns' ) ) )
     {
@@ -269,10 +258,8 @@ else if ( isset( $Params['BrowseSelected'] ) &&
 $tpl = eZNewsletterTemplateWrapper::templateInit();
 $tpl->setVariable( 'warning', $warning );
 $tpl->setVariable( 'newsletter_type', $newsletterType );
-$tpl->setVariable( 'allowed_output_formats', eZNewsletterType::allowedOutputFormatMap() );
 
 $tpl->setVariable( 'contentclass_list', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'contentclass_list' ) ) );
-$tpl->setVariable( 'selected_output_formats', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'allowed_output_formats' ) ) );
 $tpl->setVariable( 'selected_designs', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'allowed_designs' ) ) );
 // countAll(eZSendNewsletterItem::definition()) ) ) erzeugt einen sql fehler
 $tpl->setVariable( 'subscription_list_array', eZSubscriptionList::fetchList( 0, eZSubscriptionList::countAll( eZSubscriptionList::StatusPublished ) ) );

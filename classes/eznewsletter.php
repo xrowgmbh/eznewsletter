@@ -90,10 +90,6 @@ class eZNewsletter extends eZPersistentObject
                                                                       'datatype' => 'integer',
                                                                       'default' => '0',
                                                                       'required' => true ),
-                                         'output_format' => array( 'name' => 'OutputFormat',
-                                                                   'datatype' => 'string',
-                                                                   'default' => '',
-                                                                   'required' => true ),
                                          'design_to_use' => array( 'name' => 'DesignToUse',
                                                                      'datatype' => 'string',
                                                                      'default' => '',
@@ -172,7 +168,6 @@ class eZNewsletter extends eZPersistentObject
                                                       'object_relation_id_list' => 'objectRelationIDList',
                                                       'output_format_list' => 'outputFormatList',
                                                       'recurrence_value_list' => 'recurrenceValueList',
-                                                      'output_format_name_map' => 'outputFormatNameMap',
                                                       'send_status_name_map' => 'sendStatusNameMap',
                                                       'status_name_map' => 'statusNameMap',
                                                       'recurrence_name_map' => 'recurrenceNameMap',
@@ -709,17 +704,8 @@ class eZNewsletter extends eZPersistentObject
             }
         }
 
-        if ( $format == eZNewsletter::OutputFormatText ||
-             $format == eZNewsletter::OutputFormatExternalHTML )
-        {
-            if ( $format == eZNewsletter::OutputFormatText )
-            {
-                $body = strip_tags( $body );
-            }
-
-            $body = trim( $body );
-        }
-
+        $body = trim( $body );
+        
         $subject = $this->attribute( 'name' );
         if ( $tpl->hasVariable( 'subject' ) )
         {
@@ -778,21 +764,6 @@ class eZNewsletter extends eZPersistentObject
 
     /*!
      \static
-     Get output format map
-    */
-    static function outputFormatNameMap()
-    {
-        // print_r( ezNewsletterType::allowedOutputFormatMap() );
-        // return ezNewsletterType::allowedOutputFormatMap();
-        
-        return array( eZNewsletter::OutputFormatText => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
-                      eZNewsletter::OutputFormatHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
-                      eZNewsletter::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/ouput_formats', 'External HTML' ),
-                      eZNewsletter::OutputFormatSMS => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) );
-    }
-
-    /*!
-     \static
      Get send status name map
     */
     static function sendStatusNameMap()
@@ -828,7 +799,7 @@ class eZNewsletter extends eZPersistentObject
     /*!
       Sends an email with MIME headers.      
      */
-    static function sendNewsletterMail( $newsletter, $sendPreview = false, $previewFormat = false )
+    static function sendNewsletterMail( $newsletter, $sendPreview = false )
     {
         $sendMailSettings = eZINI::instance( 'ezsendmailsettings.ini' );
         $replaceMsgIDHost = $sendMailSettings->variable( 'SendNewsletter', 'ReplaceMessageIDHost' );

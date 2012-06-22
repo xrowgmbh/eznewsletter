@@ -54,16 +54,6 @@ else if ( $http->hasPostVariable( 'ImportButton' ) )
     {
         $data = $http->sessionVariable( 'CSVData' );
 
-        //check if output_format is set
-        $output_set = false;
-        if ( $http->hasPostVariable( 'OutputFormat' ) )
-        {
-            if ( count( $http->postVariable( 'OutputFormat' ) ) > 0 );
-            {
-               $output_set = true;
-            }
-        }
-
         //check if email mapping is set
         $email_set = false;
         foreach( array_keys( $data ) as $label )
@@ -81,10 +71,6 @@ else if ( $http->hasPostVariable( 'ImportButton' ) )
         //output error and return
         if ( $email_set == false ) {
            $warning = 'Please select a field mapping for the email address!';
-        }
-        elseif ( $output_set == false )
-        {
-            $warning = 'Please select a output format!';
         }
         else
         {
@@ -125,8 +111,7 @@ else if ( $http->hasPostVariable( 'ImportButton' ) )
                                                                               $data[$labelMap['email']][$rowIndex] );
 					
 
-			        		$subscription->setAttribute( 'status', eZSubscription::StatusApproved );
-                                 	 	$subscription->setAttribute( 'output_format', implode( ',', $http->postVariable( 'OutputFormat' ) ) );
+			        					$subscription->setAttribute( 'status', eZSubscription::StatusApproved );
                                 	 	$subscription->publish();
                         	}
 
@@ -159,11 +144,7 @@ else if ( $http->hasSessionVariable( 'CSVData' ) )
 }
 
 $tpl = eZNewsletterTemplateWrapper::templateInit();
-$tpl->setVariable( 'output_map', eZSubscription::outputFormatNameMap() );
-if ( $http->hasPostVariable( 'OutputFormat' ) )
-{
-    $tpl->setVariable( 'output_set', $http->postVariable( 'OutputFormat' ) );
-}
+
 $tpl->setVariable( 'subscriptionList', $subscriptionList );
 $tpl->setVariable( 'data', $data );
 $tpl->setVariable( 'CSVDelimiter', $delimiter );

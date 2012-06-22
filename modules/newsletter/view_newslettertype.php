@@ -187,7 +187,6 @@ if ( $http->hasPostVariable( "CreateNewsletter" ) )
     $newsletter->setAttribute( 'contentobject_id', $contentObject->attribute( 'id' ) );
     $newsletter->setAttribute( 'contentobject_version', $contentObject->attribute( 'current_version' ) );
     $newsletter->setAttribute( 'design_to_use', strtok( $newsletterType->attribute( 'allowed_designs' ), ',' ) );
-    $newsletter->setAttribute( 'output_format', $newsletterType->attribute( 'allowed_output_formats' ) );
 
     $newsletter->store();
 
@@ -216,13 +215,10 @@ $tpl->setVariable( 'offset', $offset );
 $tpl->setVariable( 'view_parameters', $viewParameters );
 
 $tpl->setVariable( 'newsletter_type', $newsletterType );
-$tpl->setVariable( 'output_format_names', eZNewsletterType::allowedOutputFormatMap() );
 
-//unserialize the two list attributes allowed_output_formats and contentclass_list, which are stored as imploded arrays
+//unserialize the contentclass_list, which is stored as imploded arrays
 $tpl->setVariable( 'contentclass_list', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'contentclass_list' ) ) );
-//$tpl->setVariable( 'allowed_output_formats', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'allowed_output_formats' ) ) );
 
-$tpl->setVariable( 'allowed_output_formats', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'allowed_output_formats' ) ) );
 $tpl->setVariable( 'allowed_designs', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'allowed_designs' ) ) );
 
 $Result = array();

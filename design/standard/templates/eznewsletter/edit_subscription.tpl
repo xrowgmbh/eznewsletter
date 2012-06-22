@@ -93,16 +93,7 @@
      *    </select>
      * </div>
      *}
-    
-    {* Output format. *}
-    <div class="block">
-        <label>{"Output format"|i18n( 'design/eznewsletter/edit_subscription' )}:</label>
-        <select name="OutputFormat[]" multiple="multiple" title="{'Output format'|i18n( 'design/eznewsletter/edit_subscription' )}">
-        {foreach $output_map as $value => $name}
-            <option value="{$value|wash}" {cond( $subscription.outputformat_list|contains($value), 'selected="selected"', '')}>{$name|wash}</option>
-        {/foreach}
-        </select>
-    </div>
+
 
 {* DESIGN: Content END *}</div></div></div>
 

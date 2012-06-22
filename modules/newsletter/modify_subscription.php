@@ -59,7 +59,6 @@ if ( $http->hasPostVariable( 'AddSubscription' ) )
                                             $userData->attribute( 'email' ), 
                                             false );
                     $subscription->setAttribute( 'status', eZSubscription::StatusApproved );
-                    $subscription->setAttribute( 'output_format', eZSubscription::OutputFormatExternalHTML );
                     $subscription->store();
                     }
                 }
@@ -102,10 +101,7 @@ if ( $http->hasPostVariable( 'UpdateSubscriptions' ) )
             }
         }
     
-        if ( $http->hasPostVariable( 'OutputFormat_' . $subscription->attribute( 'id' ) ) )
-    {
-        $subscription->setAttribute( 'output_format', implode( ',', $http->postVariable( 'OutputFormat_' . $subscription->attribute( 'id' ) ) ) );
-    }
+   
     $subscription->store();
     }
     
@@ -241,7 +237,6 @@ $tpl->setVariable( 'allowedStatusList', $allowedStatusList );
 $tpl->setVariable( 'statusNameMap', eZSubscription::statusNameMap() );
 $tpl->setVariable( 'subscriptionList', $subscriptionList );
 $tpl->setVariable( 'additionalLists', $additionalLists );
-$tpl->setVariable( 'output_map', eZSubscription::outputFormatNameMap() );
 
 $Result = array();
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';

@@ -458,7 +458,6 @@ class eZNewsletterFunctionCollection
                                                             $grouping,
                                                             $recurring );
         }
-
         return array( 'result' => $result );
     }
 

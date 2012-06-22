@@ -93,10 +93,6 @@ class eZNewsletterType extends eZPersistentObject
                                                               'datatype' => 'integer',
                                                               'default' => 0,
                                                               'required' => false ),
-                                         'allowed_output_formats' => array( 'name' => 'AllowedOutputFormats',
-                                                                            'datatype' => 'string', /** old#BUG#!!!! **/
-                                                                            'default' => 0,
-                                                                            'required' => true ),
                                          'allowed_designs' => array( 'name' => 'AllowedDesigns',
                                                                             'datatype' => 'string',
                                                                             'default' => 0,
@@ -148,8 +144,6 @@ class eZNewsletterType extends eZPersistentObject
                                                       'subscription_list' => 'subscriptionList',
                                                       'subscription_id_list' => 'subscriptionIDList',
                                                       'allowed_designs_array' => 'allowedDesignsArray',
-                                                      'allowed_output_formats_string' => 'allowedOutputFormatsString',
-                                                      'allowed_output_formats_array' => 'allowedOutputFormatsArray',
                                                       'related_object_1' => 'relatedObject1',
                                                       'related_object_2' => 'relatedObject2',
                                                       'related_object_3' => 'relatedObject3',
@@ -579,54 +573,6 @@ class eZNewsletterType extends eZPersistentObject
         return $allowedSiteaccessesArray;
     }
 
-    /*!
-      \static
-      Return the allowed outputformats to choose between
-      #DEPRECATED# ?
-     */
-    static function allowedOutputFormatMap()
-    {
-        #$availableOutputFormats = array( 'plaintext' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'Plain text' ),
-        #                                 'embeddedhtml' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'HTML' ),
-        #                                 'externalhtml' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'HTML w/external images' ),
-        #                                 'sms' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'SMS' ) );
-        #return $availableOutputFormats;
-                         
-        return array( eZNewsletter::OutputFormatText => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
-                      eZNewsletter::OutputFormatHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
-                      eZNewsletter::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/ouput_formats', 'External HTML' ),
-                      eZNewsletter::OutputFormatSMS => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) );
-    }
-
-    /*!
-      \static
-      #HACK# ?
-      Return the allowed outputformats as index values
-     */
-
-    function allowedOutputFormatsArray() // n�tig??
-    {
-        $allowedFormatStrings = explode( eZNewsletterType::FieldSeparationCharacter,
-                                         $this->attribute( 'allowed_output_formats' ) );       
-        return $allowedFormatStrings;
-        
-        /*
-        $availableOutputFormats = array( 'plaintext',
-                                         'embeddedhtml',
-                                         'externalhtml',
-                                         'sms' );  //here??
-
-        $keys = array();
-        foreach( $allowedFormatStrings as $format)
-        {
-            $key = array_search( $format, $availableOutputFormats );
-            if( false !== $key )
-            {
-                $keys[] = $key;
-            }
-        }
-        return $keys;*/
-    }
 }
 
 ?>

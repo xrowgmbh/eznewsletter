@@ -51,11 +51,6 @@ class eZSubscription extends eZPersistentObject
     const StatusRemovedSelf = 3;
     const StatusRemovedAdmin = 4;
     
-    const OutputFormatText = 0;
-    const OutputFormatHTML = 1;
-    const OutputFormatExternalHTML = 2;
-    const OutputFormatSMS = 3;
-    
     const FieldSeparationCharacter = ',';
     
     /*!
@@ -101,10 +96,6 @@ class eZSubscription extends eZPersistentObject
                                                                  'datatype' => 'integer',
                                                                  'default' => 0,
                                                                  'required' => true ),
-                                         'output_format' => array( 'name' => 'OutputFormat',
-                                                                   'datatype' => 'string',
-                                                                   'default' => 0,
-                                                                   'required' => true ),
                                          'created' => array( 'name' => 'Created',
                                                              'datatype' => 'interger',
                                                              'default' => 0,
@@ -138,8 +129,7 @@ class eZSubscription extends eZPersistentObject
                                                                   'default' => 0,
                                                                   'required' => false ) ),
                       'function_attributes' =>
-                            array( 'outputformat_list'      => 'outputFormatList',
-                                   'user'                   => 'user',
+                            array( 'user'                   => 'user',
                                    'subscription_list'      => 'subscriptionList',
                                    'usersubscriptiondata'   => 'userSubscriptionData',
                                    'firstname'              => 'firstname',
@@ -415,40 +405,7 @@ class eZSubscription extends eZPersistentObject
                     }
                     eZPersistentObject::setAttribute( $attr, $value );
                 }
-            } break;
-            
-            case 'output_format':
-            {          
-                if ( $this->attribute( $attr ) != $value )
-                {
-                    $outputFomatArray = explode( eZSubscription::FieldSeparationCharacter, $value );
-                    
-                    if( 0 != count( $outputFomatArray ) )
-                    {
-                        foreach( $outputFomatArray as $outputFormatIndex )
-                        {
-                            if( !isset( $outputFormatIndex ) ||
-                                !is_integer( intval( $outputFormatIndex ) ) ||
-                                intval( $outputFormatIndex ) < 0 ) 
-                            {
-                                // ouput_format is no , separated list
-                                return false;
-                            }
-                        }
-                        
-                        // remove duplicated values
-                        $value = implode( eZSubscription::FieldSeparationCharacter,
-                                          array_unique( 
-                                             explode( eZSubscription::FieldSeparationCharacter,
-                                             $value ) ) );
-                        eZPersistentObject::setAttribute( $attr, $value );                        
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }              
-            } break;          
+            } break; 
 
             default:
             {
@@ -464,15 +421,6 @@ class eZSubscription extends eZPersistentObject
     function userSubscriptionData()
     {
         return eZUserSubscriptionData::fetch( $this->attribute( 'email' ) );
-    }
-
-    /*!
-     Return output format list
-    */
-    function outputFormatList()
-    {
-        return explode( eZSubscription::FieldSeparationCharacter,
-                        $this->attribute( 'output_format' ) );
     }
 
     /*!
@@ -814,18 +762,6 @@ class eZSubscription extends eZPersistentObject
                       eZSubscription::StatusApproved     => ezpI18n::tr( 'eznewsletter/subscription_status', 'Approved' ),
                       eZSubscription::StatusRemovedSelf  => ezpI18n::tr( 'eznewsletter/subscription_status', 'Removed by self' ),
                       eZSubscription::StatusRemovedAdmin => ezpI18n::tr( 'eznewsletter/subscription_status', 'Removed by admin' ) );
-    }
-
-    /*!
-     \static
-     Get output format map
-    */
-    static function outputFormatNameMap()
-    {
-        return array( eZSubscription::OutputFormatText         => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
-                      eZSubscription::OutputFormatHTML         => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
-                      eZSubscription::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'External HTML' ),
-                      eZSubscription::OutputFormatSMS          => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) );
     }
 }
 

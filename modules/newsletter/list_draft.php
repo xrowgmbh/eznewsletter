@@ -61,11 +61,9 @@ $tpl->setVariable( 'site_access', $GLOBALS['eZCurrentAccess'] );
 $tpl->setVariable( 'view_parameters', $viewParameters );
 
 $tpl->setVariable( 'newsletter_type', $newsletterType );
-$tpl->setVariable( 'output_format_names', eZNewsletterType::allowedOutputFormatMap() );
 
-//unserialize the two list attributes allowed_output_formats and contentclass_list, which are stored as imploded arrays
+//unserialize the contentclass_list, which is stored as imploded arrays
 $tpl->setVariable( 'contentclass_list', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'contentclass_list' ) ) );
-$tpl->setVariable( 'allowed_output_formats', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'allowed_output_formats' ) ) );
 
 $Result = array();
 $Result['newsletter_menu'] = 'design:parts/content/newsletter_menu.tpl';

@@ -59,19 +59,6 @@
 </div>
 </div>
 
-<div class="block">
-
-<div class="element">
-<label>{'Format'|i18n( 'design/eznewsletter/view_newsletter_bounce' )}</label>
-<ul>
-{foreach $sendnewsletteritem_bounced.user_data.output_format|explode(',') as $user_format}
-	<li>{$output[$user_format]|wash}</li>
-{/foreach}
-</ul>
-</div>
-
-</div>
-
 {if $bounce_object}
 <div class="block">
 <h3>{'Bounce details:'|i18n( 'design/eznewsletter/view_newsletter_bounce' )}</h3>

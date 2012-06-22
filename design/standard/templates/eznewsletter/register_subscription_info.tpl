@@ -1,12 +1,11 @@
-<div class="box">
-<div class="tl">
-<div class="tr">
-<div class="br">
-<div class="bl">
-<div class="box-content float-break">
+<h1>{'Thank you for registering'|i18n('ezxnewsletter')}</h1>
 
-<h1>{'Thank you for registering'|i18n( 'design/eznewsletter/register_subscription_info' )}</h1>
+<p>{'Thank you for registering to %name.'|i18n( 'ezxnewsletter', '', hash( '%name', $subscriptionList.name ) )|wash}</p>
 
-<p>{'Thank you for subscribing to %name.'|i18n( 'design/eznewsletter/register_subscription_info', '', hash( '%name', $subscriptionList.name ) )|wash}</p>
-</div></div></div>
-</div></div></div>
+<a href={ezini( 'SiteSettings', 'DefaultPage' )|ezurl}>{'Continue'|i18n( 'ezxnewsletter' )}</a>
+
+<p></p>
+<p></p>
+<p>
+<a href={"services/newsletter"|ezurl}>{'Back to the newsletter overview'|i18n( 'ezxnewsletter' )}</a> 
+</p>

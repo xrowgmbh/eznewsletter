@@ -34,16 +34,6 @@
         <input type="checkbox" name="FirstRowLabel" checked="checked">{'First row is label'|i18n( 'design/eznewsletter/subscription_import' )}
     </div>
 
-    {* Output format. *}
-    <div class="block">
-        <label>{"Output format"|i18n( 'design/eznewsletter/subscription_import' )}:</label>
-        <select name="OutputFormat[]" multiple="multiple" title="{'OutputFormat'|i18n( 'design/eznewsletter/subscription_import' )}">
-        {foreach $output_map as $value => $name}
-            <option value="{$value|wash}" {cond( $output_set|contains($value), 'selected="selected"', '')}>{$name|wash}</option>
-        {/foreach}
-        </select>
-    </div>
-
     <div class="block">
         <label>{'CSV field delimiter'|i18n( 'design/eznewsletter/subscription_import' )}: <input style="text-align:center" type="text" size="1" maxlength="1" name="CSVDelimiter" value="{$CSVDelimiter}"></label>
     </div>
