@@ -35,6 +35,28 @@ function microtime_float2()
     return ( ( float )$usec + ( float )$sec );
 } 
 
+function regexEmail()
+{
+    // RegEx begin
+    $nonascii      = "\x80-\xff"; # Non-ASCII-Chars are not allowed
+
+    $nqtext        = "[^\\\\$nonascii\015\012\"]";
+    $qchar         = "\\\\[^$nonascii]";
+
+    $normuser      = '[a-zA-Z0-9][a-zA-Z0-9_.-]*';
+    $quotedstring  = "\"(?:$nqtext|$qchar)+\"";
+    $user_part     = "(?:$normuser|$quotedstring)";
+
+    $dom_mainpart  = '[a-zA-Z0-9][a-zA-Z0-9._-]*\\.';
+    $dom_subpart   = '(?:[a-zA-Z0-9][a-zA-Z0-9._-]*\\.)*';
+    $dom_tldpart   = '[a-zA-Z]{2,5}';
+    $domain_part   = "$dom_subpart$dom_mainpart$dom_tldpart";
+        
+    $regex         = "$user_part\@$domain_part";
+
+    return $regex;
+}
+
 function nextConnection( $active_server, $serverlist, $counter )
 {
     $cli = eZCLI::instance( );
@@ -188,8 +210,12 @@ for( $i = 0; $i < count( $mailFiles ); $i++ )
     $lines = file( $mailFiles[$i] );
 
     // get from and to
-    $from_address = trim( substr( $lines[1], 6 ) );
-    $to_address = trim( substr( $lines[7], 4 ) );
+    $regex = regexEmail();
+    $expression = "/($regex)/";
+    preg_match_all( $expression , $lines[1], $matches );
+    $from_address = array_pop( $matches[1] );
+    preg_match_all( $expression , $lines[7], $matches );
+    $to_address = array_pop( $matches[1] );
 
     eZMail::extractEmail( $from_address, $from, $name );
     eZMail::extractEmail( $to_address, $to, $name );

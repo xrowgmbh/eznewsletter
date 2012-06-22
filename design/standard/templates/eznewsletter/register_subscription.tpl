@@ -9,7 +9,7 @@
 
 
         <div class="attribute-header">
-            <h2>{'Register subscription'|i18n( 'design/eznewsletter/register_subscription' )}</h2>
+            <h1>{'Register subscription'|i18n( 'design/eznewsletter/register_subscription' )}</h1>
         </div>
 
 {if $warning}
