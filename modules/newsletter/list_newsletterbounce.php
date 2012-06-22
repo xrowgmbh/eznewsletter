@@ -141,8 +141,10 @@ switch( $mode )
     case 'all':
     default:
     {
+
         $bounceID = $Params['BounceID'];
         $sendItemBounced = eZSendNewsletterItem::fetch( $bounceID );
+
         if ( $sendItemBounced )
         {
 
@@ -194,6 +196,52 @@ switch( $mode )
             $Result['path'] = array( array( 'url' => false,
                                             'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Newsletter types' ) ) );
             return;
+        }
+        else if ( $http->hasPostVariable( 'RemoveAllBounceEntryButton' ) )
+        {         
+            $Result = array();
+            $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
+            $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
+            $Result['content'] = $tpl->fetch( "design:$extension/confirmremoveall_bounce.tpl" );
+            $Result['path'] = array( array( 'url' => false,
+                                            'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Newsletter types' ) ) );
+            return;
+        }
+        else if ( $http->hasPostVariable( 'ConfirmRemoveAllBounceEntryButton' ) )
+        {
+            $db = eZDB::instance();           
+            $removeAllBounce = 'TRUNCATE Table ez_bouncedata';      
+            $db->query( $removeAllBounce );     
+        }
+        else if ( $http->hasPostVariable( 'CancelBounceSearchButton' ) )
+        {
+            $Module->redirectToView( 'bounce_search' );   
+        }
+        else if ( $http->hasPostVariable( 'ConfirmRemoveBounceSearchButton' ) )
+        {
+            $bounceEntryIDArray = $http->sessionVariable( 'BounceIDArray' );
+
+            $db = eZDB::instance();
+            $db->begin();
+            if( count( $bounceEntryIDArray ) > 0 )
+            {
+                foreach ( $bounceEntryIDArray as $bounceID )
+                {
+                    eZBounce::removeAllBounceInformation( $bounceID );
+                }
+            }
+            $db->commit();
+            $bounceDataArray = eZBounce::fetchByOffset( $offset, $limit );
+
+            $tpl->setVariable( 'bounce_data_array', $bounceDataArray );
+
+            $Result = array();
+            $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
+            $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
+            $Result['content'] = $tpl->fetch( "design:$extension/bounce_search.tpl" );
+            $Result['path'] = array( array( 'url' => false,
+                                        'text' => ezpI18n::tr( 'eznewsletter/bounce_search', 'Bounce search' ) ) );        
+            $Module->redirectToView( 'bounce_search' );
         }
         else if ( $http->hasPostVariable( 'ConfirmRemoveBounceEntryButton' ) )
         {

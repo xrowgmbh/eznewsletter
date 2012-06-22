@@ -1,7 +1,7 @@
-<?php /* #?ini charset="iso-8859-1"?
+<?php /* #?ini charset="utf-8"?
 
 [TemplateSettings]
-AutoloadPathList[]=extension/eznewsletter/autoloads
+ExtensionAutoloadPath[]=eznewsletter
 
 [RegionalSettings]
 TranslationExtensions[]=eznewsletter

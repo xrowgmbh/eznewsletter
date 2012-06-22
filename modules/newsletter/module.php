@@ -114,6 +114,12 @@ $ViewList['subscription_search'] = array(
     'functions' => array( 'view_admin' ),
     'params' => array() );
 
+$ViewList['bounce_search'] = array(
+    'script' => 'bounce_search.php',
+    'default_navigation_part' => 'eznewsletter',
+    'functions' => array( 'view_admin' ),
+    'params' => array() );
+
 $ViewList['user_settings'] = array(
     'script' => 'user_settings.php',
     'default_navigation_part' => 'eznewsletter',

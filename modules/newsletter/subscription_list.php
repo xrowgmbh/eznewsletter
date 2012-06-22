@@ -102,10 +102,10 @@ if  ($http->hasPostVariable( 'RemoveSubscriptionButton' ) )
 			{	
 				
 
-				$userDeleteSubscription = $db->arrayQuery( "DELETE FROM ezsubscriptionuserdata
+				$userDeleteSubscription = $db->query( "DELETE FROM ezsubscriptionuserdata
 								WHERE email = '$userEmail'");
 
-				$userDeleteUserData     = $db->arrayQuery( "DELETE FROM ezsubscription
+				$userDeleteUserData     = $db->query( "DELETE FROM ezsubscription
 								WHERE email = '$userEmail'");
 
 			}

@@ -11,6 +11,7 @@
     <li><div><a href={'newsletter/list_subscriptions'|ezurl}>{'List management'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
     <li><div><a href={'newsletter/subscription_search'|ezurl}>{'Search subscriber'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
     <li><div><a href={'newsletter/list_bounce/all'|ezurl}>{'Bounce management'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
+    <li><div><a href={'newsletter/bounce_search'|ezurl}>{'Search bounce'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
 </ul>
 
 {* DESIGN: Content END *}</div></div></div></div></div></div>

@@ -169,7 +169,14 @@
 
 <form name="CreateNewsletter" method="post" action={concat( 'newsletter/view_type/', $newsletter_type.id )|ezurl} style="display:inline;float:right;">
 {if $contentclass_list|count|ge(1)}
-    {def $contentClasses=fetch( class, list, hash( class_filter, $contentclass_list ) )}
+    {def $contentClasses=fetch( class, list, hash( class_filter, $contentclass_list ) )
+         $languages=fetch( 'content', 'prioritized_languages' )}
+
+    <select name="ContentObjectLanguageCode">
+    {foreach $languages as $language}
+        <option value="{$language.locale}">{$language.name|wash}</option>
+    {/foreach}
+    </select>
 
     <select name="ClassID">
     {foreach $contentClasses as $class}
@@ -235,6 +242,7 @@
 {* Newsletter list table. *}
 <table class="list" cellspacing="0">
 <tr>
+    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} alt="{'Invert selection'|i18n( 'design/eznewsletter/view_newslettertype' )}" title="{'Invert selection.'|i18n( 'design/eznewsletter/  view_newslettertype' )}" onclick="ezjs_toggleCheckboxes( document.newsletter_list, 'NewsletterTypeListIDArray[]' ); return false;" /></th>
     <th class="tight">{'ID'|i18n('eznewslettert')}</th>
     <th>{'Name'|i18n( 'design/eznewsletter/view_newslettertype' )}</th>
     <th>{'Creator'|i18n( 'design/eznewsletter/view_newslettertype' )}</th>
@@ -243,9 +251,17 @@
     <th>{'# sent'|i18n( 'design/eznewsletter/view_newslettertype' )}</th>
     <th>{'# read'|i18n( 'design/eznewsletter/view_newslettertype' )}</th>
 </tr>
-{foreach fetch( newsletter, newsletter_list_by_type, hash( type_id, $newsletter_type.id, offset, $offset, limit, $limit ) ) as $newsletter
+
+{def $newsletterList = fetch( newsletter, newsletter_list_by_type, hash(    'type_id', $newsletter_type.id, 
+                                                                            'offset', $offset, 
+                                                                            'limit', $limit, 
+                                                                            'sort_by', array( 'published', false() ) 
+                            ) )
+}
+{foreach $newsletterList as $newsletter
          sequence array( bglight, bgdark ) as $seq}
 <tr class="{$seq}">
+    <td class="number" align="right"><input type="checkbox" name="NewsletterTypeListIDArray[]" value="{$newsletter.id}" title="{'Select bounce to clear bounce entry.'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}" /></td>
     <td class="number">{$newsletter.id}</td>
     <td>{$newsletter.name|wash}</td>
     <td><a href={$newsletter.creator.contentobject.main_node.url_alias|ezurl}>{$newsletter.creator.contentobject.name|wash}</a></td>
@@ -267,6 +283,11 @@
          item_limit=$limit}
 </div>
 
+<div class="block">
+<input class="button" type="submit" name="RemoveNewsletterTypeListButton" value="{'Remove selected'|i18n( 'design/eznewsletter/view_newslettertype' )}" title="{'Remove selected newsletter entries.'|i18n( 'design/eznewsletter/view_newslettertype' )}" />
+<input class="button" type="submit" name="RemoveAllNewsletterTypeListButton" value="{'Remove all'|i18n( 'design/eznewsletter/view_newslettertype' )}" title="{'Remove all newsletter entries.'|i18n( 'design/eznewsletter/view_newslettertype' )}" />
+<input type="hidden" name="NewsletterTypeID" value="{$newsletter_type.id}" />
+</div>  
 {* DESIGN: Content END *}</div></div></div>
 
 {* Buttons. *}

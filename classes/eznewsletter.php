@@ -945,12 +945,7 @@ class eZNewsletter extends eZPersistentObject
                         continue;
                     }
 
-                    // #TODO# IDs expected
-                    $userOutputFormatList = explode( ',', $userData['output_format'] ); // #TODO#
-                    #echo " ### userOutputFormatList\n";  ok
-                    #var_dump( $userOutputFormatList );
-                    #echo " ### newsletterOutputFormatList\n"; ok
-                    #var_dump( $newsletterOutputFormatList );
+                    $userOutputFormatList = explode( ',', $userData['output_format'] );
                     $outputFormat = false;
 
                     //special case for SMS sending
@@ -959,17 +954,6 @@ class eZNewsletter extends eZPersistentObject
                     {
                         $mail->setContentType( "sms", false, false, false, $boundary );
                         $outputFormat = eZNewsletter::OutputFormatSMS;
-
-                        //$mail->setSubject( $userMailData['subject'] );                                        ### $userMailData is undefined
-                       # echo " ### userMailData\n";
-                       # var_dump( $userMailData );
-                       # $mail->setSubject( $userMailData['subject'] );
-                       # $mail->setReceiver( $userData['email'] );
-                       # $mail->setMobile( $userData['mobile'] );
-                        //$mail->setBody( $userMailData['body'] );                                              ### $userMailData is undefined
-                       # $mail->setBody( $userMailData['body'] );                        
-                       # $mail->setDateTimestamp( $newsletter->attribute( 'send_date') );
-
                         $mailResult = eZNewsletterMailTransport::send( $mail, false );
                     }
 
@@ -1218,13 +1202,17 @@ class eZNewsletter extends eZPersistentObject
         $objectVersion = $this->attribute( 'contentobject_version' );
 
         $object = eZContentObject::fetch( $objectID );
-        $newObject = $object->copy( $objectVersion );
+        
+        if( is_object( $object ))
+        {
+            $newObject = $object->copy( $objectVersion );
 
-        $newNewsletter->setAttribute( 'contentobject_id', $newObject->attribute( 'id' ) );
-        $newNewsletter->setAttribute( 'contentobject_version', $newObject->attribute( 'current_version' ) );
-        $newNewsletter->store();
+            $newNewsletter->setAttribute( 'contentobject_id', $newObject->attribute( 'id' ) );
+            $newNewsletter->setAttribute( 'contentobject_version', $newObject->attribute( 'current_version' ) );
+            $newNewsletter->store();
 
-        return $newObject;
+            return $newObject;
+        }
     }
 }
 

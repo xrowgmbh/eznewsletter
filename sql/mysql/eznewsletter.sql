@@ -8,7 +8,7 @@ CREATE TABLE ezsubscription_group (
   description longtext NOT NULL,
   subscriptionlistid_list longtext NOT NULL,
   PRIMARY KEY  (id,status)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ezsubscription_list;
 CREATE TABLE ezsubscription_list (
@@ -30,7 +30,7 @@ CREATE TABLE ezsubscription_list (
   status int(11) NOT NULL default '0',
   allowed_siteaccesses longtext NOT NULL,
   PRIMARY KEY  (id,status)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ez_newsletter_subscription;
 CREATE TABLE ez_newsletter_subscription (
@@ -38,7 +38,7 @@ CREATE TABLE ez_newsletter_subscription (
   status int(11) NOT NULL default '0',
   subscription_id int(11) NOT NULL default '0',
   PRIMARY KEY  (newsletter_id,status,subscription_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS eznewslettertype;
 CREATE TABLE eznewslettertype (
@@ -66,7 +66,7 @@ CREATE TABLE eznewslettertype (
   Posttext longtext NOT NULL,
   allowed_siteaccesses longtext NOT NULL,
   PRIMARY KEY  (id,status)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ezsendnewsletteritem;
 CREATE TABLE ezsendnewsletteritem (
@@ -80,7 +80,7 @@ CREATE TABLE ezsendnewsletteritem (
   object_read_ids longtext,
   object_print_ids longtext,
   PRIMARY KEY  (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ezsubscription;
 CREATE TABLE ezsubscription (
@@ -102,7 +102,7 @@ CREATE TABLE ezsubscription (
   bounce_count int(11) default '0',
   contentobject_id int(11) default NULL,
   PRIMARY KEY  (id,version_status)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ez_bouncedata;
 CREATE TABLE ez_bouncedata (
@@ -114,7 +114,7 @@ CREATE TABLE ez_bouncedata (
   bounce_arrived int(11) NOT NULL default '0',
   bounce_message text NOT NULL,
   PRIMARY KEY  (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `eznewsletter`;
 SET @saved_cs_client     = @@character_set_client;
@@ -144,7 +144,7 @@ CREATE TABLE `eznewsletter` (
   `posttext` longtext collate utf8_unicode_ci NOT NULL,
   `preview_mobile` varchar(255) collate utf8_unicode_ci default '',
   PRIMARY KEY  (`id`,`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 DROP TABLE IF EXISTS ezsubscriptionuserdata;
@@ -157,7 +157,7 @@ CREATE TABLE ezsubscriptionuserdata (
   hash varchar(255) default '',
   mobile varchar(255) default '',
   PRIMARY KEY  (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ezrobinsonlist;
 CREATE TABLE ezrobinsonlist (
@@ -166,7 +166,7 @@ CREATE TABLE ezrobinsonlist (
   type int(11) NOT NULL default '0',
   global int(11) NOT NULL default '0',
   PRIMARY KEY  (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE ezsubscription ADD INDEX(subscriptionlist_id),ADD INDEX(status),ADD INDEX(version_status),ADD INDEX(email),ADD INDEX(user_id);
 ALTER TABLE ezsubscriptionuserdata ADD INDEX(id),ADD INDEX(email);

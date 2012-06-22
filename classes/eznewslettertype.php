@@ -603,11 +603,7 @@ class eZNewsletterType extends eZPersistentObject
       #HACK# ?
       Return the allowed outputformats as index values
      */
-    function allowedOutputFormatsString()
-    {
-        throw new Exception( "#DEPRECATED#" );
-    }
-    
+
     function allowedOutputFormatsArray() // n�tig??
     {
         $allowedFormatStrings = explode( eZNewsletterType::FieldSeparationCharacter,

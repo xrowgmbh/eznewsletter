@@ -516,6 +516,14 @@
         <source>Deactivated</source>
         <translation>Keine Wiederholung</translation>
     </message>
+    <message>
+        <source>Reccurence condition</source>
+        <translation>Wiederholungsbedingung</translation>
+    </message>
+    <message>
+        <source>No recurrence conditions available</source>
+        <translation>Keine Wiederholungsbedingungen verfügbar</translation>
+    </message>
 </context>
 <context>
     <name>design/eznewsletter/edit_newslettertype</name>
@@ -613,7 +621,7 @@
     </message>
     <message>
         <source>No newsletter placement is specified</source>
-        <translation>Keine Speicherort für Newsletter angegeben</translation>
+        <translation>Kein Speicherort für Newsletter angegeben</translation>
     </message>
     <message>
         <source>Add inbox placement</source>
@@ -822,7 +830,7 @@
     </message>
     <message>
         <source>Name of the subscription list.</source>
-        <translation>name der Abonnentenliste.</translation>
+        <translation>Name der Abonnentenliste.</translation>
     </message>
     <message>
         <source>Registration URL</source>

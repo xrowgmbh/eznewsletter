@@ -31,8 +31,7 @@ class eZNewsletterTemplateWrapper
 {
     static function templateInit( $name = false )
     {
-        include_once( 'kernel/common/template.php' );
-        return templateInit();
+        return eZTemplate::factory();
     }
 }
 

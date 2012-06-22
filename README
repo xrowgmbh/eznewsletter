@@ -1,0 +1,32 @@
+eZXNewsletter
+=============
+
+Version: 1.7.0 Stable
+
+A newsletter extension. This extension handles subscriptionlists and bounces.
+
+Description
+-----------
+The following functions are included:
+- Mass sendout of emails
+- Multiple formats:
+  - Plain text
+  - HTML (with embedded images)
+  - HTML (with linked images)
+  - SMS (custom transport class required)
+- Bouncemanagement
+- Listmanagement
+  - Robinsonlist
+  - Subscribtionlist
+  - a CSV import is included
+
+See CHANGELOG.txt for description of changes.
+
+Installation
+============
+- See installation guide in doc folder
+
+Notes
+=====
+- In near future its planned that the Bouncemanagement and Listmanagement will be seperated for more modularity.
+- Improvements in listmanagement and imports are planned

@@ -40,7 +40,6 @@ echo "\n";
 echo "Fetching mail source files"."\n";
 
 $mailFiles=glob($qdir.'*.sms');
-//var_dump($mailFiles);
 echo "Sending ".count($mailFiles)." sms messages"."\n\n";
 
 $robinCounter=0;
@@ -59,16 +58,12 @@ if ( !$instance )
 
 $counter=1;
 for($i=0; $i<count($mailFiles); $i++)
-//for($i=1; $i<=1; $i++)
 {    
     //sending message
-    //var_dump($mailFiles);
-    //echo "reading: ".$mailFiles[$i-1];
     echo "Sending ".$counter.": ".basename($mailFiles[$i])."\n";
     echo "Reply:"."\n";
     $sms = file_get_contents($mailFiles[$i]);
     $lines = file($mailFiles[$i]);
-    //var_dump($sms);
 
     $reply = $instance->sendMessageFile($sms);
     $reply = html_entity_decode($reply);

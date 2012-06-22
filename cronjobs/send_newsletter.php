@@ -58,6 +58,8 @@ fclose( $pidfile );
 // send newsletters
 
 $sendMailSettings = eZINI::instance( 'ezsendmailsettings.ini' );
+$newsletterSettings = eZINI::instance( 'eznewsletter.ini' );
+$newsletterContentClasses = $newsletterSettings->variable( 'NewsletterContentClasses', 'newsletterContentClassIdent');
 $replaceMsgIDHost = $sendMailSettings->variable( 'SendNewsletter', 'ReplaceMessageIDHost' );
 $newSendHost = $sendMailSettings->variable( 'SendNewsletter', 'Host' );
 $hostSettings['replace'] = $replaceMsgIDHost;
@@ -118,12 +120,48 @@ else
 
 foreach( $newsletterArray as $newsletter )
 {
-    $cli->output( 'Sending messages for '.$newsletter->attribute( 'name' ) );
-    $statistics = eZNewsletter::sendNewsletterMail( $newsletter );
-    $newsletter->setAttribute( 'send_status', eZNewsletter::SendStatusFinished );
-    $newsletter->sync();
+    /*TODO 
+    *
+    * otimize fetch for related objects
+    *
+    */
 
-    $cli->output( 'Sent ' . $statistics['sendCount'] . ' ( skipped:' . $statistics['skipCount'] . ' )' . ' messages for newsletter : ' . $newsletter->attribute( 'name' ) );
+    $hasObjectRelations = false;
+
+    if( is_object( $newsletter ) && $newsletter->attribute( 'status' ) == '1' )
+    {
+        $objectRelations = $newsletter->attribute('object_relations');
+        $objectRelationArray = split( '/', $objectRelations );
+                
+        foreach( $objectRelationArray as $objectRelation )
+        {
+            if( is_numeric( $objectRelation ) && eZContentObject::exists( $objectRelation ) )
+            {
+                $relatedObject = eZContentObject::fetch( $objectRelation );
+                if( is_object( $relatedObject ) )
+                {
+                    if( in_array( $relatedObject->attribute( 'class_identifier' ), $newsletterContentClasses ) && $relatedObject->attribute( 'status' ) == '1' )
+                    {
+                        $hasObjectRelations = true;
+                    }
+                }
+            }
+        }
+        if( $hasObjectRelations == false )
+        {
+            $cli->output( 'The newsletter issue " '.$newsletter->attribute( 'name' ).' ( ID: '.$newsletter->attribute( 'id' ).' ) " has no content. Please add a topic to send the newsletter out.' );
+            $newsletter->setAttribute( 'send_status', eZNewsletter::SendStatusStopped);
+            $newsletter->sync();
+        }
+        else
+        {
+            $cli->output( 'Sending messages for '.$newsletter->attribute( 'name' ) );
+            $statistics = eZNewsletter::sendNewsletterMail( $newsletter );
+            $newsletter->setAttribute( 'send_status', eZNewsletter::SendStatusFinished );
+            $newsletter->sync();
+            $cli->output( 'Sent ' . $statistics['sendCount'] . ' ( skipped:' . $statistics['skipCount'] . ' )' . ' messages for newsletter : ' . $newsletter->attribute( 'name' ) );
+        }
+    }
 }
 
 // remove pid file to unlock cronjob

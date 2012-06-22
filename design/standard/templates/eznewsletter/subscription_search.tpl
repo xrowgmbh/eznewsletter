@@ -74,14 +74,13 @@
     <th>{'Removed'|i18n( 'design/eznewsletter/subscription_search' )}</th> *}
     <th></th>
 </tr>
-{foreach $subscriberList as $subscriber
-         sequence array( bglight, bgdark ) as $seq}
+{foreach $subscriberBounce as $subscriberB}
 
 <tr class="{$seq}">
-    <td><input type="checkbox" name="SubscriptionIDArray[]" value="{$subscriber.id}" title="{'Select subscriber for removal'|i18n( 'design/eznewsletter/subscription_search' )}" /></td>
-    <td class="number" align="right">{$subscriber.id}</td>
+    <td><input type="checkbox" name="SubscriptionIDArray[]" value="{$subscriberB.id}" title="{'Select subscriber for removal'|i18n( 'design/eznewsletter/subscription_search' )}" /></td>
+    <td class="number" align="right">{$subscriberB.id}</td>
     <td>{$subscriber.firstname|wash}</td>
-    <td>{$subscriber.name|wash}</td>
+    <td>{$subscriberB.name|wash}</td>
     <td><a href="mailto:{$subscriber.email|wash}">{$subscriber.email|wash}</a></td>
     <td>{$subscriber.mobile|wash}</td>
 {*    <td>{cond( $subscriber.created|gt(0), $subscriber.created|l10n( shortdatetime ), 'n/a'|i18n( 'design/eznewsletter/subscription_search' ) )}</td>
@@ -89,7 +88,7 @@
     <td>{cond( $subscriber.approved|gt(0), $subscriber.approved|l10n( shortdatetime ), 'n/a'|i18n( 'design/eznewsletter/subscription_search' ) )}</td>
     <td>{cond( $subscriber.removed|gt(0), $subscriber.removed|l10n( shortdatetime ), 'n/a'|i18n( 'design/eznewsletter/subscription_search' ) )}</td> *}
     <td>
-    <a href={concat( '/newsletter/modify_subscription/', $subscriber.hash )|ezurl}><img src={'edit.gif'|ezimage} alt="{'Edit'|i18n( 'design/eznewsletter/subscription_search' )}" title="{'Edit the <%newsletter_name> subscription.'|i18n( 'eznewsletter',, hash( '%newsletter_name', $subscriber.name ) )|wash}" /></a>
+    <a href={concat( '/newsletter/modify_subscription/', $subscriberB.hash )|ezurl}><img src={'edit.gif'|ezimage} alt="{'Edit'|i18n( 'design/eznewsletter/subscription_search' )}" title="{'Edit the <%newsletter_name> subscription.'|i18n( 'eznewsletter',, hash( '%newsletter_name', $subscriber.name ) )|wash}" /></a>
     </td>
 </tr>
 {/foreach}

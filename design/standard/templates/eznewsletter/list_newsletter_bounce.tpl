@@ -101,7 +101,8 @@
 {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-tc"><div class="box-bl"><div class="box-br">
 <div class="block">
 <input class="button" type="submit" name="RemoveBounceEntryButton" value="{'Remove selected'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}" title="{'Remove selected bounce entries.'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}" />
-</div>
+<input class="button" type="submit" name="RemoveAllBounceEntryButton" value="{'Remove all'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}" title="{'Remove all bounce entries.'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}" />
+</div>  
 {* DESIGN: Control bar END *}</div></div></div></div></div></div>
 </div>
 </div>

@@ -36,6 +36,10 @@ $http = eZHTTPTool::instance();
 $newsletterTypeID = $Params['NewsletterTypeID'];
 $Module = $Params['Module'];
 
+$tpl = eZNewsletterTemplateWrapper::templateInit();
+$tpl->setVariable( 'module', $Module );
+$newslettertypeID = null;
+
 $newsletterType = eZNewsletterType::fetch( $newsletterTypeID );
 
 if ( !$newsletterType )
@@ -48,6 +52,44 @@ if ( !$newsletterType->siteaccessAllowed() )
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }
 
+if ( $http->hasPostVariable( 'RemoveNewsletterTypeListButton' ) )
+{
+    $newsletterTypeListIDArray = $http->postVariable( 'NewsletterTypeListIDArray' );
+    $http->setSessionVariable( 'NewsletterTypeListIDArray', $newsletterTypeListIDArray );
+    $types = array();
+
+    if( count( $newsletterTypeListIDArray ) > 0 )
+    {
+        foreach( $newsletterTypeListIDArray as $typeID )
+        {   
+            $newsletterTypeList = eZNewsletter::fetch( $typeID );
+            $types[] = $newsletterTypeList;
+        }
+    }
+    $tpl->setVariable( 'delete_result', $types );
+    $Result = array();
+    $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
+    $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
+    $Result['content'] = $tpl->fetch( "design:$extension/confirmremove_newslettertype_list.tpl" );
+    $Result['path'] = array( array( 'url' => false,
+                                    'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Newsletter types' ) ) );
+    return;
+}
+if ( $http->hasPostVariable( 'RemoveAllNewsletterTypeListButton' ) )
+{
+    $NewsletterTypeID          = $http->postVariable( 'NewsletterTypeID' );
+
+    $tpl = eZNewsletterTemplateWrapper::templateInit();
+    $tpl->setVariable( 'NewsletterTypeID', $NewsletterTypeID );
+
+    $Result = array();
+    $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
+    $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
+    $Result['content'] = $tpl->fetch( "design:$extension/confirmremoveall_newslettertype_list.tpl" );
+    $Result['path'] = array( array( 'url' => false,
+                                    'text' => ezpI18n::tr( 'eznewsletter/view_newslettertype', 'Newsletter types' ) ) );
+    return;
+}
 if ( $http->hasPostVariable( "CreateNewsletter" ) )
 {
 
@@ -63,6 +105,8 @@ if ( $http->hasPostVariable( "CreateNewsletter" ) )
     {
         $http->setSessionVariable( 'RedirectIfDiscarded', $http->postVariable( 'RedirectIfDiscarded' ) );
     }
+
+    $lang = $http->postVariable( 'ContentObjectLanguageCode' );
 
     $class = eZContentClass::fetch( $http->postVariable( 'ClassID' ) );
     if ( !$class )
@@ -80,7 +124,7 @@ if ( $http->hasPostVariable( "CreateNewsletter" ) )
     $db = eZDB::instance();
     $db->begin();
 
-    $contentObject = $class->instantiate( $userID, $parentObject->attribute( 'section_id' ) );
+    $contentObject = $class->instantiate( $userID, $parentObject->attribute( 'section_id' ), false, $lang );
 
     $mapSettings = eZINI::instance('eznewsletter.ini');
 
@@ -164,6 +208,7 @@ $viewParameters = array( 'offset' => $offset,
                          'limitkey' => ( isset( $userParameters['limitkey'] ) ? $userParameters['limitkey'] : 1 ) );
 
 $tpl = eZNewsletterTemplateWrapper::templateInit();
+
 
 $tpl->setVariable( 'limit', $limit );
 $tpl->setVariable( 'limitKey', $limitKey );

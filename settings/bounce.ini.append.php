@@ -18,5 +18,5 @@
 
 [BounceSettings]
 BounceCount=2
-
+HardBounceCount=2
 */ ?>

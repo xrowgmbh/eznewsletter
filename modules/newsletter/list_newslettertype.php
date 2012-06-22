@@ -87,6 +87,31 @@ else if ( $http->hasPostVariable( 'ConfirmRemoveNewslettertypeButton' ) )
     }
     $db->commit();
 }
+else if ( $http->hasPostVariable( 'ConfirmRemoveNewsletterTypeListButton' ) )
+{
+    $newsletterTypeListIDArray = $http->sessionVariable( 'NewsletterTypeListIDArray' );
+    $redirectAfterDelete       = $http->postVariable( 'RedirectAfterDelete' );
+    $db = eZDB::instance();
+    $db->begin();
+    foreach ( $newsletterTypeListIDArray as $newsletterID )
+    {
+        eZNewsletter::removeAll( $newsletterID );
+    }
+    $db->commit();
+    return $Module->redirectTo( $redirectAfterDelete );
+}
+else if ( $http->hasPostVariable( 'ConfirmRemoveAllNewsletterTypeListButton' ) )
+{
+    $redirectAfterDelete       = $http->postVariable( 'RedirectAfterDelete' );
+    $NewsletterTypeID          = $http->postVariable( 'NewsletterTypeID' );
+    $db = eZDB::instance();
+    $deleteAllNewsletter = 'DELETE eznewsletter 
+                            FROM eznewsletter, eznewslettertype 
+                            WHERE eznewslettertype.id = eznewsletter.newslettertype_id 
+                                  AND '.$NewsletterTypeID.' = eznewsletter.newslettertype_id ';
+    $db->query($deleteAllNewsletter);
+    return $Module->redirectTo( $redirectAfterDelete );
+}
 else if ( $http->hasPostVariable( 'RemoveNewsletterButton' ) )
 {
     $newsletterIDArray = $http->postVariable( 'NewsletterList' );

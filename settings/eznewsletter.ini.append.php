@@ -17,9 +17,9 @@ autoMapping=disabled
 #If SMTP selected, SMTP server must be defined in siteaccess or override settings.
 #
 #Transport class for preview sendout
-PreviewTransport=Sendmail
+PreviewTransport=sendmail
 #Transport class for newsletter sendout via cronjob
-Transport=Sendmail
+Transport=sendmail
 
 [NewsletterTypeSettings]
 # Class limitation prevents the use of classes as newsletter which are not in this list, if empty all classes can be used

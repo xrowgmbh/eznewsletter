@@ -26,7 +26,7 @@
 
 {* Content preview in content window. *}
 <div class="mainobject-window">
-{'The contentobject is not available any more.'|ezi18n( 'design/eznewsletter/standard/eznewsletter/preview_error.tpl' )}
+{'The contentobject is not available any more.'|i18n( 'design/eznewsletter/standard/eznewsletter/preview_error.tpl' )}
 </div>
 
 </div></div>

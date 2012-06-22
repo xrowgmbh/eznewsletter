@@ -144,9 +144,6 @@ foreach ($newsletterArray as $newsletter )
     $newsletter->store();
     $newNewsletter->store();
     $newNewsletter->removeDraft();
-
-    //echo "Senddate: ".$newNewsletter->attribute( 'send_day' )."-".$newNewsletter->attribute( 'send_month' )."-".$newNewsletter->attribute( 'send_year' )." ".$newNewsletter->attribute( 'send_hour' ).":".$newNewsletter->attribute( 'send_minute' )."\n";
-
 }
 
 function getNextSendDateDaily($newNewsletter)

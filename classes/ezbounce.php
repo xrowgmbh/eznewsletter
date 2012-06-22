@@ -127,6 +127,14 @@ class eZBounce extends eZPersistentObject
         return $bounce;
     }
 
+    static function fetchAddress( $id, $asObject = true )
+    {
+        $bounce = eZPersistentObject::fetchObject( eZBounce::definition(),
+                                                   null,
+                                                   array( 'address' => $id ) );
+        return $bounce;
+    }
+
     /*!
      \static
 
@@ -188,10 +196,10 @@ class eZBounce extends eZPersistentObject
                 $subscription->setAttribute( 'bounce_count', 0 );
                 $subscription->store();
             }
-            $sendItem->setAttribute( 'bounce_id', 0 );
-            $sendItem->store();
+                $sendItem->setAttribute( 'bounce_id', 0 );
+                $sendItem->store();
 
-            $bounceItem->remove();
+                $bounceItem->remove();
             
         }
         else

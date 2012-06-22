@@ -3,7 +3,6 @@
 {def $base_uri=concat( 'newsletter/subscription_list/', $subscriptionList.url_alias )}
 
 <div class="context-block">
-
 {* DESIGN: Header START *}
 <div class="box-header">
     <div class="box-tc">    
@@ -67,7 +66,7 @@
                         <label>{"Require password"|i18n( 'design/eznewsletter/subscription_list' )}:</label> {cond( $subscriptionList.require_password, 'Yes'|i18n( 'design/eznewsletter/subscription_list' ), 'No'|i18n( 'design/eznewsletter/subscription_list' ) )}
                     </div>
                     </div>
-                   <div class="block float-break">
+                    <div class="block float-break">
                     {* Allow anonymous. *}
                     <div class="element">
                         <label>{"Allow anonymous users"|i18n( 'design/eznewsletter/subscription_list' )}:</label> {cond( $subscriptionList.allow_anonymous, 'Yes'|i18n( 'design/eznewsletter/subscription_list' ), 'No'|i18n( 'design/eznewsletter/subscription_list' ) )}
@@ -83,9 +82,8 @@
                         <label>{"Automatically approve registered users"|i18n( 'design/eznewsletter/subscription_list' )}:</label> {cond( $subscriptionList.auto_approve_registered, 'Yes'|i18n( 'design/eznewsletter/subscription_list' ), 'No'|i18n( 'design/eznewsletter/subscription_list' ) )}
                     </div>
                     </div>
-
 {*
-    <div class="block">
+                    <div class="block">
                         <label>{'Related objects'|i18n( 'design/eznewsletter/subscription_list' )}:</label>
                             <div class="element">
                                 1. {cond( $subscriptionList.related_object_id_1, concat( '<a href=', $subscriptionList.related_object_1.main_node.url_alias|ezurl, '>', $subscriptionList.related_object_1.name, '</a>' ),
@@ -101,7 +99,7 @@
                             </div>
                     </div>
 *}
-<div class="block">
+                    <div class="block">
                         <label>{'Allowed siteaccesses'|i18n( 'design/eznewsletter/subscription_list' )}:</label>
                             <ul>
                                 {foreach $subscriptionList.allowed_siteaccesses_array as $siteaccess}
@@ -144,6 +142,7 @@
         </div>
     </div>
 
+
 <div class="context-block">
 
 {* DESIGN: Header START *}
@@ -185,7 +184,7 @@
                                     <input class="button" type="submit" name="SubmitFilter" value="{'Filter'|i18n( 'design/eznewsletter/subscription_list' )}" title="{'Filter  subscription list.'|i18n( 'design/eznewsletter/subscription_list' )}" />
                                 </div>
 {*
-            <div class="element">
+                                <div class="element">
                                         <label>{'VIP:'|i18n( 'design/eznewsletter/subscription_list' )}
                                         </label>
                                         <select name="(vipFilter)[]" multiple="multiple" size="8">
@@ -198,7 +197,7 @@
                                         <input class="button" type="submit" name="Submit" value="{'Filter'|i18n( 'design/eznewsletter/subscription_list' )}" title="{'Filter  subscription list.'|i18n( 'design/eznewsletter/subscription_list' )}" />
                                 </div>
 *}
-</div>
+                        </div>
                         <p>
                         {switch match=$limit}
                             {case match=25}
@@ -281,6 +280,7 @@
                             {/foreach}
                     </table>
                 </div>
+
 {* Navigator. *}
 <div class="context-toolbar">
     {include name=navigator
@@ -290,6 +290,7 @@
          view_parameters=$view_parameters
          item_limit=$limit}
 </div>
+
 
 
     <div class="controlbar">
@@ -311,7 +312,7 @@
         </div>
     </div>
 </form>
-   {* DESIGN: Table END *}
+{* DESIGN: Table END *}
         </div>
     </div>
 </div>

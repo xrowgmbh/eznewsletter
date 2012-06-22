@@ -64,7 +64,7 @@ if( is_object( $contentObject ) )
 	
 else
 {	
-    $tpl =& templateInit();
+    $tpl = eZNewsletterTemplateWrapper::templateInit();
     $Result = array();
     $Result['content']    = $tpl->fetch( 'design:eznewsletter/newsletter_preview.tpl' );
     $Result['pagelayout'] = true;

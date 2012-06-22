@@ -547,7 +547,7 @@ class eZNewsletterMail
     */
     static function validate( $address )
     {
-        $pos = ( ereg( '^' . eZNewsletterMail::MAIL_REGEXP . '$', $address) );
+        $pos = ( preg_match( '/^' . eZNewsletterMail::MAIL_REGEXP . '$/', $address) );
         return $pos;
     }
 

@@ -605,11 +605,14 @@ class eZSubscription extends eZPersistentObject
         if ( $userID !== false )
         {
             $rows['user_id'] = $userID;
-        }
 
-        $userData = eZUserSubscriptionData::fetch( $email );
-        if ( !$userData )
+	    
+        }
+        else
         {
+            $userData = eZUserSubscriptionData::fetch( $email );
+            if ( !$userData )
+            {
                  eZUserSubscriptionData::create( $firstname,
                                                  $name,
                                                  $mobile,
@@ -617,14 +620,16 @@ class eZSubscription extends eZPersistentObject
 
                  $subscription = new eZSubscription( $rows );
                  $subscription->store();
-		}	
-        else
-        {	
+	    }	
+            else
+		{	
 			$subscription = new eZSubscription( $rows );
 			$subscription->store();
-        }
+		}
 
 	    return $subscription;
+           
+	}
 }
     /*!
      Fetch by hash
@@ -656,28 +661,6 @@ class eZSubscription extends eZPersistentObject
                                                     $asObject );
     }
 
-    
-    /*!
-     Fetch list by user ID
-    */
-    static function fetchListByEmailSubscriptionListID ( $email,
-                                             $subscriptionListID,
-                                             $status = eZSubscription::VersionStatusPublished,
-                                             $subscribeStatus = eZSubscription::StatusApproved,
-                                             $asObject = true )
-    {
-        return eZPersistentObject::fetchObjectList( eZSubscription::definition(),
-                                                    null,
-                                                    array( 'email' => $email,
-                                                           'status' => $subscribeStatus,
-                                                           'version_status' => $status,
-                                                       'subscriptionlist_id' => $subscriptionListID ),
-                                                    null,
-                                                    null,
-                                                    $asObject );
-    }
-    
-    
     /*!
      Fetch list by user ID
     */

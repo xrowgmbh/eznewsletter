@@ -75,7 +75,6 @@ if ( $http->hasPostVariable( 'UpdateSubscriptions' ) )
        
             if ( $http->hasPostVariable( 'OutputFormat_' . $subscription->attribute( 'id' ) ) )
             {
-                //echo var_dump($http->postVariable( 'OutputFormat_' . $subscription->attribute( 'id' ) ));
                 $subscription->setAttribute( 'output_format', implode( ',', $http->postVariable( 'OutputFormat_' . $subscription->attribute( 'id' ) ) ) );   
             }
 
@@ -218,7 +217,6 @@ else
 //get new data
 
 $tpl = eZNewsletterTemplateWrapper::templateInit();
-//$tpl->setVariable( 'user', $user );
 if ( isset($warning) )
 {
     $tpl->setVariable( 'warning', $warning );

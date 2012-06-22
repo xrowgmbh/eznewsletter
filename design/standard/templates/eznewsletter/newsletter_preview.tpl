@@ -9,7 +9,8 @@
 {* DESIGN: Header START *}<div class="box-header"><div class="box-tc"><div class="box-ml"><div class="box-mr"><div class="box-tl"><div class="box-tr">
 
 <h1 class="context-title">
-{$object.version_name|wash}&nbsp;[{$object.content_class.name|wash}]</h1>
+
+{$object.version_name|wash}&nbsp;[{$object.contentobject.content_class.name|wash}]</h1>
 
 {* DESIGN: Mainline *}<div class="header-mainline"></div>
 

@@ -82,7 +82,7 @@ class eZSMS
         $replace_with  = array("", "", "", "", "", "", "");
         $newphrase = str_replace($search, $replace_with, $toClean);
     
-        return $newtext = ereg_replace("(^0*)", "", $newphrase);
+        return $newtext = preg_replace("/(^0*)/", "", $newphrase);
     }               						  
 
     function getConnection()

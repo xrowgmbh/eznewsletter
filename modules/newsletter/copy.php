@@ -43,7 +43,7 @@ if ( $http->hasPostVariable( 'CopyButton' ) ) {
 
     //get contentobject
     $object = eZContentObject::fetch( $ObjectID );
-    # var_dump( $object );
+
     if ( $object === null )
     {
         return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );

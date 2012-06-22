@@ -1,0 +1,193 @@
+Changelog Newsletter 1.6.0 Stable -> 1.7.0
+-------------------------------------------------
+Features:
+- #014839: Deleting bounces for non existing mail adresses does nothing.
+
+Design:
+
+Bugs:
+- #015022: PHP Error when trying to create new Subscription List
+- #015084: Link to frontpage is not working
+- #015369: eznewslettersmtptransport can't send the email
+- #015691: typo in ezapprove2 in ezapprove2type.php
+- #014495: Wrong behaviour of the eZDefaultHostname template operator
+- #014591: Newsletter imports empty entry when email value(s) missing in csv file
+- 
+
+
+Docs:
+
+
+
+Changelog Newsletter 1.5.0 Stable -> 1.6.0
+-------------------------------------------------
+Features:
+
+Design:
+
+Bugs:
+
+Docs:
+
+
+
+Changelog Newsletter 1.4.0 Stable -> 1.5.0
+-------------------------------------------------
+Features:
+
+Design:
+
+Bugs:
+
+Docs:
+
+
+
+Changelog Newsletter 1.3.0 Stable -> 1.4.0
+-------------------------------------------------
+Features:
+
+Design:
+
+Bugs:
+
+Docs:
+
+
+
+Changelog Newsletter 1.2.0 Stable -> 1.3.0
+-------------------------------------------------
+Features:
+
+Design:
+
+Bugs:
+
+Docs:
+
+
+
+Changelog Newsletter 1.1.0 Stable -> 1.2.0
+-------------------------------------------------
+Features:
+
+Design:
+
+Bugs:
+
+Docs:
+
+
+
+Changelog Newsletter 1.0.2 Stable -> 1.1.0
+-------------------------------------------------
+Features:
+
+Design:
+
+Bugs:
+
+Docs:
+
+
+
+Changelog Newsletter 1.0.1 Stable -> 1.0.2
+-------------------------------------------------
+Features:
+-added functions for version identification
+
+Design:
+
+Bugs:
+
+Docs:
+
+
+
+Changelog Newsletter 1.0.0 Stable -> 1.0.1 Stable
+-------------------------------------------------
+
+Features:
+-added robinsonlist support for email adresses and mobile phone numbers
+    -manage robinsonlist entries 
+    -import entries from CSV (synchroniation with external database possible)
+    -filtering registration and subscriber addition
+    -suport for local an external datasource
+    -filtering sendout process for emails and sms
+-mailbox connect flags in ini-files
+-define name of emailsender in template
+-added usersubscriptiondata as attribute of subscription
+-get array of user subscriptons on subscriptionlist object
+-added active_subscriptions template operator for statistics
+-added email extraction and validation in clustering send before sendout
+-
+
+Design:
+-improved email templates and added html tags
+!!added newsletter create button in type list !NOT POSSIBLE, SEVERAL SELECTIONS
+
+Bugs:
+-removed exit on error in check_bounce
+-notices error with imageListName removed
+-fixed redeclare microtime_float in cronjobs
+-validate email before creating sendinglist
+-show progress on building_list
+-removed empty line in import templates
+-leaving selected lines in import on error return
+-changed policies: subscription_search mapped to function view_admin
+-subscriptionlist counter notices filtervalue
+-fixed subscriptionlistfilter with user_preferences setting
+-fixed paging in robinsonlist and subscriptionlist with user_preferences setting
+-empty import from csv fixed (caused of CSV-files without quotes)
+-added possibility to renew disabled subscription by re-registration
+-added newslettertype attribute on newsletter creation
+
+!!filter selected sendout format in type on newsletter creation
+!!removed tabs in source code
+
+Docs:
+-Added documentation of version 0.1.0
+
+
+Changelog Newsletter 0.1.0 Beta -> 1.0.0 Stable
+-----------------------------------------------
+Bugs:
+-removed non RFC linebreaks bug in email generation
+-fixed css bug with Internet Explorer and div block
+-removed code for missing unsubscribe.php
+-removed transaction error on create newsletter
+-changed XML parser handling for pretext/posttext (changed XML API in >3.8)
+-removing whitespaces in filepath of attachment files
+
+Design:
+-removed multiple topmenus for newsletter extension, only one newsletter topmenu
+-added left sidemenu with main newsletter functions
+-added submenu for each newslettertype with different statuses of newsletter and a link to inbox
+
+Fetures:
+-setting envelope return path parameter for MTA in ini file
+-define name of embedded attachment file in global-scope block 
+-SMS outputformat included, custom transport class for provider required
+-subscribe/unsubscribe via email added
+-added firstname, mobile phone fields to profile
+-personalization by mobile phone, firstname added
+-improved user profile page, selecting outputformat and unsubscribing possible 
+-extended csv import (firstname, mobile phone fields)
+-new feature search subscriber and directly modify/remove profile
+-added pretext/posttext definition in newslettertype
+-added pretext/posttext mapping to newsletter contentobject
+-added possibility of adding newsletter design extensions and selecting allowed designs in newslettertype
+-newsletter design selection while editing with preview image
+-one default design included
+-added newsletter recurrence on frontend and a cronjob for copy and archive newsletter
+-preview newsletter in target design/outpuformat while editing
+-send preview via email/SMS
+-senddate modifier definition in newslettertype
+-added File transport class for emails/SMS, enables pregeneration of newsletters and creates a file for each one
+
+Performance:
+-splitted newsletter sendout cronjobs [build_list+send_newsletter+send_sms+cluster_send]
+-added support for sendout with several SMTP servers (round robin method)
+-added index to database tables
+-possibility of pregenerating sending lists and newsletters/SMS with '-pregeneration' on build_list/send_newsletter cronjob
+-possibility of control newsettertypes directly via cronjob with '-type <type_id>' on build_list/send_newsletter cronjob

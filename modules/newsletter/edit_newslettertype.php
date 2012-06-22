@@ -270,12 +270,6 @@ $tpl = eZNewsletterTemplateWrapper::templateInit();
 $tpl->setVariable( 'warning', $warning );
 $tpl->setVariable( 'newsletter_type', $newsletterType );
 $tpl->setVariable( 'allowed_output_formats', eZNewsletterType::allowedOutputFormatMap() );
-/*$tpl->setVariable( 'allowed_output_formats', array(
-                      eZSubscription::OutputFormatText         => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
-                      eZSubscription::OutputFormatHTML         => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
-                      eZSubscription::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'External HTML' ),
-                      eZSubscription::OutputFormatSMS          => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) ) );
-*/
 
 $tpl->setVariable( 'contentclass_list', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'contentclass_list' ) ) );
 $tpl->setVariable( 'selected_output_formats', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'allowed_output_formats' ) ) );

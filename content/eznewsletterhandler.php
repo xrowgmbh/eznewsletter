@@ -78,21 +78,25 @@ class eZNewsletterHandler extends eZContentObjectEditHandler
         }
 
         $newsletter->setAttribute( 'name', $http->postVariable( 'NewsletterName' ) );
-        $newsletter->setAttribute( 'send_date', $this->getTimestamp( $http ) );
+        $newsletter->setAttribute( 'send_date', $this->getTimestamp( $http, $object->ID ) );
         $newsletter->setAttribute( 'category', $http->postVariable( 'NewsletterCategory' ) );
         
         // #CHECK# validate
-        $newsletter->setAttribute( 'output_format', implode( ',', $http->postVariable( 'NewsletterOutputFormat' ) ) );
+        $newsletter->setAttribute( 'output_format', implode( "," , $http->postVariable( 'NewsletterOutputFormat' ) ) );
         $newsletter->setAttribute( 'preview_email', $http->postVariable( 'NewsletterPreviewEmail' ) );
         $newsletter->setAttribute( 'preview_mobile', $http->postVariable( 'NewsletterPreviewMobile' ) );
 
-        $pretext  = $http->hasPostVariable( 'pretext' )  ? $http->postVariable( 'pretext' )  : '';
-        $posttext = $http->hasPostVariable( 'posttext' ) ? $http->postVariable( 'posttext' ) : '';
+        $preInput = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><paragraph>";
+        $postInput = "</paragraph>";
+
+        $pretext  = $http->hasPostVariable( 'pretext' )  ? $preInput. html_entity_decode( $http->postVariable( 'pretext' ) ) .$postInput  : '';
+        $posttext = $http->hasPostVariable( 'posttext' ) ? $preInput. html_entity_decode( $http->postVariable( 'posttext' ) ) .$postInput : '';
 
         $newsletter->setAttribute( 'pretext', $pretext );
         $newsletter->setAttribute( 'posttext', $posttext );
-
-        $newsletter->setAttribute( 'design_to_use', $http->postVariable( 'DesignToUse' ) );
+        
+        $designtouse  = $http->hasPostVariable( 'DesignToUse' )  ? $http->postVariable( 'DesignToUse' )  : 'eznewsletter';
+        $newsletter->setAttribute( 'design_to_use', $designtouse );
         $newsletter->setAttribute( 'recurrence_type', $http->postVariable( 'RecurrenceType' ) );
 
         $recurrencecondition = $http->hasPostVariable( 'RecurrenceCondition' ) ? $http->postVariable( 'RecurrenceCondition' ) : '';
@@ -116,55 +120,10 @@ class eZNewsletterHandler extends eZContentObjectEditHandler
         }
 
         $newsletter->store();
-        $sys = eZSys::instance();
-
-        $inputValidated = true;
-        $customActionAttributeArray = array();
-        $currentRedirectionURI = "/";
-        $attributeDataBaseName = 'ContentObjectAttribute';
-        $fetchResult = $object->fetchInput( $contentObjectAttributes, $attributeDataBaseName,
-                                            $customActionAttributeArray,
-                                            array( 'module' => $module,
-                                                   'current-redirection-uri' => $currentRedirectionURI ) );
-
-        $attributeInputMap = $fetchResult['attribute-input-map'];		
- 
-        $db = eZDB::instance();
-        if ( $inputValidated and count( $attributeInputMap ) > 0 )
-        {
-            if ( $module->runHooks( 'pre_commit', array( $class, $object, $version, $contentObjectAttributes, $editVersion, $editLanguage, $fromLanguage ) ) )
-                 return;
-            $version->setAttribute( 'modified', time() );
-            $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
-
-            $db->begin();
-            $version->store();
-
-            $object->storeInput( $contentObjectAttributes,
-                                 $attributeInputMap );
-            $db->commit();
-        } 
-
-
-    eZContentObject::recursionProtectionStart();
-    foreach( $contentObjectAttributes as $contentObjectAttribute )
-    {
-        $object->handleCustomHTTPActions( $contentObjectAttribute,  $attributeDataBaseName,
-                                          $customActionAttributeArray,
-                                          array( 'module' => $module,
-                                                 'current-redirection-uri' => $currentRedirectionURI ) );
-        $contentObjectAttribute->setContent( $contentObjectAttribute->attribute( 'content' ) );
-        $contentObjectAttribute->store();
-
-    }
-    eZContentObject::recursionProtectionEnd();
-
-    $contentObjectAttribute->store();
-    $object->store();
 
         if ( $http->hasPostVariable( 'NewsletterPreview' ) )
         {
-        return $module->redirect( 'newsletter',  'preview', array( $object->attribute( 'id' ), $editVersion ) );
+            return $module->redirect( 'newsletter',  'preview', array( $object->attribute( 'id' ), $editVersion ) );
         }
 
 
@@ -197,14 +156,14 @@ class eZNewsletterHandler extends eZContentObjectEditHandler
 
      \return timestamp
     */
-    function getTimestamp( $http )
+    function getTimestamp( $http, $id )
     {
-        $day   = $http->postVariable( 'NewsletterDay' );
-        $month = $http->postVariable( 'NewsletterMonth' );
-        $year  = $http->postVariable( 'NewsletterYear' );
+        $day   = $http->postVariable( 'newsletter_datetime_day_' . $id );
+        $month = $http->postVariable( 'newsletter_datetime_month_' . $id );
+        $year  = $http->postVariable( 'newsletter_datetime_year_' . $id );
 
-        $hour   = $http->postVariable( 'NewsletterHour' );
-        $minute = $http->postVariable( 'NewsletterMinute' );
+        $hour   = $http->postVariable( 'newsletter_datetime_hour_' . $id );
+        $minute = $http->postVariable( 'newsletter_datetime_minute_' . $id );
 
         $dateTime = new eZDateTime();
 

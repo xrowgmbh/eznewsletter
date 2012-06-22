@@ -100,7 +100,6 @@
 {$subscription_object.bounce_count|wash}
 </div>
 </div>
-
 <div class="block">
 <form name="subscription_entry" method="post" action={concat( 'newsletter/list_bounce/all/', $sendnewsletteritem_bounced.id, '/' )|ezurl}>
 <label>{'Set new subscription status'|i18n( 'design/eznewsletter/view_newsletter_bounce' )}</label>
@@ -119,7 +118,7 @@
 {* Buttons. *}
 <div class="controlbar">
 {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-tc"><div class="box-bl"><div class="box-br">
-<div align="right"><a href={'newsletter/list_bounce'|ezurl}>{'Back to bounce list'|i18n( 'design/eznewsletter/view_newsletter_bounce' )} &gt;&gt;</a></div>
+<div align="right"><input type=button value="{'Back to bounce list'|i18n( 'design/eznewsletter/view_newsletter_bounce' )}" onClick="history.back()"></a></div>
 {* DESIGN: Control bar END *}</div></div></div></div></div></div>
 </div>
 </div>

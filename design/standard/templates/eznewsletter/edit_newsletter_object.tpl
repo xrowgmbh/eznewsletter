@@ -40,28 +40,40 @@
             <div class="date">
                 <div class="element">
                     <label>{'Year'|i18n( 'design/standard/content/datatype' )}:</label>
-                    <input type="text" name="NewsletterYear" id="send_date_year" size="5" value="{$newsletter.send_year|wash}" />
+                    <input type="text" name="newsletter_datetime_year_{$objectID}" id="newsletter_send_date_year" size="5" value="{$newsletter.send_year|wash}" />
                 </div>
                 <div class="element">
                     <label>{'Month'|i18n( 'design/standard/content/datatype' )}:</label>
-                    <input type="text" name="NewsletterMonth" id="send_date_month" size="3" value="{$newsletter.send_month|wash}" />
+                    <input type="text" name="newsletter_datetime_month_{$objectID}" id="newsletter_send_date_month" size="3" value="{$newsletter.send_month|wash}" />
                 </div>
 
                 <div class="element">
                     <label>{'Day'|i18n( 'design/standard/content/datatype' )}:</label>
-                    <input type="text" name="NewsletterDay" id="send_date_day" size="3" value="{$newsletter.send_day|wash}" />
+                    <input type="text" name="newsletter_datetime_day_{$objectID}" id="newsletter_send_date_day" size="3" value="{$newsletter.send_day|wash}" />
                 </div>
+                
+                <div class="element">
+                <img class="datepicker-icon" src={"calendar_icon.png"|ezimage} id="newsletter_datetime_cal_{$objectID}" width="24" height="28" onclick="showDatePicker( 'newsletter', '{$objectID}', 'datetime' );" style="cursor: pointer;" />
+                <div id="newsletter_datetime_cal_container_{$objectID}" style="display: none; position: absolute;"></div>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                </div>
+                
             </div>
+            
+            
 
             <div class="time">
                 <div class="element">
                     <label>{'Hour'|i18n( 'design/standard/content/datatype' )}:</label>
-                    <input type="text" name="NewsletterHour" id="send_date_hour" size="3" value="{$newsletter.send_hour|wash}" />
+                    <input type="text" name="newsletter_datetime_hour_{$objectID}" id="newsletter_send_date_hour" size="3" value="{$newsletter.send_hour|wash}" />
                 </div>
 
                 <div class="element">
                     <label>{'Minute'|i18n( 'design/standard/content/datatype' )}:</label>
-                    <input type="text" name="NewsletterMinute" id="send_date_minute" size="3" value=" {$newsletter.send_minute|wash}" />
+                    <input type="text" name="newsletter_datetime_minute_{$objectID}" id="newsletter_send_date_minute" size="3" value=" {$newsletter.send_minute|wash}" />
                 </div>
 
             </div>
@@ -71,17 +83,6 @@
             <label>{'Newsletter category'|i18n( 'design/eznewsletter/edit_newsletter_object' )}:</label>
             <input class="box" type="text" name="NewsletterCategory" value="{$newsletter.category}" />
         </div>
-{*
- *        <div class="block float-break">
- *             <label>{'Pretext'|i18n( 'design/eznewsletter/edit_newsletter_object' )}:</label>
- *            <textarea cols="80" rows="6" name="pretext">{$newsletter.pretext}</textarea>
- *        </div>
- *
- *        <div class="block float-break">
- *            <label>{'Posttext'|i18n( 'design/eznewsletter/edit_newsletter_object' )}:</label>
- *            <textarea cols="80" rows="6" name="posttext">{$newsletter.posttext}</textarea>
- *        </div>
- *}
 
         {* choose a format for this newsletter, available are set in type *}
         <div class="block float-break">
@@ -144,7 +145,6 @@
     <div class="box-bl">
     <div class="box-br">
         <div class="block float-break">
-            <input type="hidden" name="StoreButton" />
             <input class="button" type="Submit" name="NewsletterSendPreview" value="{'Send preview'|i18n( 'design/eznewsletter/edit_newsletter_object' )}"/>
         </div>
 {* DESIGN: Control bar END *}

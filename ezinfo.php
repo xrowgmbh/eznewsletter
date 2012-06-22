@@ -2,9 +2,7 @@
 //
 // Definition of eZNewsletterInfo class
 //
-// Created on: <09-Oct-2010 11:09:50 yg>
-//
-// Copyright (C) 1999-2010 eZ systems as. All rights reserved.
+// Copyright (C) 1999-2011 eZ systems as. All rights reserved.
 //
 // This source file is part of the eZ publish (tm) Open Source Content
 // Management System.
@@ -49,10 +47,31 @@ class eZNewsletterInfo
     static function info()
     {
         return array( 'name' => 'eZ Newsletter',
-                      'version' => '1.6.0',
-                      'copyright' => 'Copyright © 2010 eZ systems',
+                      'version' => '1.7.0',
+                      'copyright' => 'Copyright © 2011 eZ systems',
                       'info_url' => 'http://ez.no/community/contribs/applications/ez_newsletter',
-                      'license' => 'GPL version 2' );
+                      'license' => 'GPL version 2',
+                      '3rdparty_software' =>
+                            array ( 'name' => 'eznewsletter_builder',
+                                    'Version' => '1.7-0',
+                                    'copyright' => 'Copyright © 2011 eZ systems',
+                                    'license' => 'GPL version 2',
+                                    'name' => 'eznewsletter_designs',
+                                    'Version' => '1.7-0',
+                                    'copyright' => 'Copyright © 2011 eZ systems',
+                                    'license' => 'GPL version 2',
+                                    'name' => 'ezapprove2',
+                                    'Version' => '0.9.0',
+                                    'copyright' => 'Copyright © 2011 eZ systems',
+                                    'license' => 'GPL version 2',
+                                    'name' => 'ezlabel',
+                                    'Version' => '1.2',
+                                    'copyright' => 'Copyright © 2011 eZ systems',
+                                    'license' => 'GPL version 2',
+                                    'name' => 'ezmailimport',
+                                    'Version' => '1.2',
+                                    'copyright' => 'Copyright © 2011 eZ systems',
+                                    'license' => 'GPL version 2', ) );
     }
 }
 

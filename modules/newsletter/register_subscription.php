@@ -102,7 +102,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
 
         if ( !eZRobinsonListEntry::inList( $http->postVariable( 'Email' ) ) && !eZRobinsonListEntry::inList( $http->postVariable( 'Mobile' ) ) )
         {
-			/* commented out, because firstname and lastname are not required (by Anika Weckemann Revision 267)
+
             if ( !$firstname )
             {
                 $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You must enter a first name.' );
@@ -112,7 +112,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
             {
                 $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You must enter a last name.' );
             }
-			*/
+
             if ( !eZMail::validate( $email ) )
             {
                 $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You must provide a valid email address.' );
@@ -128,14 +128,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
                 }
                 else if ( $http->hasPostVariable( 'OutputFormat' ) )
                 {
-					if (is_array($http->postVariable( 'OutputFormat' )))
-					{
-						$subscription->setAttribute( 'output_format', implode( ',', $http->postVariable( 'OutputFormat' ) ) );
-					}
-					else
-					{
-						$subscription->setAttribute( 'output_format', (int) $http->postVariable( 'OutputFormat' ) );
-					}
+                    $subscription->setAttribute( 'output_format', implode( ',', $http->postVariable( 'OutputFormat' ) ) );
                     $subscription->sync();
                 }
             }
