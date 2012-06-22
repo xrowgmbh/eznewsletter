@@ -59,7 +59,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     {
         if ( !eZMail::validate( $http->postVariable( 'Email' ) ) )
         {
-            $warnings[] = ezi18n( 'eznewsletter/newsletter/edit_subscription', 'You must provide a valid email address.' );
+            $warnings[] = ezpI18n::tr( 'eznewsletter/newsletter/edit_subscription', 'You must provide a valid email address.' );
         }
         else
         {
@@ -91,7 +91,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-        $warnings[] = ezi18n( 'eznewsletter/edit_subscription', 'Email address or mobile phone number is in opt-out list!' );
+        $warnings[] = ezpI18n::tr( 'eznewsletter/edit_subscription', 'Email address or mobile phone number is in opt-out list!' );
     }
 }
 
@@ -145,7 +145,7 @@ $Result['newsletter_menu'] = 'design:parts/content/robinson_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:eznewsletter/edit_subscription.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/edit_subscription', 'Edit subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/edit_subscription', 'Edit subscription' ) ) );
 
 
 ?>

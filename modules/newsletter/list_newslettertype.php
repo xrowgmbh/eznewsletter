@@ -71,7 +71,7 @@ if (is_array ($newsletterTypeIDArray))
     $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
     $Result['content'] = $tpl->fetch( "design:$extension/confirmremove_newslettertype.tpl" );
     $Result['path'] = array( array( 'url' => false,
-                                    'text' => ezi18n( 'eznewsletter/list_newslettertype', 'Newsletter types' ) ) );
+                                    'text' => ezpI18n::tr( 'eznewsletter/list_newslettertype', 'Newsletter types' ) ) );
     return;
 }
 }
@@ -105,7 +105,7 @@ else if ( $http->hasPostVariable( 'RemoveNewsletterButton' ) )
     $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
     $Result['content'] = $tpl->fetch( "design:$extension/confirmremove_newsletter.tpl" );
     $Result['path'] = array( array( 'url' => false,
-                                    'text' => ezi18n( 'eznewsletter/list_newslettertype', 'Newsletter types' ) ) );
+                                    'text' => ezpI18n::tr( 'eznewsletter/list_newslettertype', 'Newsletter types' ) ) );
 
     return;
 }
@@ -137,5 +137,5 @@ $Result['newsletter_menu'] = 'design:parts/content/newsletter_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:$extension/list_newsletter_type.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                               'text' => ezi18n( 'eznewsletter/list_newslettertype', 'Newsletter types' ) ) );
+                               'text' => ezpI18n::tr( 'eznewsletter/list_newslettertype', 'Newsletter types' ) ) );
 ?>

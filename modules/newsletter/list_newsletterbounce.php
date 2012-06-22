@@ -79,7 +79,7 @@ switch( $mode )
                 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
                 $Result['content'] = $tpl->fetch( "design:$extension/edit_newsletter_onhold.tpl" );
                 $Result['path'] = array( array( 'url' => false,
-                                                'text' => ezi18n( 'eznewsletter/list_newsletterbounce', 'Messages on hold' ) ) );
+                                                'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Messages on hold' ) ) );
                 return;
             }
         }
@@ -103,7 +103,7 @@ switch( $mode )
             $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
             $Result['content'] = $tpl->fetch( "design:$extension/confirmremove_onhold.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'eznewsletter/list_newsletterbounce', 'Newsletter items on hold' ) ) );
+                                            'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Newsletter items on hold' ) ) );
             return;
         }
         else if ( $http->hasPostVariable( 'ConfirmRemoveOnHoldEntryButton' ) )
@@ -134,7 +134,7 @@ switch( $mode )
         $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
         $Result['content'] = $tpl->fetch( "design:$extension/list_newsletter_onhold.tpl" );
         $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'eznewsletter/list_newsletterbounce', 'Messages on hold' ) ) );
+                                            'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Messages on hold' ) ) );
         return;
     }break;
 
@@ -169,7 +169,7 @@ switch( $mode )
             $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
             $Result['content'] = $tpl->fetch( "design:$extension/view_newsletter_bounce.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'eznewsletter/list_newsletterbounce', 'View newsletter bounce entry' ) ) );
+                                            'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'View newsletter bounce entry' ) ) );
             return;
         }
         else if ( $http->hasPostVariable( 'RemoveBounceEntryButton' ) )
@@ -192,7 +192,7 @@ switch( $mode )
             $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
             $Result['content'] = $tpl->fetch( "design:$extension/confirmremove_bounce.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'eznewsletter/list_newsletterbounce', 'Newsletter types' ) ) );
+                                            'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Newsletter types' ) ) );
             return;
         }
         else if ( $http->hasPostVariable( 'ConfirmRemoveBounceEntryButton' ) )
@@ -220,7 +220,7 @@ switch( $mode )
         $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
         $Result['content'] = $tpl->fetch( "design:$extension/list_newsletter_bounce.tpl" );
         $Result['path'] = array( array( 'url' => false,
-                                        'text' => ezi18n( 'eznewsletter/list_newsletterbounce', 'View newsletter bounces' ) ) );
+                                        'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'View newsletter bounces' ) ) );
 
     }break;
 }

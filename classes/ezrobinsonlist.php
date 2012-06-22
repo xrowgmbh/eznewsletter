@@ -262,8 +262,8 @@ class eZRobinsonListEntry extends eZPersistentObject
     */
     static function typeNameMap()
     {
-        return array( self::EMAIL => ezi18n( 'eznewsletter/robinsonlist_entrytype', 'Email address' ),
-                      self::MOBILE => ezi18n( 'eznewsletter/robinsonlist_entrytype', 'Mobile phone number' ) );
+        return array( self::EMAIL => ezpI18n::tr( 'eznewsletter/robinsonlist_entrytype', 'Email address' ),
+                      self::MOBILE => ezpI18n::tr( 'eznewsletter/robinsonlist_entrytype', 'Mobile phone number' ) );
     }
 
     /*!
@@ -272,8 +272,8 @@ class eZRobinsonListEntry extends eZPersistentObject
     */
     static function globalNameMap()
     {
-        return array( self::IMPORT_LOCAL => ezi18n( 'eznewsletter/robinsonlist_entrysource', 'Local' ),
-                      self::IMPORT_GLOBAL => ezi18n( 'eznewsletter/robinsonlist_entrysource', 'External data' ) );
+        return array( self::IMPORT_LOCAL => ezpI18n::tr( 'eznewsletter/robinsonlist_entrysource', 'Local' ),
+                      self::IMPORT_GLOBAL => ezpI18n::tr( 'eznewsletter/robinsonlist_entrysource', 'External data' ) );
     }
 
     /*!
@@ -282,8 +282,8 @@ class eZRobinsonListEntry extends eZPersistentObject
     */
     static function importNameMap()
     {
-        return array( self::SYNC => ezi18n( 'eznewsletter/robinsonlist_action', 'Synchronize' ),
-                      self::ADD => ezi18n( 'eznewsletter/robinsonlist_action', 'Only add new' ) );
+        return array( self::SYNC => ezpI18n::tr( 'eznewsletter/robinsonlist_action', 'Synchronize' ),
+                      self::ADD => ezpI18n::tr( 'eznewsletter/robinsonlist_action', 'Only add new' ) );
     }
 
     /*!

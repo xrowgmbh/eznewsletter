@@ -101,7 +101,7 @@ if ( $http->hasPostVariable( 'UpdateSubscriptions' ) )
                 $emailExists = eZUserSubscriptionData::fetch( $http->postVariable( 'Email' ) );
                 if ( $emailExists )
                 {
-                    $warning = ezi18n( 'eznewsletter/user_settings', 'The given email address is already in use. Please use another.' );
+                    $warning = ezpI18n::tr( 'eznewsletter/user_settings', 'The given email address is already in use. Please use another.' );
                 }
                 else
                 {
@@ -119,7 +119,7 @@ if ( $http->hasPostVariable( 'UpdateSubscriptions' ) )
                 }
                 else
                 {
-                    $warning = ezi18n( 'eznewsletter/user_settings', 'Password did not match' );
+                    $warning = ezpI18n::tr( 'eznewsletter/user_settings', 'Password did not match' );
                 }
             }
 
@@ -141,7 +141,7 @@ if( $Params['Hash'] )
             $Result = array();
             $Result['content'] = $tpl->fetch( "design:eznewsletter/no_subscription.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'eznewsletter', 'No subscription.' ) ) );
+                                            'text' => ezpI18n::tr( 'eznewsletter', 'No subscription.' ) ) );
             return $Result;
         }
     else
@@ -168,7 +168,7 @@ if( $Params['Hash'] )
                 $Result = array();
                 $Result['content'] = $tpl->fetch( "design:eznewsletter/user_settings_password.tpl" );
                 $Result['path'] = array( array( 'url'  => false,
-                                                'text' => ezi18n( 'eznewsletter/user_settings_password.tpl', 'Activate subscription' ) ) );
+                                                'text' => ezpI18n::tr( 'eznewsletter/user_settings_password.tpl', 'Activate subscription' ) ) );
                 return $Result;
             }
         }
@@ -204,7 +204,7 @@ if( $Params['Hash'] )
             $Result = array();
             $Result['content'] = $tpl->fetch( "design:eznewsletter/pending.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'eznewsletter', 'Activate Subscription' ) ) );
+                                            'text' => ezpI18n::tr( 'eznewsletter', 'Activate Subscription' ) ) );
             return $Result;
 
         }
@@ -235,6 +235,6 @@ $tpl->setVariable( 'output_map', eZSubscription::outputFormatNameMap() );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:eznewsletter/user_settings_user.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter', 'Activate Subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter', 'Activate Subscription' ) ) );
 
 ?>

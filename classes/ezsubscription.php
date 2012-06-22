@@ -814,10 +814,10 @@ class eZSubscription extends eZPersistentObject
     #*/
     #static function vipNameMap()
     #{
-    #    return array( eZSubscription::VIPNone     => ezi18n( 'eznewsletter/vip_type', 'Not set' ),
-    #                  eZSubscription::VIPSilver   => ezi18n( 'eznewsletter/vip_type', 'Silver' ),
-    #                  eZSubscription::VIPGold     => ezi18n( 'eznewsletter/vip_type', 'Gold' ),
-    #                  eZSubscription::VIPPlatinum => ezi18n( 'eznewsletter/vip_type', 'Platinum' ) );
+    #    return array( eZSubscription::VIPNone     => ezpI18n::tr( 'eznewsletter/vip_type', 'Not set' ),
+    #                  eZSubscription::VIPSilver   => ezpI18n::tr( 'eznewsletter/vip_type', 'Silver' ),
+    #                  eZSubscription::VIPGold     => ezpI18n::tr( 'eznewsletter/vip_type', 'Gold' ),
+    #                  eZSubscription::VIPPlatinum => ezpI18n::tr( 'eznewsletter/vip_type', 'Platinum' ) );
     #}
 
     /*!
@@ -826,11 +826,11 @@ class eZSubscription extends eZPersistentObject
     */
     static function statusNameMap()
     {
-        return array( eZSubscription::StatusPending      => ezi18n( 'eznewsletter/subscription_status', 'Pending' ),
-                      eZSubscription::StatusConfirmed    => ezi18n( 'eznewsletter/subscription_status', 'Confirmed' ),
-                      eZSubscription::StatusApproved     => ezi18n( 'eznewsletter/subscription_status', 'Approved' ),
-                      eZSubscription::StatusRemovedSelf  => ezi18n( 'eznewsletter/subscription_status', 'Removed by self' ),
-                      eZSubscription::StatusRemovedAdmin => ezi18n( 'eznewsletter/subscription_status', 'Removed by admin' ) );
+        return array( eZSubscription::StatusPending      => ezpI18n::tr( 'eznewsletter/subscription_status', 'Pending' ),
+                      eZSubscription::StatusConfirmed    => ezpI18n::tr( 'eznewsletter/subscription_status', 'Confirmed' ),
+                      eZSubscription::StatusApproved     => ezpI18n::tr( 'eznewsletter/subscription_status', 'Approved' ),
+                      eZSubscription::StatusRemovedSelf  => ezpI18n::tr( 'eznewsletter/subscription_status', 'Removed by self' ),
+                      eZSubscription::StatusRemovedAdmin => ezpI18n::tr( 'eznewsletter/subscription_status', 'Removed by admin' ) );
     }
 
     /*!
@@ -839,10 +839,10 @@ class eZSubscription extends eZPersistentObject
     */
     static function outputFormatNameMap()
     {
-        return array( eZSubscription::OutputFormatText         => ezi18n( 'eznewsletter/output_formats', 'Text' ),
-                      eZSubscription::OutputFormatHTML         => ezi18n( 'eznewsletter/output_formats', 'HTML' ),
-                      eZSubscription::OutputFormatExternalHTML => ezi18n( 'eznewsletter/output_formats', 'External HTML' ),
-                      eZSubscription::OutputFormatSMS          => ezi18n( 'eznewsletter/output_formats', 'SMS' ) );
+        return array( eZSubscription::OutputFormatText         => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
+                      eZSubscription::OutputFormatHTML         => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
+                      eZSubscription::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'External HTML' ),
+                      eZSubscription::OutputFormatSMS          => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) );
     }
 }
 

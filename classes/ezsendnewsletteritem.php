@@ -344,9 +344,9 @@ class eZSendNewsletterItem extends eZPersistentObject
      */
     static function sendStatusNameMap()
     {
-        return array( eZSendNewsletterItem::SendStatusNone => ezi18n( 'eznewsletter/senditem_status', 'Send mailing' ),
-                      eZSendNewsletterItem::SendStatusSent => ezi18n( 'eznewsletter/senditem_status', 'Mark as sent' ),
-                      eZSendNewsletterItem::SendStatusOnHold => ezi18n( 'eznewsletter/senditem_status', 'On hold' ) );
+        return array( eZSendNewsletterItem::SendStatusNone => ezpI18n::tr( 'eznewsletter/senditem_status', 'Send mailing' ),
+                      eZSendNewsletterItem::SendStatusSent => ezpI18n::tr( 'eznewsletter/senditem_status', 'Mark as sent' ),
+                      eZSendNewsletterItem::SendStatusOnHold => ezpI18n::tr( 'eznewsletter/senditem_status', 'On hold' ) );
     }
 
     /*!

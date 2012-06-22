@@ -65,13 +65,13 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
         $subscription = eZSubscription::fetchByUserSubscriptionListID( $user->attribute( 'contentobject_id' ), $subscriptionList->attribute( 'id' ) );
         if ( is_object( $subscription ) and $subscription->attribute( 'status' ) != eZSubscription::StatusRemovedSelf )
         {
-            $warning = ezi18n( 'eznewsletter/register_subscription', 'You are already a registered subscriber' );
+            $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You are already a registered subscriber' );
         }
         elseif ( is_object( $subscription ) and $subscription->attribute( 'status' ) == eZSubscription::StatusRemovedSelf )
         {
             $subscription->setAttribute( 'status', eZSubscription::StatusApproved );
             $subscription->store();
-            $warning = ezi18n( 'eznewsletter/register_subscription', 'You have renewed your subscription.' );
+            $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You have renewed your subscription.' );
         }
         else
         {
@@ -91,7 +91,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
             }
             else
             {
-                $warning = ezi18n( 'eznewsletter/register_subscription', 'Passwords did not match.' );
+                $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'Passwords did not match.' );
             }
         }
 
@@ -105,17 +105,17 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
 			/* commented out, because firstname and lastname are not required (by Anika Weckemann Revision 267)
             if ( !$firstname )
             {
-                $warning = ezi18n( 'eznewsletter/register_subscription', 'You must enter a first name.' );
+                $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You must enter a first name.' );
             }
 
             if ( !$name )
             {
-                $warning = ezi18n( 'eznewsletter/register_subscription', 'You must enter a last name.' );
+                $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You must enter a last name.' );
             }
 			*/
             if ( !eZMail::validate( $email ) )
             {
-                $warning = ezi18n( 'eznewsletter/register_subscription', 'You must provide a valid email address.' );
+                $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You must provide a valid email address.' );
             }
 
             if ( !$warning )
@@ -124,7 +124,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
 
                 if ( !$subscription )
                 {
-                    $warning = ezi18n( 'eznewsletter/register_subscription', 'You\'re already a registered subscriber' );
+                    $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You\'re already a registered subscriber' );
                 }
                 else if ( $http->hasPostVariable( 'OutputFormat' ) )
                 {
@@ -143,7 +143,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
         }
         else
         {
-            $warning = ezi18n( 'eznewsletter/register_subscription', 'Email address or mobile phone number is in opt-out list. Subscribing is not possible.' );
+            $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'Email address or mobile phone number is in opt-out list. Subscribing is not possible.' );
         }
 
     }
@@ -158,7 +158,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
         $Result = array();
         $Result['content'] = $tpl->fetch( "design:eznewsletter/register_subscription_info.tpl" );
         $Result['path'] = array( array( 'url' => false,
-                                        'text' => ezi18n( 'eznewsletter/register_subscription', 'Register subscription' ) ) );
+                                        'text' => ezpI18n::tr( 'eznewsletter/register_subscription', 'Register subscription' ) ) );
         return;
     }
 }
@@ -187,6 +187,6 @@ if (isset($warning))
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:eznewsletter/register_subscription.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/register_subscription', 'Register subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/register_subscription', 'Register subscription' ) ) );
 
 ?>

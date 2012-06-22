@@ -63,7 +63,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-        $warning[] = ezi18n( 'eznewsletter/edit_newslettertype', 'You have not defined a name for this newslettertype' );
+        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'You have not defined a name for this newslettertype' );
     }
 
 
@@ -93,7 +93,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-        $warning[] = ezi18n( 'eznewsletter/edit_newslettertype', 'Email address "%address" did not validate.', false, array( '%address' => $senderAddress ) );
+        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'Email address "%address" did not validate.', false, array( '%address' => $senderAddress ) );
     }
 
     if( $http->hasPostVariable( 'ValidContentClassIDArray' ) )
@@ -109,7 +109,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-        $warning[] = ezi18n( 'eznewsletter/edit_newslettertype', 'You have to select at least one allowed output format.' );
+        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'You have to select at least one allowed output format.' );
     }
 
     if( $http->hasPostVariable( 'AllowedDesigns' ) &&
@@ -119,7 +119,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-        $warning[] = ezi18n( 'eznewsletter/edit_newslettertype', 'You have to select at least one design.' );
+        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'You have to select at least one design.' );
     }
 
     if( $http->hasPostVariable( 'AllowedSiteaccesses' ) &&
@@ -129,7 +129,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-        $warning[] = ezi18n( 'eznewsletter/edit_newslettertype', 'You have to select at least one allowed siteaccess.' );
+        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'You have to select at least one allowed siteaccess.' );
     }
 
     if ( $http->hasPostVariable( 'SubscriptionListIDArray' ) &&
@@ -144,12 +144,12 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-        $warning[] = ezi18n( 'eznewsletter/edit_newslettertype', 'You have to select at least one subscription list.' );
+        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'You have to select at least one subscription list.' );
     }
 
     if ( !$newsletterType->attribute( 'article_pool_object_id' ) )
     {
-        $warning[] = ezi18n( 'eznewsletter/edit_newslettertype', 'You have to select a valid newsletter placement.' );
+        $warning[] = ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'You have to select a valid newsletter placement.' );
     }
 
     $newsletterType->setAttribute( 'description', $http->postVariable( 'NewsletterTypeDescription' ) );
@@ -271,10 +271,10 @@ $tpl->setVariable( 'warning', $warning );
 $tpl->setVariable( 'newsletter_type', $newsletterType );
 $tpl->setVariable( 'allowed_output_formats', eZNewsletterType::allowedOutputFormatMap() );
 /*$tpl->setVariable( 'allowed_output_formats', array(
-                      eZSubscription::OutputFormatText         => ezi18n( 'eznewsletter/output_formats', 'Text' ),
-                      eZSubscription::OutputFormatHTML         => ezi18n( 'eznewsletter/output_formats', 'HTML' ),
-                      eZSubscription::OutputFormatExternalHTML => ezi18n( 'eznewsletter/output_formats', 'External HTML' ),
-                      eZSubscription::OutputFormatSMS          => ezi18n( 'eznewsletter/output_formats', 'SMS' ) ) );
+                      eZSubscription::OutputFormatText         => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
+                      eZSubscription::OutputFormatHTML         => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
+                      eZSubscription::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'External HTML' ),
+                      eZSubscription::OutputFormatSMS          => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) ) );
 */
 
 $tpl->setVariable( 'contentclass_list', eZNewsletterType::unserializeArray( $newsletterType->attribute( 'contentclass_list' ) ) );
@@ -289,6 +289,6 @@ $Result['newsletter_menu'] = 'design:parts/content/newsletter_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:$extension/edit_newslettertype.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/edit_newslettertype', 'Edit newsletter type' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/edit_newslettertype', 'Edit newsletter type' ) ) );
 
 ?>

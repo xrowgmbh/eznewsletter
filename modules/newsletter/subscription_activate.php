@@ -56,7 +56,7 @@ $tpl->setVariable( 'subscription', $subscription );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:eznewsletter/subscription_activate.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/subscription_activate', 'Activate subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/subscription_activate', 'Activate subscription' ) ) );
 
 
 ?>

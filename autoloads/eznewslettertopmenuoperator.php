@@ -45,33 +45,33 @@ class eZNewsletterTopMenuOperator
     {
         $this->Operators = array( $name );
         $this->DefaultNames = array(
-            'content' => array( 'name' => ezi18n( 'design/admin/pagelayout',
+            'content' => array( 'name' => ezpI18n::tr( 'design/admin/pagelayout',
                                                   'Content structure' ),
-                                'tooltip'=> ezi18n( 'design/admin/pagelayout',
+                                'tooltip'=> ezpI18n::tr( 'design/admin/pagelayout',
                                                     'Manage the main content structure of the site.' ) ),
-            'media' => array( 'name' => ezi18n( 'design/admin/pagelayout',
+            'media' => array( 'name' => ezpI18n::tr( 'design/admin/pagelayout',
                                                 'Media library' ),
-                              'tooltip'=> ezi18n( 'design/admin/pagelayout',
+                              'tooltip'=> ezpI18n::tr( 'design/admin/pagelayout',
                                                   'Manage images, files, documents, etc.' ) ),
-            'users' => array( 'name' => ezi18n( 'design/admin/pagelayout',
+            'users' => array( 'name' => ezpI18n::tr( 'design/admin/pagelayout',
                                                 'User accounts' ),
-                              'tooltip'=> ezi18n( 'design/admin/pagelayout',
+                              'tooltip'=> ezpI18n::tr( 'design/admin/pagelayout',
                                                   'Manage users, user groups and permission settings.' ) ),
-            'shop' => array( 'name' => ezi18n( 'design/admin/pagelayout',
+            'shop' => array( 'name' => ezpI18n::tr( 'design/admin/pagelayout',
                                                'Webshop' ),
-                             'tooltip'=> ezi18n( 'design/admin/pagelayout',
+                             'tooltip'=> ezpI18n::tr( 'design/admin/pagelayout',
                                                  'Manage customers, orders, discounts and VAT types; view sales statistics.' ) ),
-            'design' => array( 'name' => ezi18n( 'design/admin/pagelayout',
+            'design' => array( 'name' => ezpI18n::tr( 'design/admin/pagelayout',
                                                  'Design' ),
-                               'tooltip'=> ezi18n( 'design/admin/pagelayout',
+                               'tooltip'=> ezpI18n::tr( 'design/admin/pagelayout',
                                                    'Manage templates, menus, toolbars and other things related to appearence.' ) ),
-            'setup' => array( 'name' => ezi18n( 'design/admin/pagelayout',
+            'setup' => array( 'name' => ezpI18n::tr( 'design/admin/pagelayout',
                                                 'Setup' ),
-                              'tooltip'=> ezi18n( 'design/admin/pagelayout',
+                              'tooltip'=> ezpI18n::tr( 'design/admin/pagelayout',
                                                   'Configure settings and manage advanced functionality.' ) ),
-            'my_account' => array( 'name' => ezi18n( 'design/admin/pagelayout',
+            'my_account' => array( 'name' => ezpI18n::tr( 'design/admin/pagelayout',
                                                      'My account' ),
-                                   'tooltip'=> ezi18n( 'design/admin/pagelayout',
+                                   'tooltip'=> ezpI18n::tr( 'design/admin/pagelayout',
                                                        'Manage items and settings that belong to your account.' ) ) );
     }
 
@@ -151,7 +151,7 @@ class eZNewsletterTopMenuOperator
 
             if ( $ini->hasVariable( 'Topmenu_' . $tabID , 'Name' ) &&  $ini->variable( 'Topmenu_' . $tabID , "Name" ) != '' )
             {
-                $menuItem['name'] = ezi18n( 'design/eznewsletter/topmenu', $ini->variable( 'Topmenu_' . $tabID , "Name" ) );
+                $menuItem['name'] = ezpI18n::tr( 'design/eznewsletter/topmenu', $ini->variable( 'Topmenu_' . $tabID , "Name" ) );
             }
             else
             {
@@ -159,7 +159,7 @@ class eZNewsletterTopMenuOperator
             }
             if ( $ini->hasVariable( 'Topmenu_' . $tabID , 'Tooltip' ) &&  $ini->variable( 'Topmenu_' . $tabID , "Tooltip" ) != '' )
             {
-                $menuItem['tooltip'] =  ezi18n( 'design/eznewsletter/topmenu', $ini->variable( 'Topmenu_' . $tabID , "Tooltip" ) );
+                $menuItem['tooltip'] =  ezpI18n::tr( 'design/eznewsletter/topmenu', $ini->variable( 'Topmenu_' . $tabID , "Tooltip" ) );
             }
             else
             {

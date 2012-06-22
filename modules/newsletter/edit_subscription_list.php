@@ -70,7 +70,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
     }
     else
     {
-	$warning[] = ezi18n( 'eznewsletter/edit_subscription_list', 'You have to select at least one allowed siteaccess.' );
+	$warning[] = ezpI18n::tr( 'eznewsletter/edit_subscription_list', 'You have to select at least one allowed siteaccess.' );
     }
 
     if ( $http->hasPostVariable( 'GenerateURLHash' ) )
@@ -143,7 +143,7 @@ $Result['newsletter_menu'] = 'design:parts/content/robinson_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:eznewsletter/edit_subscription_list.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/edit_subscription_list', 'Subscription lists' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/edit_subscription_list', 'Subscription lists' ) ) );
 
 
 ?>

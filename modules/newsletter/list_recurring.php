@@ -71,6 +71,6 @@ $Result['newsletter_menu'] = 'design:parts/content/newsletter_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:$extension/list_recurring.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/list_recuring', 'View newsletter type' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/list_recuring', 'View newsletter type' ) ) );
 
 ?>

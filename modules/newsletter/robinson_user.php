@@ -53,7 +53,7 @@ if ( $http->hasPostVariable( 'AddButton' ) || $http->hasPostVariable( 'RemoveBut
             }
             else
             {
-            $warning = ezi18n( 'eznewsletter/robinson_user', 'Entered email address is already in the list.' );
+            $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'Entered email address is already in the list.' );
             $done=true;
             }
             
@@ -67,14 +67,14 @@ if ( $http->hasPostVariable( 'AddButton' ) || $http->hasPostVariable( 'RemoveBut
             }
             else
             {
-            $warning = ezi18n( 'eznewsletter/robinson_user', 'Entered email address is not in the list.' );
+            $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'Entered email address is not in the list.' );
             $done=true;
             }
         }
         }
         else
         {
-        $warning = ezi18n( 'eznewsletter/robinson_user', 'Please enter a valid email.' );
+        $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'Please enter a valid email.' );
         $done=true;
         }
     }
@@ -94,7 +94,7 @@ if ( $http->hasPostVariable( 'AddButton' ) || $http->hasPostVariable( 'RemoveBut
             }
             else
             {
-            $warning = ezi18n( 'eznewsletter/robinson_user', 'Entered mobile phone number is already in the list.' );
+            $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'Entered mobile phone number is already in the list.' );
             $done=true;
             }
         }
@@ -107,7 +107,7 @@ if ( $http->hasPostVariable( 'AddButton' ) || $http->hasPostVariable( 'RemoveBut
             }
             else
             {
-            $warning = ezi18n( 'eznewsletter/robinson_user', 'Entered mobile phone number is not in the list.' );
+            $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'Entered mobile phone number is not in the list.' );
             $done=true;
             }
         }
@@ -116,17 +116,17 @@ if ( $http->hasPostVariable( 'AddButton' ) || $http->hasPostVariable( 'RemoveBut
 
     if ( ( !$done ) && ( $warning == "" ) )
     {
-    $warning = ezi18n( 'eznewsletter/robinson_user', 'An error occured, no updates were made.' );
+    $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'An error occured, no updates were made.' );
     }
     
     if ( ( $done ) && ( $warning == "" ) )
     {
-    $warning = ezi18n( 'eznewsletter/robinson_user', 'Updates complete.' );
+    $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'Updates complete.' );
     }
     
     if ( ( $empty_input ) && ( $warning == ""  ) )
     {
-    $warning = ezi18n( 'eznewsletter/robinson_user', 'You must fill in at least one field.' );
+    $warning = ezpI18n::tr( 'eznewsletter/robinson_user', 'You must fill in at least one field.' );
     }
 
 }
@@ -139,6 +139,6 @@ if ( $warning != "" ) {
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:eznewsletter/robinson_user.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/robinson_user', 'Robinsonlist settings' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/robinson_user', 'Robinsonlist settings' ) ) );
 
 ?>

@@ -71,6 +71,6 @@ $Result['newsletter_menu'] = 'design:parts/content/robinson_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:eznewsletter/list_subscriptions.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/list_subscriptions', 'Subscription lists' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/list_subscriptions', 'Subscription lists' ) ) );
 
 ?>

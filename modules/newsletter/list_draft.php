@@ -72,7 +72,7 @@ $Result['newsletter_menu'] = 'design:parts/content/newsletter_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:$extension/list_draft.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/list_draft', 'View newsletter type' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/list_draft', 'View newsletter type' ) ) );
 
 
 ?>

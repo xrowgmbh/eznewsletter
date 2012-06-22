@@ -61,7 +61,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
         }
         else
         {
-        $warning = ezi18n( 'eznewsletter/robinson_edit', 'Please enter a valid email.' );
+        $warning = ezpI18n::tr( 'eznewsletter/robinson_edit', 'Please enter a valid email.' );
         }
     }
     else
@@ -77,7 +77,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
     }
     else
     {
-    $warning = ezi18n( 'eznewsletter/robinson_edit', 'Please fill in all required fields.' );
+    $warning = ezpI18n::tr( 'eznewsletter/robinson_edit', 'Please fill in all required fields.' );
     }
 }
 
@@ -109,6 +109,6 @@ $Result['newsletter_menu'] = 'design:parts/content/robinson_menu.tpl';
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:eznewsletter/robinson_edit.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/robinson_edit', 'Opt-out list edit' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/robinson_edit', 'Opt-out list edit' ) ) );
 
 ?>

@@ -586,16 +586,16 @@ class eZNewsletterType extends eZPersistentObject
      */
     static function allowedOutputFormatMap()
     {
-        #$availableOutputFormats = array( 'plaintext' => ezi18n( 'eznewsletter/eznewslettertype/output_format', 'Plain text' ),
-        #                                 'embeddedhtml' => ezi18n( 'eznewsletter/eznewslettertype/output_format', 'HTML' ),
-        #                                 'externalhtml' => ezi18n( 'eznewsletter/eznewslettertype/output_format', 'HTML w/external images' ),
-        #                                 'sms' => ezi18n( 'eznewsletter/eznewslettertype/output_format', 'SMS' ) );
+        #$availableOutputFormats = array( 'plaintext' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'Plain text' ),
+        #                                 'embeddedhtml' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'HTML' ),
+        #                                 'externalhtml' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'HTML w/external images' ),
+        #                                 'sms' => ezpI18n::tr( 'eznewsletter/eznewslettertype/output_format', 'SMS' ) );
         #return $availableOutputFormats;
                          
-        return array( eZNewsletter::OutputFormatText => ezi18n( 'eznewsletter/output_formats', 'Text' ),
-                      eZNewsletter::OutputFormatHTML => ezi18n( 'eznewsletter/output_formats', 'HTML' ),
-                      eZNewsletter::OutputFormatExternalHTML => ezi18n( 'eznewsletter/ouput_formats', 'External HTML' ),
-                      eZNewsletter::OutputFormatSMS => ezi18n( 'eznewsletter/output_formats', 'SMS' ) );
+        return array( eZNewsletter::OutputFormatText => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
+                      eZNewsletter::OutputFormatHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
+                      eZNewsletter::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/ouput_formats', 'External HTML' ),
+                      eZNewsletter::OutputFormatSMS => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) );
     }
 
     /*!
@@ -608,7 +608,7 @@ class eZNewsletterType extends eZPersistentObject
         throw new Exception( "#DEPRECATED#" );
     }
     
-    function allowedOutputFormatsArray() // nötig??
+    function allowedOutputFormatsArray() // nï¿½tig??
     {
         $allowedFormatStrings = explode( eZNewsletterType::FieldSeparationCharacter,
                                          $this->attribute( 'allowed_output_formats' ) );       

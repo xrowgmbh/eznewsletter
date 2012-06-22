@@ -127,7 +127,7 @@ if ( $http->hasPostVariable( 'UpdateSubscriptions' ) )
             $emailExists = eZUserSubscriptionData::fetch( $http->postVariable( 'Email' ) );
             if ( $emailExists )
             {
-                $warning = ezi18n( 'eznewsletter/modify_subscription', 'The given email address is already in use. Please use another.' );
+                $warning = ezpI18n::tr( 'eznewsletter/modify_subscription', 'The given email address is already in use. Please use another.' );
             }
             else
             {
@@ -145,7 +145,7 @@ if ( $http->hasPostVariable( 'UpdateSubscriptions' ) )
             }
             else
             {
-                $warning = ezi18n( 'eznewsletter/modify_subscription', 'Password did not match' );
+                $warning = ezpI18n::tr( 'eznewsletter/modify_subscription', 'Password did not match' );
             }
         }
 
@@ -184,7 +184,7 @@ if( $Params['hash'] != "" ) {
         $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
             $Result['content'] = $tpl->fetch( "design:ezsubscribe/no_subscription.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'eznewsletter/modify_subscription', 'No subscription' ) ) );
+                                            'text' => ezpI18n::tr( 'eznewsletter/modify_subscription', 'No subscription' ) ) );
             return $Result;
         }
     else
@@ -247,6 +247,6 @@ $Result = array();
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:eznewsletter/user_modify.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/modify_subscription', 'Activate subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/modify_subscription', 'Activate subscription' ) ) );
 
 ?>

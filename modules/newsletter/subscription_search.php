@@ -110,6 +110,6 @@ $Result = array();
 $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
 $Result['content'] = $tpl->fetch( "design:eznewsletter/subscription_search.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter/subscription_search', 'Edit Subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter/subscription_search', 'Edit Subscription' ) ) );
 
 ?>

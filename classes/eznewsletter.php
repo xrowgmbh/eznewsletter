@@ -785,10 +785,10 @@ class eZNewsletter extends eZPersistentObject
         // print_r( ezNewsletterType::allowedOutputFormatMap() );
         // return ezNewsletterType::allowedOutputFormatMap();
         
-        return array( eZNewsletter::OutputFormatText => ezi18n( 'eznewsletter/output_formats', 'Text' ),
-                      eZNewsletter::OutputFormatHTML => ezi18n( 'eznewsletter/output_formats', 'HTML' ),
-                      eZNewsletter::OutputFormatExternalHTML => ezi18n( 'eznewsletter/ouput_formats', 'External HTML' ),
-                      eZNewsletter::OutputFormatSMS => ezi18n( 'eznewsletter/output_formats', 'SMS' ) );
+        return array( eZNewsletter::OutputFormatText => ezpI18n::tr( 'eznewsletter/output_formats', 'Text' ),
+                      eZNewsletter::OutputFormatHTML => ezpI18n::tr( 'eznewsletter/output_formats', 'HTML' ),
+                      eZNewsletter::OutputFormatExternalHTML => ezpI18n::tr( 'eznewsletter/ouput_formats', 'External HTML' ),
+                      eZNewsletter::OutputFormatSMS => ezpI18n::tr( 'eznewsletter/output_formats', 'SMS' ) );
     }
 
     /*!
@@ -797,11 +797,11 @@ class eZNewsletter extends eZPersistentObject
     */
     static function sendStatusNameMap()
     {
-        return array( eZNewsletter::SendStatusNone => ezi18n( 'eznewsletter/send_status', 'Not sent' ),
-                      eZNewsletter::SendStatusBuldingList => ezi18n( 'eznewsletter/send_status', 'Building sendout list' ),
-                      eZNewsletter::SendStatusSending => ezi18n( 'eznewsletter/send_status', 'Sending' ),
-                      eZNewsletter::SendStatusFinished => ezi18n( 'eznewsletter/send_status', 'Finished' ),
-                      eZNewsletter::SendStatusStopped => ezi18n( 'eznewsletter/send_status', 'Stopped' ) );
+        return array( eZNewsletter::SendStatusNone => ezpI18n::tr( 'eznewsletter/send_status', 'Not sent' ),
+                      eZNewsletter::SendStatusBuldingList => ezpI18n::tr( 'eznewsletter/send_status', 'Building sendout list' ),
+                      eZNewsletter::SendStatusSending => ezpI18n::tr( 'eznewsletter/send_status', 'Sending' ),
+                      eZNewsletter::SendStatusFinished => ezpI18n::tr( 'eznewsletter/send_status', 'Finished' ),
+                      eZNewsletter::SendStatusStopped => ezpI18n::tr( 'eznewsletter/send_status', 'Stopped' ) );
     }
 
     /*!
@@ -810,8 +810,8 @@ class eZNewsletter extends eZPersistentObject
     */
     static function statusNameMap()
     {
-        return array( eZNewsletter::StatusDraft => ezi18n( 'eznewsletter/object_status', 'Draft' ),
-                      eZNewsletter::StatusPublished => ezi18n( 'eznewsletter/object_status', 'Published' ) );
+        return array( eZNewsletter::StatusDraft => ezpI18n::tr( 'eznewsletter/object_status', 'Draft' ),
+                      eZNewsletter::StatusPublished => ezpI18n::tr( 'eznewsletter/object_status', 'Published' ) );
     }
 
     /*!
@@ -820,9 +820,9 @@ class eZNewsletter extends eZPersistentObject
     */
     static function recurrenceNameMap()
     {
-        return array( eZNewsletter::RecurrenceDaily   => ezi18n( 'eznewsletter/recurrencetype', 'Daily' ),
-                      eZNewsletter::RecurrenceWeekly  => ezi18n( 'eznewsletter/recurrencetype', 'Weekly' ),
-                      eZNewsletter::RecurrenceMonthly => ezi18n( 'eznewsletter/recurrencetype', 'Monthly' ) );
+        return array( eZNewsletter::RecurrenceDaily   => ezpI18n::tr( 'eznewsletter/recurrencetype', 'Daily' ),
+                      eZNewsletter::RecurrenceWeekly  => ezpI18n::tr( 'eznewsletter/recurrencetype', 'Weekly' ),
+                      eZNewsletter::RecurrenceMonthly => ezpI18n::tr( 'eznewsletter/recurrencetype', 'Monthly' ) );
     }
 
     /*!

@@ -665,8 +665,8 @@ class eZSubscriptionList extends eZPersistentObject
     */
     static function loginStepsNameMap()
     {
-        return array( eZSubscriptionList::LoginStepsOne => ezi18n( 'eznewsletter/login_steps', 'Confirm user' ),
-                      eZSubscriptionList::LoginStepsTwo => ezi18n( 'eznewsletter/login_steps', 'Confirm and approve user' ) );
+        return array( eZSubscriptionList::LoginStepsOne => ezpI18n::tr( 'eznewsletter/login_steps', 'Confirm user' ),
+                      eZSubscriptionList::LoginStepsTwo => ezpI18n::tr( 'eznewsletter/login_steps', 'Confirm and approve user' ) );
     }
 
     /*!
