@@ -108,15 +108,6 @@
 </ul>
 </div>
 
-<div class="block float-break">
-<label>{'Allowed output formats'|i18n( 'design/eznewsletter/view_newslettertype' )}:</label>
-<ul>
-{foreach $allowed_output_formats as $output}
-<li>{$output_format_names[$output]|wash}</li>
-{/foreach}
-</ul>
-</div>
-
 {*
 <div class="block float-break">
 <label>{'Related objects'|i18n( 'design/eznewsletter/view_newslettertype' )}:</label>

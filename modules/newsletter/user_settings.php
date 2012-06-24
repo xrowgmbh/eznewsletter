@@ -72,11 +72,6 @@ if ( $http->hasPostVariable( 'UpdateSubscriptions' ) )
                     $subscriptionList[$key] = $subscription;
                 }
             }
-       
-            if ( $http->hasPostVariable( 'OutputFormat_' . $subscription->attribute( 'id' ) ) )
-            {
-                $subscription->setAttribute( 'output_format', implode( ',', $http->postVariable( 'OutputFormat_' . $subscription->attribute( 'id' ) ) ) );   
-            }
 
             $subscription->store();
         }
@@ -227,7 +222,6 @@ $tpl->setVariable( 'allowedStatusList', $allowedStatusList );
 $tpl->setVariable( 'removedStatusList', $removedStatusList );
 $tpl->setVariable( 'statusNameMap', eZSubscription::statusNameMap() );
 $tpl->setVariable( 'subscriptionList', $subscriptionList );
-$tpl->setVariable( 'output_map', eZSubscription::outputFormatNameMap() );
 //get profile data
 
 $Result = array();

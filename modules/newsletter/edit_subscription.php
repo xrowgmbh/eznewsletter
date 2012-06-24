@@ -71,9 +71,6 @@ if ( $http->hasPostVariable( 'StoreButton' ) ||
         $subscription->setAttribute( 'mobile', $http->postVariable( 'Mobile' ) );
         $subscription->setAttribute( 'status', $http->postVariable( 'Status' ) );
         // $subscription->setAttribute( 'vip', $http->postVariable( 'Vip' ) );
-        $subscription->setAttribute( 'output_format',
-                            implode( eZSubscription::FieldSeparationCharacter,
-                            $http->postVariable( 'OutputFormat' ) ) );
 
         if ( $http->hasPostVariable( 'Password1' ) &&
              $http->hasPostVariable( 'Password2' ) )
@@ -137,7 +134,6 @@ $tpl = eZNewsletterTemplateWrapper::templateInit();
 $tpl->setVariable( 'warning', $warnings );
 // $tpl->setVariable( 'vip_map', $subscription->vipNameMap() );
 $tpl->setVariable( 'status_map', $subscription->statusNameMap() );
-$tpl->setVariable( 'output_map', $subscription->outputFormatNameMap() );
 $tpl->setVariable( 'subscription', $subscription );
 
 $Result = array();

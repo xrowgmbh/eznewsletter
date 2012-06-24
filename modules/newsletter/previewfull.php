@@ -52,7 +52,6 @@ if( !$newsletter )
 //skin selection
 $skin_prefix = 'eznewsletter';
 $custom_skin = $newsletter->attribute( 'design_to_use' );
-$format = $newsletter->attribute( 'output_format' );
 
 $Result = array();
 
@@ -61,33 +60,8 @@ if ( $custom_skin )
     $skin_prefix = $custom_skin;
 }
 
-switch( $format )
-{
-    default:
-    case eZNewsletter::OutputFormatText:
-    {
-	$template = 'design:'.$skin_prefix.'/sendout/text.tpl';
-	$Result['content'] = '<pre>'.$tpl->fetch( $template ).'</pre>';
-    } break;
-    
-    case eZNewsletter::OutputFormatExternalHTML:
-    {
-        $template = 'design:'.$skin_prefix.'/sendout/linked.tpl';
-	$Result['content'] = $tpl->fetch( $template );
-    } break;
-			   
-    case eZNewsletter::OutputFormatHTML:
-    {
-	$template = 'design:'.$skin_prefix.'/sendout/html.tpl';
-	$Result['content'] = $tpl->fetch( $template );
-    } break;
-
-    case eZNewsletter::OutputFormatSMS:
-    {
-	$template = 'design:'.$skin_prefix.'/sendout/sms.tpl';
-	$Result['content'] = $tpl->fetch( $template );
-    } break;
-}
+$template = 'design:'.$skin_prefix.'/sendout/html.tpl';
+$Result['content'] = $tpl->fetch( $template );
 
 $Result['pagelayout'] = false;
 

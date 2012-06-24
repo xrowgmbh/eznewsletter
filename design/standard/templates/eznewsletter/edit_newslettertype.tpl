@@ -103,15 +103,6 @@
 </div>
 
 <div class="element">
-<label>{'Allowed output formats'|i18n( 'design/eznewsletter/edit_newslettertype' )}:</label>
-<select name="AllowedOutputFormats[]" multiple="multiple" size="5">
-{foreach $allowed_output_formats as $key => $format}
-    <option value="{$key}" {cond( $selected_output_formats|contains( $key ), 'selected="selected"', '' )}>{$format|wash}</option>
-{/foreach}
-</select>
-</div>
-
-<div class="element">
 <label>{'Subscription lists'|i18n( 'design/eznewsletter/edit_newslettertype' )}:</label>
 <select name="SubscriptionListIDArray[]" multiple="multiple" size="5">
 {foreach $subscription_list_array as $subscriptionList}

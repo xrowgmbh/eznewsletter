@@ -250,7 +250,6 @@ class eZSendNewsletterItem extends eZPersistentObject
                     'name'              => $subscription->attribute( 'name' ),
                     'email'             => $subscription->attribute( 'email' ),
                     'mobile'            => $subscription->attribute( 'mobile' ),
-                    'output_format'     => $subscription->attribute( 'output_format' ),
                     'userhash'          => $this->attribute( 'hash' ),
                     'generic_userhash'  => $generic_hash
                 );

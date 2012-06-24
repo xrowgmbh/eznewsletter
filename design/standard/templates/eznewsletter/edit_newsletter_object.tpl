@@ -102,17 +102,6 @@
             {/foreach}
             </ul>
         </div>
-        {* Choose the design to use for mail output generation *}
-        <div class="block float-break">
-            <label>{'Output format'|i18n( 'design/eznewsletter/edit_newsletter_object' )}:</label>
-            <select name="NewsletterOutputFormat[]" multiple="multiple" title="OutputFormat">
-                {foreach $newsletter.output_format_name_map as $value => $name}
-                    {if $newsletter.newsletter_type.allowed_output_formats_array|contains( $value )}
-                    <option value="{$value|wash}" {cond( $newsletter.output_format_list|contains( $value ), 'selected="selected"', '')}>{$name|wash}</option>
-                    {/if}
-                {/foreach}
-            </select>
-        </div>
         {* View online preview *}
         <div class="block float-break">
             <input class="button" type="Submit" name="NewsletterPreview" value="{'Preview'|i18n( 'design/eznewsletter/edit_newsletter_object' )}" />

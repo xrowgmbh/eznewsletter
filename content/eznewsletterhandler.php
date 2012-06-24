@@ -69,20 +69,12 @@ class eZNewsletterHandler extends eZContentObjectEditHandler
             eZDebug::writeError( 'Could not fetch newsletter : ' . $http->postVariable( 'NewsletterID' ) );
             return;
         }
-        
-        /* #TODO# #CHECK# show as usermessage */
-        if( 0 == count( $http->postVariable( 'NewsletterOutputFormat' ) ) )
-        {
-            eZDebug::writeError( 'No output format selected' );
-            return;
-        }
 
         $newsletter->setAttribute( 'name', $http->postVariable( 'NewsletterName' ) );
         $newsletter->setAttribute( 'send_date', $this->getTimestamp( $http, $object->ID ) );
         $newsletter->setAttribute( 'category', $http->postVariable( 'NewsletterCategory' ) );
         
         // #CHECK# validate
-        $newsletter->setAttribute( 'output_format', implode( "," , $http->postVariable( 'NewsletterOutputFormat' ) ) );
         $newsletter->setAttribute( 'preview_email', $http->postVariable( 'NewsletterPreviewEmail' ) );
         $newsletter->setAttribute( 'preview_mobile', $http->postVariable( 'NewsletterPreviewMobile' ) );
 
@@ -129,8 +121,7 @@ class eZNewsletterHandler extends eZContentObjectEditHandler
 
         if ( $http->hasPostVariable( 'NewsletterSendPreview' ) )
         {
-            $previewFormats = $http->postVariable( 'NewsletterOutputFormat' );
-            eZNewsletter::sendNewsletterMail( $newsletter, true, $previewFormats );
+            eZNewsletter::sendNewsletterMail( $newsletter, true );
 
         }
     }

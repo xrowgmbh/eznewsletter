@@ -156,7 +156,6 @@ switch( $mode )
             {
                 $tpl->setVariable( 'subscription_object', $subscriptionObject );
             }
-            $tpl->setVariable( 'output', eZSubscription::outputFormatNameMap() );
             $tpl->setVariable( 'statusNames', eZSubscription::statusNameMap() );
 
             if( $http->hasPostVariable( 'EditButton' )  && $http->hasPostVariable( 'NewSubscriptionStatus' ) )

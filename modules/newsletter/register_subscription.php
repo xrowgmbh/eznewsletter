@@ -126,9 +126,8 @@ if ( $http->hasPostVariable( 'StoreButton' ) )
                 {
                     $warning = ezpI18n::tr( 'eznewsletter/register_subscription', 'You\'re already a registered subscriber' );
                 }
-                else if ( $http->hasPostVariable( 'OutputFormat' ) )
+                else
                 {
-                    $subscription->setAttribute( 'output_format', implode( ',', $http->postVariable( 'OutputFormat' ) ) );
                     $subscription->sync();
                 }
             }
@@ -170,7 +169,6 @@ $tpl->setVariable( 'firstname', $firstname );
 $tpl->setVariable( 'name', $name );
 $tpl->setVariable( 'email', $email );
 $tpl->setVariable( 'subscriptionList', $subscriptionList );
-$tpl->setVariable( 'output_map', eZSubscription::outputFormatNameMap() );
 
 if (isset($warning))
 {

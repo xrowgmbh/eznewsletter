@@ -22,7 +22,6 @@
 <tr>
     <th>{'Name'|i18n( 'design/eznewsletter/edit_subscription_list' )}</th>
     <th>{'Status'|i18n( 'design/eznewsletter/edit_subscription_list' )}</th>
-    <th>{'OutputFormat'|i18n( 'design/eznewsletter/edit_subscription_list' )}</th>
 </tr>
 {if count($subscriptionList)|lt(1)}
 <tr><td>&nbsp;</td><td>{'No subscriptions available'|i18n( 'design/eznewsletter/edit_subscription_list' )}</td></tr>
@@ -42,13 +41,6 @@
             {$statusNameMap[$subscription.status]|wash}
         {/if}
         </td>
-    <td>
-        <select name="OutputFormat_{$subscription.id}[]" multiple="multiple" title="{'OutputFormat'|i18n( 'design/eznewsletter/edit_subscription_list' )} class="halfbox">
-    {foreach $output_map as $value => $name} 
-        <option value="{$value|wash}" {cond( $subscription.outputformat_list|contains($value), 'selected="selected"', '')}>{$name|wash}</option>
-    {/foreach}
-    </select>
-    </td>
         </tr>
     {/foreach}
 {/if}
