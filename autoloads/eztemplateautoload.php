@@ -15,4 +15,3 @@ $eZTemplateOperatorArray[] = array( 'script' => 'extension/eznewsletter/autoload
 $eZTemplateOperatorArray[] = array( 'script' => 'extension/eznewsletter/autoloads/ezcurrentsiteaccessoperator.php',
                                     'class' => 'eZCurrentSiteaccessOperator',
                                     'operator_names' => array( 'current_siteaccess' ) );
-?>
