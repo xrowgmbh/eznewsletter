@@ -1,4 +1,5 @@
 <?php
+
 //
 // Definition of eZNewsletterMailTransport class
 //
@@ -28,6 +29,7 @@
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
+
 /*! \file eznewslettermailtransport.php
 */
 
@@ -39,25 +41,14 @@
 
 class eZNewsletterMailTransport
 {
-    /*!
-     Constructor
-    */
-    function __construct()
-    {
-    }
 
     /*!
      \virtual
      Tries to send the contents of the email object \a $mail and
      returns \c true if succesful.
     */
-    function sendMail( &$mail )
+    function sendMail( ezcMail &$mail )
     {
-        if ( get_class( $mail ) != 'eznewslettermail' )
-        {
-            eZDebug::writeError( 'Can only handle objects of type eZMail.', 'eZNewsletterMailTransport::sendMail' );
-            return false;
-        }
         return false;
     }
 
@@ -65,75 +56,26 @@ class eZNewsletterMailTransport
      \static
      Sends the contents of the email object \a $mail using the default transport.
     */
-    static function send( eZNewsletterMail $mail, $preview=false )
+    static function send( ezcMail $mail, $preview = false )
     {
-        if( strtolower( get_class( $mail ) ) != 'eznewslettermail' )
+        //transport type defined in newsletter extension
+        $newsletterINI = eZINI::instance( 'eznewsletter.ini' );
+        
+        if ( $preview )
         {
-            eZDebug::writeError( 'Can only handle objects of type eZNewsletterMail .', 'eZNewsletterMailTransport::send' );
-            return false;
+            $transportClass = trim( $newsletterINI->variable( 'NewsletterSendout', 'PreviewTransport' ) );
         }
-	
-	//transport type defined in newsletter extension
-	$newsletterINI = eZINI::instance('eznewsletter.ini');
-
-	if ($newsletterINI)
-	{
-	    if ($preview)
-	    {
-    		$customTransportType = trim( $newsletterINI->variable( 'NewsletterSendout', 'PreviewTransport' ) );
-	    }
-	    else
-	    {
-    		$customTransportType = trim( $newsletterINI->variable( 'NewsletterSendout', 'Transport' ) );	    
-	    }
-	}
-
-	//transport type defined in siteaccess/override
-    $ini = eZINI::instance();
-
-    if ( $mail->contentType() === "sms" )
-    {
-	    if ($customTransportType=='File')
-	    {
-		$transportType = 'fileSMS';
-	    }
-	    else
-	    {
-		$transportType = 'SMS';
-    }
-	} 
         else
         {
-	    if (!$customTransportType)
-	    {
-    		$transportType = trim( $ini->variable( 'MailSettings', 'Transport' ) );
-	    }
-	    else
-	    {
-		$transportType = $customTransportType;
-	    }
-	}
-
-        $transportObject =& $GLOBALS['eZMailTransportHandler_' . strtolower( $transportType )];
-        if ( !isset( $transportObject ) or
-             !is_object( $transportObject ) )
-        {
-            $transportClassFile = 'eznewsletter' . strtolower( $transportType ) . 'transport.php';
-            //Change from original ezmailtransport.php, now loads transport class directly from the newsletter extension.
-            $transportClassPath = eZExtension::baseDirectory() . '/eznewsletter/classes/' . $transportClassFile;
-            $transportClass = 'eZNewsletter' . $transportType . 'Transport';
-            if ( !file_exists( $transportClassPath ) )
+            $transportClass = trim( $newsletterINI->variable( 'NewsletterSendout', 'Transport' ) );
+        }
+        
+        $transportObject = & $GLOBALS['eZMailTransportHandler_' . strtolower( $transportType )];
+        if ( ! isset( $transportObject ) or ! is_object( $transportObject ) )
+        {     
+            if ( ! class_exists( $transportClass ) )
             {
-                eZDebug::writeError( "Unknown mail transport type '$transportType', cannot send mail",
-                                     'eZNewsletterMailTransport::send' );
-                return false;
-            }
-            //include_once( $transportClassPath );
-            
-            if ( !class_exists( $transportClass ) )
-            {
-                eZDebug::writeError( "No class available for mail transport type '$transportType', cannot send mail",
-                                     'eZNewsletterMailTransport::send' );
+                eZDebug::writeError( "No class available for mail transport type '$transportType', cannot send mail", 'eZNewsletterMailTransport::send' );
                 return false;
             }
             $transportObject = new $transportClass();
@@ -141,5 +83,3 @@ class eZNewsletterMailTransport
         return $transportObject->sendMail( $mail );
     }
 }
-
-?>

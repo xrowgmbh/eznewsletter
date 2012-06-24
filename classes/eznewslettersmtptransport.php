@@ -37,17 +37,7 @@
 
 class eZNewsletterSMTPTransport extends eZNewsletterMailTransport
 {
-    /*!
-     Constructor
-    */
-    function __construct()
-    {
-    }
-
-    /*!
-     \reimp
-    */
-    function sendMail( &$mail )
+    function sendMail( ezcMail $mail )
     {
         $ini = eZINI::instance();
         $parameters = array();
@@ -65,65 +55,20 @@ class eZNewsletterSMTPTransport extends eZNewsletterMailTransport
             $parameters['pass'] = $password;
         }
 
-        /* If email sender hasn't been specified or is empty
-         * we substitute it with either MailSettings.EmailSender or AdminEmail.
-         */
-        if ( !$mail->senderText() )
-        {
-            $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
-            if ( !$emailSender )
-                $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
-
-            eZMail::extractEmail( $emailSender, $emailSenderAddress, $emailSenderName );
-
-            if ( !eZMail::validate( $emailSenderAddress ) )
-                $emailSender = false;
-
-            if ( $emailSender )
-                $mail->setSenderText( $emailSender );
-        }
-        $email = new ezcMailComposer();
-        
-        $email->charset = $mail->usedCharset();
-        $email->subjectCharset = $mail->usedCharset();
-
-        $from = $mail->sender();
-        $email->from = new ezcMailAddress( $from['email'], $from['name'] ); 
-        
-        foreach ( $mail->receiverTextList() as $recipient )
-        {
-            $email->addTo( new ezcMailAddress( $recipient ) );    
-        }
-        
-        foreach ( $mail->ccReceiverTextList() as $ccReceiver )
-        {
-            $email->addCc( new ezcMailAddress( $ccReceiver ) );    
-        }
-        
-        foreach ( $mail->bccReceiverTextList() as $bccReceiver )
-        {
-            $email->addBcc( new ezcMailAddress( $bccReceiver ) );    
-        }
-
-        $sendData['headers'] = $mail->headerTextList();
-        
-        $email->subject = $mail->subject();
-        $email->htmlText = $mail->body();
-
         $options = new ezcMailSmtpTransportOptions();
         if( $parameters['connectionType'] )
         {
             $options->connectionType = $parameters['connectionType'];
         }
         
-        $email->build(); 
+        $mail->build(); 
         
         $smtp = new ezcMailSmtpTransport( $parameters['host'], $user, $password, $parameters['port'], $options );
 
         try
         {
-            $smtp->send( $email );
-            return = true;
+            $smtp->send( $mail );
+            return true;
         }
         catch ( ezcMailException $e )
         {

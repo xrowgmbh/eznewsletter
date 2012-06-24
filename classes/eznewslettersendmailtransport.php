@@ -39,49 +39,12 @@
 
 class eZNewsletterSendmailTransport extends eZNewsletterMailTransport
 {
-    /*!
-     Constructor
-    */
-    function __construct()
+    function sendMail( ezcMail $mail )
     {
-    }
-
-    /*!
-     \reimp
-    */
-    function sendMail( &$mail )
-    {
-        $ini = eZINI::instance();
-        $emailFrom = $mail->sender();
-        $emailSender = $emailFrom['email'];
-        if ( !$emailSender || count( $emailSender) <= 0 )
-            $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
-        if ( !$emailSender )
-            $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
-        if ( !eZNewsletterMail::validate( $emailSender ) )
-            $emailSender = false;
-        $isSafeMode = ini_get( 'safe_mode' );
-        if ( $isSafeMode and
-             $emailSender and
-             $mail->sender() == false )
-        {
-            $mail->setSenderText( $emailSender );
-        }
-        $message = $mail->body();
-        $extraHeaders = $mail->headerText( array( 'exclude-headers' => array( 'To', 'Subject', 'content-transfer-encoding',  'content-disposition' ) ) );
-
         $sendMailSettings = eZINI::instance( 'ezsendmailsettings.ini' );
         $sendMailParameter = $sendMailSettings->variable( 'SendNewsletter', 'MTAEnvelopeReturnPathParameter' );
-
-        if ( $isSafeMode or
-             !$emailSender )
-        {
-            return mail( $mail->receiverEmailText(), $mail->subject(), $message, $extraHeaders );
-        }
-        else
-        {
-            return mail( $mail->receiverEmailText(), $mail->subject(), $message, $extraHeaders, $sendMailParameter . ' -f' . $emailSender );
-        }
+        $transport = new ezcMailMtaTransport();
+        $transport->send( $mail );
     }
 }
 
