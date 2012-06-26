@@ -10,8 +10,7 @@
 {attribute_view_gui attribute=$attribute}
 {/foreach}
 
-{def $link = "<a href={'/newsletteraddons/unregister_subscription/[userhash]'|ezurl()} title="Cancel newsletter">{'cancel'|i18n('design/mobotix')}</a>"}
 <hr />
-<p>Use the following link to {$link} your subscription to this newsletter.</p>
+<p>Use the following link to <a href={'/newsletteraddons/unregister_subscription/[userhash]'|ezurl()} title="Cancel newsletter">{'cancel'|i18n('design/mobotix')}</a> your subscription to this newsletter.</p>
 </body>
 </html>
