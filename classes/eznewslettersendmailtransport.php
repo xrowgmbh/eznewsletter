@@ -47,5 +47,3 @@ class eZNewsletterSendmailTransport extends eZNewsletterMailTransport
         $transport->send( $mail );
     }
 }
-
-?>

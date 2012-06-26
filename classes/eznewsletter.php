@@ -652,13 +652,9 @@ class eZNewsletter extends eZPersistentObject
         {
             $skin_prefix = 'eznewsletter';
         }
-        /*
-        $template = array();
-        $template[eZNewsletter::OutputFormatExternalHTML] = 'design:'.$skin_prefix.'/sendout/linked.tpl';
-        $template[eZNewsletter::OutputFormatSMS]  = 'design:'.$skin_prefix.'/sendout/sms.tpl';
-        */
-        $mail = new ezpMailComposer();
-        
+
+        $mail = new ezpMailComposer( $options );
+        $mail->charset = 'utf-8';
         $tpl = eZTemplate::factory();
         $tpl->setVariable( 'hostname', $hostname );
         $tpl->setVariable( 'contentobject', $contentObject );
@@ -679,11 +675,11 @@ class eZNewsletter extends eZPersistentObject
         $emailSender = $newsletterType->attribute( 'sender_address' ) ? $newsletterType->attribute( 'sender_address' ) : $ini->variable( 'MailSettings', 'EmailSender' );
         if ( $tpl->hasVariable( 'emailSenderName' ) )
         {
-            $mail->from = new ezcMailAddress( $emailSender, $tpl->variable( 'emailSenderName' ) );
+            $mail->from = new ezcMailAddress( $emailSender, $tpl->variable( 'emailSenderName' ), 'utf-8' );
         }
         else
         {
-            $mail->from = new ezcMailAddress( $emailSender );
+            $mail->from = new ezcMailAddress( $emailSender, null, 'utf-8' );
         }
         $subject = $this->attribute( 'name' );
         if ( $tpl->hasVariable( 'subject' ) )
@@ -789,12 +785,7 @@ class eZNewsletter extends eZPersistentObject
         {
             return false;
         }
-        /*
-        $newsletterMailData[eZNewsletter::OutputFormatText] = $newsletter->generateNewsletter( eZNewsletter::OutputFormatText, $sendPreview );
-        $newsletterMailData[eZNewsletter::OutputFormatHTML] = $newsletter->generateNewsletter( eZNewsletter::OutputFormatHTML, $sendPreview );
-        $newsletterMailData[eZNewsletter::OutputFormatExternalHTML] = $newsletter->generateNewsletter( eZNewsletter::OutputFormatExternalHTML, $sendPreview );
-        $newsletterMailData[eZNewsletter::OutputFormatSMS] = $newsletter->generateNewsletter( eZNewsletter::OutputFormatSMS, $sendPreview );
-*/
+
         if ( $sendPreview )
         {
             // Fetch the draft because the object is not published during preview
@@ -804,17 +795,9 @@ class eZNewsletter extends eZPersistentObject
         {
             $contentObject = $newsletter->contentObject();
         }
-        $mail = $newsletter->generateNewsletter( $contentObject );
-        
-        $noMimeMessage = "This message is in MIME format. Since your mail reader does not understand\nthis format, some or all of this message may not be legible.";
-        $lineBreak = "\r\n";
         
         $partCounter = 0;
-        $boundary = date( "YmdGHjs" ) . ':' . getmypid() . ':' . $partCounter ++;
-        
-        $charset = eZTextCodec::internalCharset();
-        $contentTypeHtmlPart = "Content-Type: text/html; charset=$charset";
-        
+
         // 4. Go through revceivers, and send emails.
         if ( ! $sendPreview )
         {
@@ -826,11 +809,12 @@ class eZNewsletter extends eZPersistentObject
             {
                 foreach ( $receiverList as $receiver )
                 {
-                    $msgid = eZNewsletter::generateMessageId( $mail->from->toString(), $receiver->attribute( 'id' ), $idcounter ++, $hostSettings );
+                	$mail = $newsletter->generateNewsletter( $contentObject );
+                	
+                    $msgid = eZNewsletter::generateMessageId( $mail->from->email, $receiver->attribute( 'id' ), $idcounter ++, $hostSettings );
                     
                     $mail->messageId = $msgid;
                     
-                    $mail->build();
                     $userData = $receiver->attribute( 'user_data' );
                     if ( ! $userData )
                     {
@@ -844,7 +828,7 @@ class eZNewsletter extends eZPersistentObject
                     
                     //personalize if set in type
                     $newsletter_type = eZNewsletterType::fetch( $newsletter->attribute( 'newslettertype_id' ) );
-                    
+/*
                     if ( $newsletter_type->attribute( 'personalise' ) === '1' )
                     {
                         $mail->htmlText = eZNewsletter::personalize( $mail->htmlText, $userData, true );
@@ -855,17 +839,20 @@ class eZNewsletter extends eZPersistentObject
                         $mail->htmlText = eZNewsletter::personalize( $mail->htmlText, $userData, false );
                         $mail->plainText = eZNewsletter::personalize( $mail->plainText, $userData, false );
                     }
+*/
+                    $mail->to = array();
+                    $mail->addTo( new ezcMailAddress( $userData['email'], null, 'utf-8' ) );
                     
-                    $mail->addTo( new ezcMailAddress( $userData['email'] ) );
                     $mail->build();
+
                     $mailResult = eZNewsletterMailTransport::send( $mail, false );
+
                     $sendCount ++;
                     
                     $receiver->setAttribute( 'send_status', eZSendNewsletterItem::SendStatusSent );
                     $receiver->setAttribute( 'send_ts', time() );
                     $receiver->sync();
                 }
-                
             }
             return array( 
                 'sendCount' => $sendCount , 
@@ -874,6 +861,7 @@ class eZNewsletter extends eZPersistentObject
         }
         else
         {
+        	$mail = $newsletter->generateNewsletter( $contentObject );
             //send preview
             $msgid = eZNewsletter::generateMessageId( 'preview', 0, 0, $hostSettings );
             
@@ -909,7 +897,6 @@ class eZNewsletter extends eZPersistentObject
             $mail->build();
             
             $mailResult = eZNewsletterMailTransport::send( $mail, true );
-        
         }
     
     }

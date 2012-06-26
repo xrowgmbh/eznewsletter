@@ -502,6 +502,7 @@ class ezpMailComposer extends ezcMail
 
             $result = new ezcMailText( $this->htmlText, $this->charset, $this->encoding );
             $result->subType = "html";
+            
             if ( count( $matches ) > 0 )
             {
                 $htmlPart = $result;
@@ -513,6 +514,7 @@ class ezpMailComposer extends ezcMail
                 // when we replace the originals in the HTML message.
                 foreach ( $matches as $fileName )
                 {
+                	
                     if ( is_readable( $fileName ) )
                     {
                         // @todo waiting for fix of the fileinfo extension
@@ -539,6 +541,7 @@ class ezpMailComposer extends ezcMail
                         $cid = $result->addRelatedPart( $filePart );
                         // replace the original file reference with a reference to the cid
                         $this->htmlText = str_replace( 'file://' . $fileName, 'cid:' . $cid, $this->htmlText );
+                        
                     }
                     else
                     {

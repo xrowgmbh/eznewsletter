@@ -47,7 +47,7 @@ class eZNewsletterMailTransport
      Tries to send the contents of the email object \a $mail and
      returns \c true if succesful.
     */
-    function sendMail( ezcMail &$mail )
+    function sendMail( ezcMail $mail )
     {
         return false;
     }
@@ -70,12 +70,12 @@ class eZNewsletterMailTransport
             $transportClass = trim( $newsletterINI->variable( 'NewsletterSendout', 'Transport' ) );
         }
         
-        $transportObject = & $GLOBALS['eZMailTransportHandler_' . strtolower( $transportType )];
+        $transportObject = & $GLOBALS['eZMailTransportHandler_' . strtolower( $transportClass )];
         if ( ! isset( $transportObject ) or ! is_object( $transportObject ) )
         {     
             if ( ! class_exists( $transportClass ) )
             {
-                eZDebug::writeError( "No class available for mail transport type '$transportType', cannot send mail", 'eZNewsletterMailTransport::send' );
+                eZDebug::writeError( "No class available for mail transport '$transportClass', cannot send mail", 'eZNewsletterMailTransport::send' );
                 return false;
             }
             $transportObject = new $transportClass();

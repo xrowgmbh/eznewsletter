@@ -26,14 +26,16 @@
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
+
 /*! \file send_newsletter.php
 */
-set_time_limit(0);
+set_time_limit( 0 );
 
 // check if another instance of this script is already running and prevent execution if so
-$pidfilename = eZDir::cleanPath( eZSys::varDirectory().'/run/eznewsletter.pid' ); 
+$pidfilename = eZDir::cleanPath( eZSys::varDirectory() . '/run/eznewsletter.pid' );
 
-if( file_exists( $pidfilename ) ) {
+if ( file_exists( $pidfilename ) )
+{
     $pid = file_get_contents( $pidfilename );
     $cli->error( "A newsletter cronjob is already running." );
     $cli->error( "Please wait until the process (PID: $pid) is finished." );
@@ -41,14 +43,15 @@ if( file_exists( $pidfilename ) ) {
     exit();
 }
 
-if( false == file_exists( dirname( $pidfilename ) ) ) {
+if ( false == file_exists( dirname( $pidfilename ) ) )
+{
     eZDir::mkdir( dirname( $pidfilename ), false, true );
 }
 
-if( !is_writeable( dirname( $pidfilename ) ) )
+if ( ! is_writeable( dirname( $pidfilename ) ) )
 {
     $cli->error( "PID file not writeable ( {$pidfilename} ). Please add write access for cronjob." );
-    exit(1);
+    exit( 1 );
 }
 
 $pidfile = fopen( $pidfilename, 'w' );
@@ -57,9 +60,10 @@ fclose( $pidfile );
 
 // send newsletters
 
+
 $sendMailSettings = eZINI::instance( 'ezsendmailsettings.ini' );
 $newsletterSettings = eZINI::instance( 'eznewsletter.ini' );
-$newsletterContentClasses = $newsletterSettings->variable( 'NewsletterContentClasses', 'newsletterContentClassIdent');
+$newsletterContentClasses = $newsletterSettings->variable( 'NewsletterContentClasses', 'newsletterContentClassIdent' );
 $replaceMsgIDHost = $sendMailSettings->variable( 'SendNewsletter', 'ReplaceMessageIDHost' );
 $newSendHost = $sendMailSettings->variable( 'SendNewsletter', 'Host' );
 $hostSettings['replace'] = $replaceMsgIDHost;
@@ -68,7 +72,7 @@ $hostSettings['host'] = $newSendHost;
 $conditions = array();
 
 //pregeneration parameter
-if ( in_array('-pregeneration',$_SERVER['argv']) )
+if ( in_array( '-pregeneration', $_SERVER['argv'] ) )
 {
     //fetch only newsletter with send_date <= now + 1 hour
     $timestamp = time() + 3600;
@@ -79,22 +83,32 @@ else
     $timestamp = time();
 }
 
-$conditions = array_merge( $conditions, array( 'send_date' => array( '<=', $timestamp ) ) );
+$conditions = array_merge( $conditions, array( 
+    'send_date' => array( 
+        '<=' , 
+        $timestamp 
+    ) 
+) );
 
 //newslettertype parameter
-if ( in_array('-newslettertype',$_SERVER['argv']) )
+if ( in_array( '-newslettertype', $_SERVER['argv'] ) )
 {
     $key = array_search( '-newslettertype', $_SERVER['argv'] );
-    $newslettertype_id = $_SERVER['argv'][$key+1];
-
-    if ( is_numeric($newslettertype_id) && eZNewsletterType::fetch($newslettertype_id) )
+    $newslettertype_id = $_SERVER['argv'][$key + 1];
+    
+    if ( is_numeric( $newslettertype_id ) && eZNewsletterType::fetch( $newslettertype_id ) )
     {
-        $conditions = array_merge( $conditions, array( 'newslettertype_id' => array( '=', $newslettertype_id ) ) );
-        $cli->output( 'Filter for newslettertype <'.$newslettertype_id.'> enabled.' );
+        $conditions = array_merge( $conditions, array( 
+            'newslettertype_id' => array( 
+                '=' , 
+                $newslettertype_id 
+            ) 
+        ) );
+        $cli->output( 'Filter for newslettertype <' . $newslettertype_id . '> enabled.' );
     }
     else
     {
-        $cli->output( 'Invalid id of newslettertype <'.$newslettertype_id.'>!' );
+        $cli->output( 'Invalid id of newslettertype <' . $newslettertype_id . '>!' );
         eZExecution::cleanup();
         eZExecution::setCleanExit();
     }
@@ -102,14 +116,11 @@ if ( in_array('-newslettertype',$_SERVER['argv']) )
 
 // 2. Fetch all newsletters with status : eZNewsletter::SendStatusSending, and send date less than current TS.
 $cli->output( 'Fetching prepared newsletter...' );
-$newsletterArray = eZNewsletter::fetchListBySendStatus( eZNewsletter::SendStatusSending,
-                                                        eZNewsletter::StatusPublished,
-                                                        true,
-                                                        $conditions );
+$newsletterArray = eZNewsletter::fetchListBySendStatus( eZNewsletter::SendStatusSending, eZNewsletter::StatusPublished, true, $conditions );
 
-$cli->output( 'Found '.count( $newsletterArray ).' newsletter.' );
+$cli->output( 'Found ' . count( $newsletterArray ) . ' newsletter.' );
 
-if( 0 === count( $newsletterArray ) )
+if ( 0 === count( $newsletterArray ) )
 {
     $cli->output( 'Nothing to send.' );
 }
@@ -118,54 +129,18 @@ else
     $cli->output( 'Sending newsletter...' );
 }
 
-foreach( $newsletterArray as $newsletter )
+foreach ( $newsletterArray as $newsletter )
 {
-    /*TODO 
-    *
-    * otimize fetch for related objects
-    *
-    */
-
-    $hasObjectRelations = false;
-
-    if( is_object( $newsletter ) && $newsletter->attribute( 'status' ) == '1' )
-    {
-        $objectRelations = $newsletter->attribute('object_relations');
-        $objectRelationArray = split( '/', $objectRelations );
-                
-        foreach( $objectRelationArray as $objectRelation )
-        {
-            if( is_numeric( $objectRelation ) && eZContentObject::exists( $objectRelation ) )
-            {
-                $relatedObject = eZContentObject::fetch( $objectRelation );
-                if( is_object( $relatedObject ) )
-                {
-                    if( in_array( $relatedObject->attribute( 'class_identifier' ), $newsletterContentClasses ) && $relatedObject->attribute( 'status' ) == '1' )
-                    {
-                        $hasObjectRelations = true;
-                    }
-                }
-            }
-        }
-        if( $hasObjectRelations == false )
-        {
-            $cli->output( 'The newsletter issue " '.$newsletter->attribute( 'name' ).' ( ID: '.$newsletter->attribute( 'id' ).' ) " has no content. Please add a topic to send the newsletter out.' );
-            $newsletter->setAttribute( 'send_status', eZNewsletter::SendStatusStopped);
-            $newsletter->sync();
-        }
-        else
-        {
-            $cli->output( 'Sending messages for '.$newsletter->attribute( 'name' ) );
-            $statistics = eZNewsletter::sendNewsletterMail( $newsletter );
-            $newsletter->setAttribute( 'send_status', eZNewsletter::SendStatusFinished );
-            $newsletter->sync();
-            $cli->output( 'Sent ' . $statistics['sendCount'] . ' ( skipped:' . $statistics['skipCount'] . ' )' . ' messages for newsletter : ' . $newsletter->attribute( 'name' ) );
-        }
-    }
+    $cli->output( 'Sending messages for ' . $newsletter->attribute( 'name' ) );
+    $statistics = eZNewsletter::sendNewsletterMail( $newsletter );
+    $newsletter->setAttribute( 'send_status', eZNewsletter::SendStatusFinished );
+    $newsletter->sync();
+    $cli->output( 'Sent ' . $statistics['sendCount'] . ' ( skipped:' . $statistics['skipCount'] . ' )' . ' messages for newsletter : ' . $newsletter->attribute( 'name' ) );
 }
 
 // remove pid file to unlock cronjob
-if( file_exists( $pidfilename ) ) {
+if ( file_exists( $pidfilename ) )
+{
     unlink( $pidfilename );
 }
 ?>
