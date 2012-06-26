@@ -49,7 +49,7 @@ class eZNewsletterFileTransport extends eZNewsletterMailTransport
     /*!
      \reimp
     */
-    function sendMail( &$mail )
+    function sendMail( ezcMail $mail )
     {
         $ini = eZINI::instance();
         $emailFrom = $mail->sender();
