@@ -653,7 +653,7 @@ class eZNewsletter extends eZPersistentObject
             $skin_prefix = 'eznewsletter';
         }
 
-        $mail = new ezpMailComposer( $options );
+        $mail = new ezpMailComposer();
         $mail->charset = 'utf-8';
         $tpl = eZTemplate::factory();
         $tpl->setVariable( 'hostname', $hostname );
@@ -687,7 +687,7 @@ class eZNewsletter extends eZPersistentObject
             $subject = $tpl->variable( 'subject' );
         }
         $mail->subject = $subject;
-        $mail->subjectCharset = 'UTF-8';
+        $mail->subjectCharset = 'utf-8';
         
         if ( preg_match_all( '/(<img)\s (src="\/([a-zA-Z0-9-\.;:!\/\?&=_|\r|\n]{1,})")/isxmU', $mail->htmlText, $patterns ) )
         {
@@ -700,37 +700,6 @@ class eZNewsletter extends eZPersistentObject
             }
         }
         return $mail;
-    }
-
-    /*!
-     \static
-     Personalize email based on import parameters
-    */
-    static function personalize( $newsletterMail, $userData, $enabled = true )
-    {
-        $returnResult = array();
-        $matchArray = array();
-
-        foreach( $userData as $key => $value )
-        {
-            if ( ( $enabled === false ) and ( $key === 'name') ) {
-                $matchArray['[' . $key . ']'] = '';
-            }
-            else
-            {
-                $matchArray['[' . $key . ']'] = $value;
-            }
-        }
-
-        foreach( $newsletterMail as $key => $value )
-        {
-            if( !is_object( $value ) )
-            {
-                $returnResult[$key] = str_replace( array_keys( $matchArray ), array_values( $matchArray ), $value );
-            }
-        }
-
-        return $returnResult;
     }
 
     /*!
@@ -773,10 +742,7 @@ class eZNewsletter extends eZPersistentObject
     static function sendNewsletterMail( eZNewsletter $newsletter, $sendPreview = false )
     {
         $sendMailSettings = eZINI::instance( 'ezsendmailsettings.ini' );
-        $replaceMsgIDHost = $sendMailSettings->variable( 'SendNewsletter', 'ReplaceMessageIDHost' );
-        $newSendHost = $sendMailSettings->variable( 'SendNewsletter', 'Host' );
-        $hostSettings['replace'] = $replaceMsgIDHost;
-        $hostSettings['host'] = $newSendHost;
+        $hostname = $sendMailSettings->variable( 'SendNewsletter', 'Host' );
         
         $sys = eZSys::instance();
         
@@ -795,6 +761,7 @@ class eZNewsletter extends eZPersistentObject
         {
             $contentObject = $newsletter->contentObject();
         }
+        $mailTemplate = $newsletter->generateNewsletter( $contentObject );
         
         $partCounter = 0;
 
@@ -809,12 +776,7 @@ class eZNewsletter extends eZPersistentObject
             {
                 foreach ( $receiverList as $receiver )
                 {
-                	$mail = $newsletter->generateNewsletter( $contentObject );
-                	
-                    $msgid = eZNewsletter::generateMessageId( $mail->from->email, $receiver->attribute( 'id' ), $idcounter ++, $hostSettings );
-                    
-                    $mail->messageId = $msgid;
-                    
+                    $mail = clone $mailTemplate;
                     $userData = $receiver->attribute( 'user_data' );
                     if ( ! $userData )
                     {
@@ -828,31 +790,27 @@ class eZNewsletter extends eZPersistentObject
                     
                     //personalize if set in type
                     $newsletter_type = eZNewsletterType::fetch( $newsletter->attribute( 'newslettertype_id' ) );
-/*
+                    
                     if ( $newsletter_type->attribute( 'personalise' ) === '1' )
                     {
-                        $mail->htmlText = eZNewsletter::personalize( $mail->htmlText, $userData, true );
-                        $mail->plainText = eZNewsletter::personalize( $mail->plainText, $userData, true );
+                        $mail->personalize( $userData, true );
                     }
                     else
                     {
-                        $mail->htmlText = eZNewsletter::personalize( $mail->htmlText, $userData, false );
-                        $mail->plainText = eZNewsletter::personalize( $mail->plainText, $userData, false );
+                        $mail->personalize( $userData, false );
                     }
-*/
+                    $mail->generateMessageId( $newsletter->attribute( 'id' ) . '.' . $receiver->attribute( 'id' ) );
                     $mail->to = array();
                     $mail->addTo( new ezcMailAddress( $userData['email'], null, 'utf-8' ) );
-                    
                     $mail->build();
-
                     $mailResult = eZNewsletterMailTransport::send( $mail, false );
-
                     $sendCount ++;
                     
                     $receiver->setAttribute( 'send_status', eZSendNewsletterItem::SendStatusSent );
                     $receiver->setAttribute( 'send_ts', time() );
                     $receiver->sync();
                 }
+                
             }
             return array( 
                 'sendCount' => $sendCount , 
@@ -861,28 +819,24 @@ class eZNewsletter extends eZPersistentObject
         }
         else
         {
-        	$mail = $newsletter->generateNewsletter( $contentObject );
+            $mail = clone $mailTemplate;
             //send preview
-            $msgid = eZNewsletter::generateMessageId( 'preview', 0, 0, $hostSettings );
             
             $user = eZUser::currentUser();
             $userObject = $user->attribute( 'contentobject' );
             
             //personalize if set in type
             $newsletter_type = eZNewsletterType::fetch( $newsletter->attribute( 'newslettertype_id' ) );
-            
+
             if ( $newsletter_type->attribute( 'personalise' ) === '1' )
             {
-                $newsletterMail = $newsletter->personalize( $mail->htmlText, array( 
-                    'name' => $userObject->attribute( 'name' ) 
-                ), true );
-                $newsletterMail = $newsletter->personalize( $mail->plainText, array( 
+                $mail->personalize( array( 
                     'name' => $userObject->attribute( 'name' ) 
                 ), true );
             }
             else
             {
-                $newsletterMail = $newsletter->personalize( $mail->htmlText, array( 
+                $mail->personalize( array( 
                     'name' => $userObject->attribute( 'name' ) 
                 ), false );
                 $newsletterMail = $newsletter->personalize( $mail->plainText, array( 
@@ -892,30 +846,11 @@ class eZNewsletter extends eZPersistentObject
             
             $mail->addTo( new ezcMailAddress( $newsletter->attribute( 'preview_email' ) ) );
             
-            $mail->messageId = $msgid;
-            
             $mail->build();
             
             $mailResult = eZNewsletterMailTransport::send( $mail, true );
         }
     
-    }
-
-    static function generateMessageId( $hostname, $newsletter_id, $count = 0, $params = null )
-    {
-        if ( isset( $params['replace'] ) && $params['replace'] && $params['replace'] == 'enabled' && isset( $params['host'] ) && count( $params['host'] > 0 ) )
-        {
-            $msgidhost = '@' . $params['host'];
-        }
-        else if ( strpos( $hostname, '@' ) !== false )
-        {
-            $msgidhost = strstr( $hostname, '@' );
-        }
-        else
-        {
-            $msgidhost = '@' . $hostname;
-        }
-        return '<' . $newsletter_id . '.' . date( 'YmdGHjs' ) . '.' . getmypid() . '.' . $count . $msgidhost . '>';
     }
 
     function copy( $frontendcopy = false )
