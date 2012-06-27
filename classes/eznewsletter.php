@@ -661,9 +661,9 @@ class eZNewsletter extends eZPersistentObject
         $tpl->setVariable( 'newsletter', $this );
         
         $mail->plainText = $tpl->fetch( 'design:' . $skin_prefix . '/sendout/text.tpl' );
-        
+        $mail->plainText = preg_replace('/(\r\n|\r|\n)/', "\r\n", $mail->plainText);
         $mail->htmlText = $tpl->fetch( 'design:' . $skin_prefix . '/sendout/html.tpl' );
-        
+        $mail->htmlText = preg_replace('/(\r\n|\r|\n)/', "\r\n", $mail->htmlText);
         if ( $tpl->hasVariable( 'attachments' ) )
         {
             foreach ( $tpl->hasVariable( 'attachments' ) as $attachment )

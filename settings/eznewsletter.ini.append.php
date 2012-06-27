@@ -18,6 +18,8 @@ autoMapping=disabled
 #
 #Transport class for preview sendout
 PreviewTransport=eZNewsletterSendmailTransport
+#PreviewTransport=eZNewsletterFileTransport
+#PreviewTransport=eZNewsletterSMTPTransport
 #Transport class for newsletter sendout via cronjob
 Transport=eZNewsletterSendmailTransport
 

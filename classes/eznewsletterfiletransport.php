@@ -39,66 +39,40 @@
 
 class eZNewsletterFileTransport extends eZNewsletterMailTransport
 {
-    /*!
-     Constructor
-    */
-    function __construct()
-    {
-    }
-
-    /*!
-     \reimp
-    */
     function sendMail( ezcMail $mail )
     {
-        $ini = eZINI::instance();
-        $emailFrom = $mail->sender();
-        $emailSender = $emailFrom['email'];
-        if ( !$emailSender || count( $emailSender) <= 0 )
-            $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
-        if ( !$emailSender )
-            $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
-        if ( !eZNewsletterMail::validate( $emailSender ) )
-            $emailSender = false;
-        $isSafeMode = ini_get( 'safe_mode' );
-        if ( $isSafeMode and
-             $emailSender and
-             $mail->sender() == false )
-            $mail->setSenderText( $emailSender );
-        $message = $mail->body();
-        $extraHeaders = $mail->headerText( array( 'exclude-headers' => array( 'To', 'Subject', 'content-transfer-encoding',  'content-disposition' ) ) );
-        
-    if ( $isSafeMode or !$emailSender )
-    {
-            return $this->createFile( $mail->receiverEmailText(), $mail->subject(), $message, $extraHeaders );
-        }
-    else
+
+        $mail->appendExcludeHeaders( array( 'to', 'subject' ) );
+        $headers = rtrim( $mail->generateHeaders() ); // rtrim removes the linebreak at the end, mail doesn't want it.
+
+        if ( ( count( $mail->to ) + count( $mail->cc ) + count( $mail->bcc ) ) < 1 )
         {
-        return $this->createFile( $mail->receiverEmailText(), $mail->subject(), $message, $extraHeaders, $emailSender );
-    }
-    }
-    
-    function createFile($reciever, $subject, $message, $extraHeaders, $emailSender=false)
-    {
+            throw new ezcMailTransportException( 'No recipient addresses found in message header.' );
+        }
+        $additionalParameters = "";
+        if ( isset( $mail->returnPath ) )
+        {
+            $additionalParameters = "-f{$mail->returnPath->email}";
+        }
         $sys = eZSys::instance();
-        $lineBreak =  ($sys->osType() == 'win32' ? "\r\n" : "\n" );
-        $separator =  ($sys->osType() == 'win32' ? "\\" : "/" );
 
         $fname = time().'-'.rand().'.mail';
         $qdir = eZSys::siteDir().eZSys::varDirectory().$separator.'mailq';
 
-        $data = $extraHeaders.$lineBreak;
-        $data .= "Return-Path: <".$emailSender.">".$lineBreak;
-        $data .= "To: ".$reciever.$lineBreak;
-        $data .= "Subject: ".$subject.$lineBreak;
-        //$data .= "From: ".$emailSender.$lineBreak;
-        $data .=  $lineBreak;
-        $data .= $message;
+        $data = $headers.ezcMailTools::lineBreak();
+        #$data .= "Return-Path: ". ezcMailTools::composeEmailAddresses($mail->from) .ezcMailTools::lineBreak();
+        #$data .= "To: ".ezcMailTools::composeEmailAddresses($mail->to).ezcMailTools::lineBreak();
+        #$data .= "Subject: ". $mail->subject . ezcMailTools::lineBreak();
+
+        $data .= ezcMailTools::lineBreak();
+        $data .= $mail->generateBody();
 
         $data = preg_replace('/(\r\n|\r|\n)/', "\r\n", $data);
 
-        eZFile::create($fname, $qdir, $data);
+        $success = eZFile::create($fname, $qdir, $data);
+        if ( $success === false )
+        {
+            throw new ezcMailTransportException( 'The email could not be sent by sendmail' );
+        }
     }
 }
-
-?>
