@@ -1,17 +1,16 @@
 <?php
-define( "EZ_WORKFLOW_TYPE_IMPORTNEWSLETTER_ID", "importnewsletter" );
-
-include_once( eZExtension::baseDirectory() . '/eznewsletter/classes/eznewsletter.php' );
 
 class ImportNewsletterType extends eZWorkflowEventType
 {
+    const WORKFLOW_TYPE_STRING = "importnewsletter";
     function ImportNewsletterType()
     {
-    	$this->eZWorkflowEventType( EZ_WORKFLOW_TYPE_IMPORTNEWSLETTER_ID, ezi18n( 'newsletteraddon/event', 'Newsletter import event' ));
+    	$this->eZWorkflowEventType( ImportNewsletterType::WORKFLOW_TYPE_STRING, ezi18n( 'newsletteraddon/event', 'Newsletter import event' ));
     	$this->setTriggerTypes( array( 'content' => array( 'publish' => array( 'after' ) ) ) );
     }
-    function execute( &$process, &$event )
+    function execute( $process, $event )
     {
+
         $parameters = $process->attribute( 'parameter_list' );
         $co = eZContentObject::fetch( $parameters['object_id'] );
         $parent = eZContentObjectTreeNode::fetch( $co->attribute( 'main_parent_node_id' ) );
@@ -33,8 +32,9 @@ class ImportNewsletterType extends eZWorkflowEventType
             $newsletter->store();
             $newsletter->publish();
         }
-    	return EZ_WORKFLOW_TYPE_STATUS_ACCEPTED;
+    	return eZWorkflowType::STATUS_ACCEPTED;
     }
 }
-eZWorkflowEventType::registerType( EZ_WORKFLOW_TYPE_IMPORTNEWSLETTER_ID, 'importnewslettertype' );
+eZWorkflowEventType::registerEventType( ImportNewsletterType::WORKFLOW_TYPE_STRING, "ImportNewsletterType" );
+
 ?>
