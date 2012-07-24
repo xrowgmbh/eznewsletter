@@ -30,3 +30,16 @@ Notes
 =====
 - In near future its planned that the Bouncemanagement and Listmanagement will be seperated for more modularity.
 - Improvements in listmanagement and imports are planned
+
+
+Hints
+========
+Sample AWS connection settigns
+
+[MailSettings]
+Transport=smtp
+TransportServer=email-smtp.us-east-1.amazonaws.com
+TransportUser=AKIAJTNKM????
+TransportPassword=Ao20CCrJucirJ+??????
+TransportConnectionType=ssl
+TransportPort=465

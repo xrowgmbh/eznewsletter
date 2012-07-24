@@ -659,11 +659,26 @@ class eZNewsletter extends eZPersistentObject
         $tpl->setVariable( 'hostname', $hostname );
         $tpl->setVariable( 'contentobject', $contentObject );
         $tpl->setVariable( 'newsletter', $this );
+        $tpl->setVariable( 'SkipMIMEPart', false );
         
         $mail->plainText = $tpl->fetch( 'design:' . $skin_prefix . '/sendout/text.tpl' );
-        $mail->plainText = preg_replace('/(\r\n|\r|\n)/', "\r\n", $mail->plainText);
-        $mail->htmlText = $tpl->fetch( 'design:' . $skin_prefix . '/sendout/html.tpl' );
-        $mail->htmlText = preg_replace('/(\r\n|\r|\n)/', "\r\n", $mail->htmlText);
+        $mail->plainText = rtrim( preg_replace('/(\r\n|\r|\n)/', "\r\n", $mail->plainText) );
+        
+        
+        if ( $tpl->hasVariable( 'SkipMIMEPart' ) && $tpl->variable( 'SkipMIMEPart' ) === true )
+        {
+            $mail->plainText = null;
+        }
+        
+        $tpl->setVariable( 'SkipMIMEPart', false );
+        $mail->htmlText = $tpl->fetch( 'design:' . $skin_prefix . '/sendout/html.tpl' ).'<img src="/var/ezflow_site/storage/images/hello/188-1-ger-DE/Hello_medium.jpg" />';
+        $mail->htmlText = rtrim( preg_replace('/(\r\n|\r|\n)/', "\r\n", $mail->htmlText) );
+
+        if ( $tpl->hasVariable( 'SkipMIMEPart' ) && $tpl->variable( 'SkipMIMEPart' ) === true )
+        {
+            $mail->htmlText = null;
+        }
+
         if ( $tpl->hasVariable( 'attachments' ) )
         {
             foreach ( $tpl->hasVariable( 'attachments' ) as $attachment )

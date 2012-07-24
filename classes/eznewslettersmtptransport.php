@@ -60,9 +60,7 @@ class eZNewsletterSMTPTransport extends eZNewsletterMailTransport
         {
             $options->connectionType = $parameters['connectionType'];
         }
-        
-        $mail->build(); 
-        
+
         $smtp = new ezcMailSmtpTransport( $parameters['host'], $user, $password, $parameters['port'], $options );
 
         try
