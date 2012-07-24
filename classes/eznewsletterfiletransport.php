@@ -41,7 +41,7 @@ class eZNewsletterFileTransport extends eZNewsletterMailTransport
 {
     function sendMail( ezcMail $mail )
     {
-
+		$separator = "/";
         $mail->appendExcludeHeaders( array( 'to', 'subject' ) );
         $headers = rtrim( $mail->generateHeaders() ); // rtrim removes the linebreak at the end, mail doesn't want it.
 

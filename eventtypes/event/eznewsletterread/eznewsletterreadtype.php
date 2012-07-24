@@ -50,7 +50,7 @@ class eZNewsletterReadType extends eZWorkflowEventType
         $user = eZUser::currentUser();
         if ( $user->isLoggedIn() )
         {
-            return EZ_WORKFLOW_TYPE_STATUS_ACCEPTED;
+            return eZWorkflowType::STATUS_ACCEPTED;
         }
         $http = eZHTTPTool::instance();
 
@@ -60,7 +60,7 @@ class eZNewsletterReadType extends eZWorkflowEventType
         $node = eZContentObjectTreeNode::fetch( $nodeID );
         if ( !$node )
         {
-            return EZ_WORKFLOW_TYPE_STATUS_REJECTED;
+            return eZWorkflowType::STATUS_REJECTED;
         }
         $objectID = $node->attribute( 'contentobject_id' );
 
@@ -80,21 +80,21 @@ class eZNewsletterReadType extends eZWorkflowEventType
                 $sendItem = eZSendNewsletterItem::fetch( $sendID );
                 $sendItem->addObjectRead( $objectID );
 
-                return EZ_WORKFLOW_TYPE_STATUS_ACCEPTED;
+                return eZWorkflowType::STATUS_ACCEPTED;
             }
         }
 
         // Get send item, and check that is contains the object id.
         if ( !$sendItem )
         {
-            return EZ_WORKFLOW_TYPE_STATUS_REJECTED;
+            return eZWorkflowType::STATUS_REJECTED;
         }
         $sendItemIDList = $sendItem->attribute( 'newsletter_related_object_list' );
 
         if ( !$sendItemIDList ||
              !in_array( $objectID, $sendItemIDList ) )
         {
-            return EZ_WORKFLOW_TYPE_STATUS_REJECTED;
+            return eZWorkflowType::STATUS_REJECTED;
         }
 
         $sendNodeIDArray = array();
@@ -118,7 +118,7 @@ class eZNewsletterReadType extends eZWorkflowEventType
         // Add object read
         $sendItem->addObjectRead( $objectID );
 
-        return EZ_WORKFLOW_TYPE_STATUS_ACCEPTED;
+        return eZWorkflowType::STATUS_ACCEPTED;
     }
 }
 
