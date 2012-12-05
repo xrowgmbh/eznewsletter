@@ -130,7 +130,7 @@ class eZSubscriptionList extends eZPersistentObject
                       'increment_key' => 'id',
                       'function_attributes' =>
                             array( 'creator'            => 'creator',
-                                   'subscription_count' => 'countAll',
+                                   'subscription_count' => 'subscriptionCount',
                                    'related_object_1'   => 'relatedObject1',
                                    'related_object_2'   => 'relatedObject2',
                                    'related_object_3'   => 'relatedObject3',
@@ -565,12 +565,12 @@ class eZSubscriptionList extends eZPersistentObject
     */
     static function fetchList( $offset = 0, $limit = 10, $asObject = true, $status = eZSubscriptionList::StatusPublished, $useFilter = false )
     {
-	$custom_conds = null;
-	if( $useFilter )
-	{
-	    $currentAccessArray = $GLOBALS['eZCurrentAccess'];
-	    $custom_conds = 'AND allowed_siteaccesses LIKE \'%'.$currentAccessArray['name'].'%\'';
-	}
+		$custom_conds = null;
+		if( $useFilter )
+		{
+		    $currentAccessArray = $GLOBALS['eZCurrentAccess'];
+		    $custom_conds = 'AND allowed_siteaccesses LIKE \'%'.$currentAccessArray['name'].'%\'';
+		}
 
         return eZPersistentObject::fetchObjectList( eZSubscriptionList::definition(),
                                                     null,
@@ -634,7 +634,7 @@ class eZSubscriptionList extends eZPersistentObject
 
     /*!
      \static
-     Get subscription list count
+     Fetches the subscription list amount
      \return eZSubscriptionList count
     */
     static function countAll( $status = eZSubscriptionList::StatusPublished, $useFilter = false )
@@ -657,6 +657,15 @@ class eZSubscriptionList extends eZPersistentObject
                                                      null,
                                                      $custom_conds );
         return $rows[0]['count'];
+    }
+    
+	/*!
+     Get number of subscribers
+    */
+    function subscriptionCount()
+    {
+        $count = eZSubscription::count( $this->attribute( 'id' ) );
+        return $count;
     }
 
     /*!
