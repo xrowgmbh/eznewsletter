@@ -714,6 +714,12 @@ class eZNewsletter extends eZPersistentObject
                 }
             }
         }
+        
+        //setting the reply-to head from site.ini
+        if ( $ini->variable( 'MailSettings', 'EmailReplyTo' ) != "" )
+        {
+        	$mail->setHeader( 'Reply-To', $ini->variable( 'MailSettings', 'EmailReplyTo' ) );
+        }
         return $mail;
     }
 
