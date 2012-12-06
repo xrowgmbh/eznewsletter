@@ -63,22 +63,25 @@
 {if $bounceCount|lt(1)}
 <tr><td>&nbsp;</td><td>{'No bounces detected'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 {else}
-{foreach $bounce_data_array as $bounceEntry
-         sequence array( bglight, bgdark ) as $seq}
-<tr class="{$seq}">
-    <td class="number" align="right"><input type="checkbox" name="BounceIDArray[]" value="{$bounceEntry.id}" title="{'Select bounce to clear bounce entry.'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}" /></td>
-    <td>{$bounceEntry.id|wash}</td>
-    <td>{$bounceEntry.newsletter_name|wash}</td>
-    <td>{$bounceEntry.address|wash}</td>
-    <td class="number">{$bounceEntry.bounce_count|wash}</td>
-    <td>{$bounceTypes[$bounceEntry.bounce_type]|wash}</td>
-    <td>{$bounceEntry.bounce_arrived|l10n( shortdatetime )}</td>
-         {if $bounceEntry.newslettersenditem_id|eq(0)|not}
-	    <td><a href={concat( 'newsletter/list_bounce/all/', $bounceEntry.newslettersenditem_id, '/' )|ezurl}><img src={'edit.gif'|ezimage}</a></td>
-         {else} 
-    	    <td>&nbsp;</td>
-	{/if}
-    </tr>
+{foreach $bounce_data_array as $bounceEntry sequence array( bglight, bgdark ) as $seq}
+	<tr class="{$seq}">
+	    <td class="number" align="right"><input type="checkbox" name="BounceIDArray[]" value="{$bounceEntry.id}" title="{'Select bounce to clear bounce entry.'|i18n( 'design/eznewsletter/list_newsletter_bounce' )}" /></td>
+	    <td>{$bounceEntry.id|wash}</td>
+	    <td>{$bounceEntry.newsletter_name|wash}</td>
+	    <td>{$bounceEntry.address|wash}</td>
+	    <td class="number">{$bounceEntry.bounce_count|wash}</td>
+	    <td>{$bounceTypes[$bounceEntry.bounce_type]|wash}</td>
+	    <td>{$bounceEntry.bounce_arrived|l10n( shortdatetime )}</td>
+	    {if $bounceEntry.newslettersenditem_id|eq(0)|not}
+		    <td>
+		    	<a href={concat( 'newsletter/list_bounce/all/', $bounceEntry.newslettersenditem_id, '/' )|ezurl()}>
+		    		<img src={'edit.gif'|ezimage()} />
+		    	</a>
+		    </td>
+	    {else} 
+	    	<td>&nbsp;</td>
+		{/if}
+	</tr>
 {/foreach}
 {/if}
 

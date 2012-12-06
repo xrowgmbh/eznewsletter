@@ -59,18 +59,17 @@
 </tr>
 
 {if $onHoldCount|lt(1)}
-<tr><td>&nbsp;</td><td>{'No messages on hold detected'|i18n( 'design/eznewsletter/list_newsletter_onhold' )}</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr><td>&nbsp;</td><td>{'No messages on hold detected'|i18n( 'design/eznewsletter/list_newsletter_onhold' )}</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 {else}
-{foreach $onhold_items as $onHoldEntry
-         sequence array( bglight, bgdark ) as $seq}
-<tr class="{$seq}">
-    <td class="number" align="right"><input type="checkbox" name="OnHoldIDArray[]" value="{$onHoldEntry.id}" title="{'Select an iten on hold to delete the scheduled sendout.'|i18n( 'design/eznewsletter/list_newsletter_onhold' )}" /></td>
-    <td>{$onHoldEntry.id|wash}</td>
-    <td>{$onHoldEntry.newsletter.name|wash}</td>
-    <td>{$onHoldEntry.user_data.email|wash}</td>
-    <td>{$onHoldEntry.user_data.name|wash}</td>
-    <td><a href={concat( 'newsletter/list_bounce/onhold/', $onHoldEntry.id, '/' )|ezurl}><img src={'edit.gif'|ezimage}</a></td>
-    </tr>
+{foreach $onhold_items as $onHoldEntry sequence array( bglight, bgdark ) as $seq}
+	<tr class="{$seq}">
+	    <td class="number" align="right"><input type="checkbox" name="OnHoldIDArray[]" value="{$onHoldEntry.id}" title="{'Select an iten on hold to delete the scheduled sendout.'|i18n( 'design/eznewsletter/list_newsletter_onhold' )}" /></td>
+	    <td>{$onHoldEntry.id|wash}</td>
+	    <td>{$onHoldEntry.newsletter.name|wash}</td>
+	    <td>{$onHoldEntry.user_data.email|wash}</td>
+	    <td>{$onHoldEntry.user_data.name|wash}</td>
+	    <td><a href={concat( 'newsletter/list_bounce/onhold/', $onHoldEntry.id, '/' )|ezurl}><img src={'edit.gif'|ezimage} /></a></td>
+	</tr>
 {/foreach}
 {/if}
 
