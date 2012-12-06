@@ -59,7 +59,6 @@ class eZSubscription extends eZPersistentObject
     function __construct( $row )
     {
         parent::__construct( $row );
-        #$this->eZPersistentObject( $row );
     }
 
     static function definition()
@@ -509,7 +508,10 @@ class eZSubscription extends eZPersistentObject
     function removeDraft()
     {
         $subscriptionDraft = eZSubscription::fetchDraft( $this->attribute( 'id' ) );
-        $subscriptionDraft->remove();
+    	if( $subscriptionListDraft )
+        {
+            $subscriptionListDraft->remove();
+        }
     }
 
     /*!
@@ -559,25 +561,20 @@ class eZSubscription extends eZPersistentObject
         else
         {
             $userData = eZUserSubscriptionData::fetch( $email );
-            if ( !$userData )
+            if ( !$userData && $email )
             {
                  eZUserSubscriptionData::create( $firstname,
                                                  $name,
                                                  $mobile,
                                                  $email );
-
-                 $subscription = new eZSubscription( $rows );
-                 $subscription->store();
-	    }	
-            else
-		{	
-			$subscription = new eZSubscription( $rows );
-			$subscription->store();
-		}
+	    	}
+        }	
+         
+        $subscription = new eZSubscription( $rows );
+        $subscription->store();
 
 	    return $subscription;
            
-	}
 }
     /*!
      Fetch by hash
