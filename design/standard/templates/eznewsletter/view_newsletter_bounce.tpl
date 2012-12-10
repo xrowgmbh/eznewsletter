@@ -35,7 +35,7 @@
 
 <div class="element">
 <label>{'Subscription ID'|i18n( 'design/eznewsletter/view_newsletter_bounce' )}</label>
-{$sendnewsletteritem_bounced.subscription_id|wash}
+{$sendnewsletteritem_bounced.subscription_id|wash()} (<a href={concat("/newsletter/edit_subscription/", $sendnewsletteritem_bounced.subscription_id)|ezurl()}">{'edit'|i18n( 'design/eznewsletter/view_newsletter_bounce' )}</a>)
 </div>
 
 <div class="element">
@@ -69,6 +69,7 @@
 </div>
 {/if}
 
+{*
 {if $subscription_object}
 <div class="block">
 <h3>{'Subscription data:'|i18n( 'design/eznewsletter/view_newsletter_bounce' )}</h3>
@@ -100,6 +101,7 @@
 </form>
 </div>
 {/if}
+*}
 {* DESIGN: Content END *}</div></div></div>
 
 {* Buttons. *}

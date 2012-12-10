@@ -33,7 +33,7 @@ $baseDir = "$base/$extension/classes/";
 
 $http = eZHTTPTool::instance();
 $Module = $Params['Module'];
-
+$db = eZDB::instance();
 
 $userParameters = $Params['UserParameters'];
 $offset = isset( $userParameters['offset'] ) ? $userParameters['offset'] : 0;
@@ -110,7 +110,6 @@ switch( $mode )
         {
             $onHoldEntryIDArray = $http->sessionVariable( 'OnHoldIDArray' );
 
-            $db = eZDB::instance();
             $db->begin();
             if( count( $onHoldEntryIDArray ) > 0 )
             {
@@ -141,14 +140,14 @@ switch( $mode )
     case 'all':
     default:
     {
-
         $bounceID = $Params['BounceID'];
         $sendItemBounced = eZSendNewsletterItem::fetch( $bounceID );
 
-        if ( $sendItemBounced )
+        if ( $sendItemBounced)
         {
-
+        	
             $bounceObject = eZBounce::fetchBySendItemID($bounceID);
+            
             $tpl->setVariable( 'bounce_object', $bounceObject );
             $tpl->setVariable( 'sendnewsletteritem_bounced', $sendItemBounced );
             $subscriptionObject = eZSubscription::fetch( $sendItemBounced->attribute( 'subscription_id' ) );
@@ -158,13 +157,6 @@ switch( $mode )
             }
             $tpl->setVariable( 'statusNames', eZSubscription::statusNameMap() );
 
-            if( $http->hasPostVariable( 'EditButton' )  && $http->hasPostVariable( 'NewSubscriptionStatus' ) )
-            {
-                $subscriptionObject->setAttribute( 'status', $http->postVariable( 'NewSubscriptionStatus' ) );
-                $subscriptionObject->store();
-                $Module->redirectToView( 'list_bounce', array( $bounceID ) );
-            }
-
             $Result = array();
             $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
             $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
@@ -173,9 +165,30 @@ switch( $mode )
                                             'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'View newsletter bounce entry' ) ) );
             return;
         }
+        else if( $http->hasPostVariable( 'EditButton' ) && $http->hasPostVariable( 'NewSubscriptionStatus' ) &&  $http->hasPostVariable( 'SubscriptionID' ))
+        {
+        		$subscriptionObject = eZSubscription::fetch( $http->postVariable( 'SubscriptionID' ) );
+                $subscriptionObject->setAttribute( 'status', $http->postVariable( 'NewSubscriptionStatus' ) );
+                $subscriptionObject->store();
+        }
         else if ( $http->hasPostVariable( 'RemoveBounceEntryButton' ) )
         {
-            $bounceEntryIDArray = $http->postVariable( 'BounceIDArray' );
+        	if ($http->hasPostVariable( 'MailArray' ))
+        	{
+        		$bounceEntryIDArray = array();
+        		foreach ($http->postVariable( 'MailArray' ) as $mail)
+        		{
+        			foreach (eZBounce::fetchListByAddress($mail) as $bounce)
+        			{
+        				array_push($bounceEntryIDArray, $bounce->ID);
+        			}
+        		}
+        	}
+        	else
+        	{
+        		$bounceEntryIDArray = $http->postVariable( 'BounceIDArray' );
+        	}
+            
             $http->setSessionVariable( 'BounceIDArray', $bounceEntryIDArray );
             $bounces = array();
 
@@ -196,6 +209,52 @@ switch( $mode )
                                             'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Newsletter types' ) ) );
             return;
         }
+        else if ( $http->hasPostVariable( 'RemoveAndUnSubscribeButton' ) )
+        {  
+        	if ($http->hasPostVariable( 'MailArray' ))
+        	{
+        		foreach ($http->postVariable( 'MailArray' ) as $mail)
+        		{
+        			foreach (eZBounce::fetchListByAddress($mail) as $bounce)
+        			{
+                    	$bounces[] = eZBounce::fetch( $bounce->ID );
+        			}
+        		}
+        	}
+            
+        	$http->setSessionVariable( 'BounceIDArray', $bounces );
+        	
+        	$tpl->setVariable( 'delete_result', $bounces );
+        	
+        	$Result = array();
+            $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
+            $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
+            $Result['content'] = $tpl->fetch( "design:$extension/confirmremoveandunsubscribe_bounce.tpl" );
+            $Result['path'] = array( array( 'url' => false,
+                                            'text' => ezpI18n::tr( 'eznewsletter/list_newsletterbounce', 'Remove and unsubscribe' ) ) );
+            return;
+        	
+        }
+    	else if ( $http->hasPostVariable( 'ConfirmRemoveAndUnsubscribeButton' ) )
+        {
+            $bounceArray = $http->sessionVariable( 'BounceIDArray' );
+            $db->begin();
+            if( count( $bounceArray ) > 0 )
+            {
+                foreach ( $bounceArray as $bounce )
+                {
+                    eZBounce::removeAllBounceInformation( $bounce->ID );
+                    $sendItemBounced = eZSendNewsletterItem::fetch($bounce->ID);
+	        		$subscription = eZSubscription::fetch( $sendItemBounced->attribute( 'subscription_id' ) );
+	        		if ( $subscriptionObject )
+	        		{
+	        			$subscription->setAttribute( 'status', eZSubscription::StatusRemovedAdmin );
+	        			$subscription->sync();
+	        		}
+                }
+            }
+            $db->commit();
+        }
         else if ( $http->hasPostVariable( 'RemoveAllBounceEntryButton' ) )
         {         
             $Result = array();
@@ -208,7 +267,6 @@ switch( $mode )
         }
         else if ( $http->hasPostVariable( 'ConfirmRemoveAllBounceEntryButton' ) )
         {
-            $db = eZDB::instance();           
             $removeAllBounce = 'TRUNCATE Table ez_bouncedata';      
             $db->query( $removeAllBounce );     
         }
@@ -220,7 +278,6 @@ switch( $mode )
         {
             $bounceEntryIDArray = $http->sessionVariable( 'BounceIDArray' );
 
-            $db = eZDB::instance();
             $db->begin();
             if( count( $bounceEntryIDArray ) > 0 )
             {
@@ -230,7 +287,8 @@ switch( $mode )
                 }
             }
             $db->commit();
-            $bounceDataArray = eZBounce::fetchByOffset( $offset, $limit );
+            /*
+            $bounceDataArray = eZBounce::fetchByOffset( $offset, $limit, true, "address" );
 
             $tpl->setVariable( 'bounce_data_array', $bounceDataArray );
 
@@ -239,14 +297,14 @@ switch( $mode )
             $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
             $Result['content'] = $tpl->fetch( "design:$extension/bounce_search.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                        'text' => ezpI18n::tr( 'eznewsletter/bounce_search', 'Bounce search' ) ) );        
+                                        'text' => ezpI18n::tr( 'eznewsletter/bounce_search', 'Bounce search' ) ) );      
+			*/
             $Module->redirectToView( 'bounce_search' );
         }
         else if ( $http->hasPostVariable( 'ConfirmRemoveBounceEntryButton' ) )
         {
             $bounceEntryIDArray = $http->sessionVariable( 'BounceIDArray' );
 
-            $db = eZDB::instance();
             $db->begin();
             if( count( $bounceEntryIDArray ) > 0 )
             {
@@ -258,10 +316,37 @@ switch( $mode )
             $db->commit();
         }
 
-        $bounceDataArray = eZBounce::fetchByOffset( $offset, $limit );
+        $MailArray = eZBounce::fetchByOffset( $offset, $limit, false, "address" );
+        
+        if( count($MailArray) >= 1)
+        {
+        	$bounceDataArray = array();
+        	foreach ($MailArray as $key => $MailBounceData)
+        	{
+        		$mail = $MailBounceData["address"];
+        		$sb_c = $db->ArrayQuery( "SELECT count(*) as 'softbounces' FROM ez_bouncedata WHERE address='$mail' and bounce_type = 0" );
+        		$hb_c = $db->ArrayQuery( "SELECT count(*) as 'hardbounces' FROM ez_bouncedata WHERE address='$mail' and bounce_type = 1" );
+        		$bounceDataArray[$key]["mail"] = $mail;
+        		$bounceDataArray[$key]["sb_count"] = $sb_c[0]["softbounces"];
+        		$bounceDataArray[$key]["hb_count"] = $hb_c[0]["hardbounces"];
+        		$bounceDataArray[$key]["bounces"] = eZBounce::fetchListByAddress($mail);
+        		$bounceDataArray[$key]["bounceIDarray"] = array();
+        		foreach ( $bounceDataArray[$key]["bounces"] as $key2 => $bounce)
+        		{
+        			$sendItemBounced = eZSendNewsletterItem::fetch($bounce->ID);
+        			array_push($bounceDataArray[$key]["bounceIDarray"], $bounce->ID);
+	        		$subscriptionObject = eZSubscription::fetch( $sendItemBounced->attribute( 'subscription_id' ) );
+		            if ( $subscriptionObject )
+		            {
+		                $bounceDataArray[$key]["subscriptions"][$key2] = $subscriptionObject;
+		            }
+        		}
+        	}
+        	$tpl->setVariable( 'bounce_data_array', $bounceDataArray );
+        }
 
-        $tpl->setVariable( 'bounce_data_array', $bounceDataArray );
-
+        $tpl->setVariable( 'statusNames', eZSubscription::statusNameMap() );
+        
         $Result = array();
         $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
         $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';

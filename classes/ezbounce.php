@@ -94,14 +94,16 @@ class eZBounce extends eZPersistentObject
       \a $asObject Specifies whether to return datasat as objects or rows.
       \return Array of eZNewsletterType.
      */
-    static function fetchByOffset( $offset, $limit, $asObject = true )
+    static function fetchByOffset( $offset, $limit, $asObject = true, $grouping = false )
     {
         $newsletterTypeList = eZPersistentObject::fetchObjectList( eZBounce::definition(),
                                                             null,
                                                             null,
-                                                            array( 'id' => 'ASC' ),
+                                                            array( 'address' => 'ASC' ),
                                                             array( 'offset' => $offset, 'length' => $limit ),
-                                                            $asObject );
+                                                            $asObject,
+															array( $grouping )
+                                                            );
         return $newsletterTypeList;
     }
 
@@ -127,6 +129,17 @@ class eZBounce extends eZPersistentObject
         return $bounce;
     }
 
+ 	/*!
+      Fetches bouncelist by mail address
+     */
+    static function fetchListByAddress( $address, $asObject = true )
+    {
+        $bounceList = eZPersistentObject::fetchObjectList( eZBounce::definition(),
+	                                                   null,
+	                                                   array( 'address' => $address ) );
+        return $bounceList;
+    }
+    
     static function fetchAddress( $id, $asObject = true )
     {
         $bounce = eZPersistentObject::fetchObject( eZBounce::definition(),

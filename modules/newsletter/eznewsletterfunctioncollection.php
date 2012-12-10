@@ -341,6 +341,14 @@ class eZNewsletterFunctionCollection
     {
         return array( 'result' => eZBounce::count( eZBounce::definition() ) );
     }
+    
+	/*!
+      \return The number of eZBounce objects in the system.
+    */
+    function fetchNewsletterBounceCountGroupedByAddress()
+    {
+    	return array( 'result' => eZBounce::count( eZBounce::definition(), null, "DISTINCT ADDRESS" ) );
+    }
 
     /*!
       \return The number of eZSendNewsletterItem objects in the system.

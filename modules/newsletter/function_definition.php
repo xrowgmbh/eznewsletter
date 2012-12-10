@@ -237,6 +237,13 @@ $FunctionList['bounce_count'] = array( 'name' => 'bounce_count',
                                        'parameter_type' => 'standard',
                                        'parameters' => array() );
 
+$FunctionList['grouped_bounce_count'] = array( 'name' => 'grouped_bounce_count',
+                                       'call_method' => array( 'include_file' => $baseDir . 'eznewsletterfunctioncollection.php',
+                                                               'class' => 'eZNewsletterFunctionCollection',
+                                                               'method' => 'fetchNewsletterBounceCountGroupedByAddress' ),
+                                       'parameter_type' => 'standard',
+                                       'parameters' => array() );
+
 $FunctionList['object_stat'] = array( 'name' => 'newsletter_read_stat',
                                            'call_method' => array( 'include_file' => $baseDir . 'eznewsletterfunctioncollection.php',
                                                                    'class' => 'eZNewsletterFunctionCollection',
