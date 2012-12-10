@@ -41,7 +41,7 @@
 
 <div class="block">
 
-<form action={$module.functions.list_bounce.uri|ezurl} method="post" name="BounceEntryRemove">
+<form action="" method="post" name="BounceEntryRemove">
     <input class="button" type="submit" name="ConfirmRemoveBounceEntryButton" value="{'OK'|i18n( 'design/eznewsletter/confirmremove_bounce' )}" />
     <input class="button" type="submit" name="CancelButton" value="{'Cancel'|i18n( 'design/eznewsletter/confirmremove_bounce' )}" />
 </form>

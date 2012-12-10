@@ -13,7 +13,7 @@
 
 {* DESIGN: Content START *}<div class="box-ml"><div class="box-mr"><div class="box-content">
 
-<form name="subscription_search" method="post" action={$base_uri|ezurl} class="inline">
+<form name="bounce_search" method="post" action={$base_uri|ezurl} class="inline">
 
 <div class="context-attributes">
 

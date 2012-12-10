@@ -37,32 +37,34 @@ $tpl->setVariable( 'module', $Module );
 if ( $http->hasPostVariable( 'RemoveBounceButton' ) )
 {
 
-if (is_array ( $http->postVariable( 'BounceIDArray' )))
-{       
-        $bounceIDArray = $http->postVariable( 'BounceIDArray' );
-        $http->setSessionVariable( 'BounceIDArray', $bounceIDArray );
-        $bounces = array();
-
-        if( count( $bounceIDArray ) > 0 )
-        {
-            foreach( $bounceIDArray as $bounceID )
-            {
-                $bounce = eZBounce::fetch( $bounceID );
-                $bounces[] = $bounce;
-            }
-        }
-        $Result = array();
-        $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
-        $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
-        $Result['content'] = $tpl->fetch( "design:$extension/confirmremove_bounce_search.tpl" );
-        $Result['path'] = array( array( 'url' => false,
-                                        'text' => ezpI18n::tr( 'eznewsletter/bounce_search', 'Bounce Search' ) ) );
-        return;
-}
+	if (is_array ( $http->postVariable( 'BounceIDArray' )))
+	{       
+		
+	        $bounceIDArray = $http->postVariable( 'BounceIDArray' );
+	        $http->setSessionVariable( 'BounceIDArray', $bounceIDArray );
+	        $bounces = array();
+	
+	        if( count( $bounceIDArray ) > 0 )
+	        {
+	            foreach( $bounceIDArray as $bounceID )
+	            {
+	                $bounce = eZBounce::fetch( $bounceID );
+	                $bounces[] = $bounce;
+	            }
+	        }
+	        
+	        $tpl->setVariable( 'delete_result', $bounces );
+	        $Result = array();
+	        $Result['newsletter_menu'] = 'design:parts/content/bounce_menu.tpl';
+	        $Result['left_menu'] = 'design:parts/content/eznewsletter_menu.tpl';
+	        $Result['content'] = $tpl->fetch( "design:$extension/confirmremove_bounce_search.tpl" );
+	        $Result['path'] = array( array( 'url' => false,
+	                                        'text' => ezpI18n::tr( 'eznewsletter/bounce_search', 'Bounce Search' ) ) );
+	        return;
+	}
 }
 if ( $http->hasPostVariable( 'searchString' ) && trim( $http->postVariable( 'searchString' ) ) != ""   )
 {
-
     $search = trim( strtolower( $http->postVariable( 'searchString' ) ) );
 
     $db = eZDB::instance();
@@ -75,25 +77,12 @@ if ( $http->hasPostVariable( 'searchString' ) && trim( $http->postVariable( 'sea
                         )";
 
     $bounceSearch = $db->arrayQuery( $searchSQL );
-}
-
-$tpl = eZNewsletterTemplateWrapper::templateInit();
-
-if ( $http->hasPostVariable( 'searchString' ) )
-{
+    $tpl->setVariable( 'bounceSearch', $bounceSearch );
     $tpl->setVariable( 'searchString', $http->postVariable( 'searchString' ) );
 }
 else
 {
     $tpl->setVariable( 'searchString', '' );
-}
-
-if ( isset($bounceSearch ) )
-{
-    $tpl->setVariable( 'bounceSearch', $bounceSearch );
-}
-else
-{
     $tpl->setVariable( 'subscriberSearch', array() );
 }
 

@@ -20,10 +20,8 @@
     <h2>{'Are you sure you want to remove the bounce entries?'|i18n( 'design/eznewsletter/confirmremove_bounce' )}</h2>
 {/section}
 
-
 <ul>
 {foreach $delete_result as $item}
-{$item|attribute(show,1)}
     <li>{$item.newsletter_name|wash}: {$item.id|wash} - {$item.address|wash}</li>
 {/foreach}
 </ul>
