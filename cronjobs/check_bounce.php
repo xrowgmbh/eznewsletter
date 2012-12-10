@@ -393,7 +393,8 @@ function handleBounce( $type, $id, $bounceType )
 {
     $previousBounce = eZBounce::fetchObject( eZBounce::definition(),
                                         null,
-                                        array( 'newslettersenditem_id' => $id ),
+                                        array( 'newslettersenditem_id' => $id,
+                                               'bounce_type' => $bounceType ),
                                         true);
     if( $previousBounce )
     {

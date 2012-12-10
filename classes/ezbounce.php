@@ -160,13 +160,18 @@ class eZBounce extends eZPersistentObject
      */
 	function getNewsletterName()
 	{
-	    $sendItem = eZNewsletter::fetch( 
-	         $this->attribute( 'newslettersenditem_id' ), true 
-	    );
+	    $sendItem = eZSendNewsletterItem::fetch(
+	        $this->attribute( 'newslettersenditem_id' ), true
+	    );  
 	
-	    if ( $sendItem)
+	    if ( $sendItem )  
 	    {
-	        return $sendItem->attribute( 'name' );
+	        $newsletter = $sendItem->attribute( 'newsletter' );
+	        if ( $newsletter )
+	        {
+	            $newsletterName = $newsletter->attribute( 'name' );
+	            return $newsletterName;
+	        }
 	    }
 	    return false;
 	}
