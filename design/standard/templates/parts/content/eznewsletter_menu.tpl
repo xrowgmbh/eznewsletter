@@ -7,11 +7,11 @@
 {* DESIGN: Content START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-bl"><div class="box-br"><div class="box-content">
 
 <ul>
-    <li><div><a href={'newsletter/list_type'|ezurl}>{'Newslettertypes'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
-    <li><div><a href={'newsletter/list_subscriptions'|ezurl}>{'List management'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
-    <li><div><a href={'newsletter/subscription_search'|ezurl}>{'Search subscriber'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
-    <li><div><a href={'newsletter/list_bounce/all'|ezurl}>{'Bounce management'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
-    <li><div><a href={'newsletter/bounce_search'|ezurl}>{'Search bounce'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
+    <li><div><a href={'newsletter/list_type'|ezurl()}>{'Newslettertypes'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
+    <li><div><a href={'newsletter/list_subscriptions'|ezurl()}>{'Subscription lists'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
+    <li><div><a href={'newsletter/subscription_search'|ezurl()}>{'Search subscriber'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
+    <li><div><a href={'newsletter/list_bounce/all'|ezurl()}>{'Bounce list'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
+    <li><div><a href={'newsletter/bounce_search'|ezurl()}>{'Search bounce'|i18n( 'design/eznewsletter/parts/eznewsletter_menu' )}</a></div></li>
 </ul>
 
 {* DESIGN: Content END *}</div></div></div></div></div></div>
