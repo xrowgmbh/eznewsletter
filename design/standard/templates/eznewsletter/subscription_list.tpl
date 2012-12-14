@@ -301,8 +301,9 @@
                     <div class="box-tc">
                         <div class="box-bl">
                             <div class="box-br">
-                                <input class="button" type="submit" name="RemoveSubscriptionButton" value="{'Remove selected'|i18n( 'design/eznewsletter/subscription_list' )}" title="{'Remove selected subscription.'|i18n( 'design/eznewsletter/subscription_list' )}" />
+                                <input class="button" type="submit" name="RemoveSingleSubscriptionButton" value="{'Remove selected subscription'|i18n( 'design/eznewsletter/subscription_list' )}" title="{'Remove selected subscription.'|i18n( 'design/eznewsletter/subscription_list' )}" />
                                 <input class="button" type="submit" name="CreateSubscriptionButton" value="{'New subscription'|i18n( 'design/eznewsletter/subscription_list' )}" title="{'Create a new subscription.'|i18n( 'design/eznewsletter/subscription_list' )}" />
+                                <input class="button" type="submit" name="RemoveSubscriptionButton" value="{'Remove all subscriptions for the selected user'|i18n( 'design/eznewsletter/subscription_list' )}" title="{'Remove selected subscription.'|i18n( 'design/eznewsletter/subscription_list' )}" />
 {* DESIGN: Control bar END *}
                             </div>
                         </div>

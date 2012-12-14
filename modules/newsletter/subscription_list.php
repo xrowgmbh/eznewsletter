@@ -116,14 +116,13 @@ if  ($http->hasPostVariable( 'RemoveSubscriptionButton' ) )
 }
 
 
-/*
-if ($http->hasPostVariable( 'RemoveSubscriptionButton' ) )
+if ($http->hasPostVariable( 'RemoveSingleSubscriptionButton' ) )
 {
     foreach( $http->postVariable( 'SubscriptionIDArray' ) as $subscriptionID )
     {
         eZSubscription::removeAll( $subscriptionID );
     }
-}*/
+}
 
 /*
 $userParameters = $Params['UserParameters'];

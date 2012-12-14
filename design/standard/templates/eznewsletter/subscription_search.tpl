@@ -106,7 +106,7 @@
 <div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-tc"><div class="box-bl"><div class="box-br">
 
 <div class="block">
-    <input class="button" type="submit" name="RemoveSubscriptionButton" value="{'Remove selected'|i18n( 'design/eznewsletter/subscription_search' )}" title="{'Remove selected subscription.'|i18n( 'design/eznewsletter/subscription_search' )}">
+    <input class="button" type="submit" name="RemoveSubscriptionButton" value="{'Remove all subscriptions for the selected user'|i18n( 'design/eznewsletter/subscription_search' )}" title="{'Remove selected subscription.'|i18n( 'design/eznewsletter/subscription_search' )}">
 </form>
 </div>
 
