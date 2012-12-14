@@ -820,7 +820,7 @@ class eZNewsletter extends eZPersistentObject
                     {
                         $mail->personalize( $userData, false );
                     }
-                    $mail->generateMessageId( $newsletter->attribute( 'id' ) . '.' . $receiver->attribute( 'id' ) );
+                    $mail->generateMessageId( $receiver->attribute( 'id' ) . '.' . $newsletter->attribute( 'id' ) );
                     $mail->to = array();
                     $mail->addTo( new ezcMailAddress( $userData['email'], null, 'utf-8' ) );
                     $mail->build();
