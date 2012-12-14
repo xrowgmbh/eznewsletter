@@ -3,9 +3,9 @@
 {* DESIGN: Header START *}<div class="box-header"><div class="box-tc"><div class="box-ml"><div class="box-mr"><div class="box-tl"><div class="box-tr">
 
 {section show=ezpreference( 'admin_treemenu' )}
-<h4><a class="showhide" href={'/user/preferences/set/admin_treemenu/0'|ezurl} title="Hide content structure."></a> {'Newslettertypes'|i18n( 'design/eznewsletter/parts/newsletter_menu' )}</h4>
+<h4><a class="showhide" href={'/user/preferences/set/admin_treemenu/0'|ezurl} title="Hide content structure."><span class="bracket">[</span>-<span class="bracket">]</span></a> {'Newslettertypes'|i18n( 'design/eznewsletter/parts/newsletter_menu' )}</h4>
 {section-else}
-<h4><a class="showhide" href={'/user/preferences/set/admin_treemenu/1'|ezurl} title="Show content structure."></a> {'Newslettertypes'|i18n( 'design/eznewsletter/parts/newsletter_menu' )}</h4>
+<h4><a class="showhide" href={'/user/preferences/set/admin_treemenu/1'|ezurl} title="Show content structure."><span class="bracket">[</span>+<span class="bracket">]</span></a> {'Newslettertypes'|i18n( 'design/eznewsletter/parts/newsletter_menu' )}</h4>
 {/section}
 
 {* DESIGN: Header END *}</div></div></div></div></div></div>
@@ -14,19 +14,36 @@
 
 {* Treemenu. *}
 <div id="contentstructure">
-{if ezini('TreeMenu','Dynamic','contentstructuremenu.ini')|eq('enabled')}
-    {include uri='design:contentstructuremenu/content_structure_menu_dynamic.tpl' menu_persistence=false() hide_node_list=array(ezini( 'NodeSettings', 'DesignRootNode', 'content.ini'), ezini( 'NodeSettings', 'SetupRootNode', 'content.ini'))}
-{else}
-    {include uri='design:contentstructuremenu/content_structure_menu.tpl' custom_root_node_id=1}
-{/if}
+{section show=ezpreference( 'admin_treemenu' )}
+    {include uri='design:contentstructuremenu/newsletter_structure_menu.tpl'}
+{/section}
 </div>
+
+{* Left menu width control. *}
+<div class="widthcontrol">
+<p>
+{switch match=ezpreference( 'admin_left_menu_width' )}
+{case match='medium'}
+<a href={'/user/preferences/set/admin_left_menu_width/small'|ezurl} title="{'Change the left menu width to small size.'|i18n( 'design/admin/parts/content/menu' )}">{'Small'|i18n( 'design/admin/parts/content/menu' )}</a>
+<span class="current">{'Medium'|i18n( 'design/admin/parts/content/menu' )}</span>
+<a href={'/user/preferences/set/admin_left_menu_width/large'|ezurl} title="{'Change the left menu width to large size.'|i18n( 'design/admin/parts/content/menu' )}">{'Large'|i18n( 'design/admin/parts/content/menu' )}</a>
+{/case}
+
+{case match='large'}
+<a href={'/user/preferences/set/admin_left_menu_width/small'|ezurl} title="{'Change the left menu width to small size.'|i18n( 'design/admin/parts/content/menu' )}">{'Small'|i18n( 'design/admin/parts/content/menu' )}</a>
+<a href={'/user/preferences/set/admin_left_menu_width/medium'|ezurl} title="{'Change the left menu width to medium size.'|i18n( 'design/admin/parts/content/menu' )}">{'Medium'|i18n( 'design/admin/parts/content/menu' )}</a>
+<span class="current">{'Large'|i18n( 'design/admin/parts/content/menu' )}</span>
+{/case}
+
+{case}
+<span class="current">{'Small'|i18n( 'design/admin/parts/content/menu' )}</span>
+<a href={'/user/preferences/set/admin_left_menu_width/medium'|ezurl} title="{'Change the left menu width to medium size.'|i18n( 'design/admin/parts/content/menu' )}">{'Medium'|i18n( 'design/admin/parts/content/menu' )}</a>
+<a href={'/user/preferences/set/admin_left_menu_width/large'|ezurl} title="{'Change the left menu width to large size.'|i18n( 'design/admin/parts/content/menu' )}">{'Large'|i18n( 'design/admin/parts/content/menu' )}</a>
+{/case}
+{/switch}
+</p>
+</div>
+
 {* DESIGN: Content END *}</div></div></div></div></div></div>
-
-
-
-{* This is the border placed to the left for draging width, js will handle disabling the one above and enabling this *}
-<div id="widthcontrol-handler" class="hide">
-<div class="widthcontrol-grippy"></div>
-</div>
 
 </div>
