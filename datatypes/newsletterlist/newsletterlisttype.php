@@ -14,7 +14,7 @@ class newsletterlistType extends eZDataType
     */
     function newsletterlistType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', 'newsletterlist', 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', 'newsletterlist', 'Datatype name' ),
                            array( 'serialize_supported' => false ) );
     }
     function storeSession( &$contentObjectAttribute )

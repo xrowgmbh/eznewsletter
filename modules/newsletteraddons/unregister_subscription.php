@@ -12,7 +12,7 @@ include_once( eZExtension::baseDirectory() . '/eznewsletter/classes/eznewsletter
 
 $Module =& $Params['Module'];
 
-$tpl = templateInit();
+$tpl = eZTemplate::instance();
 
 $http = eZHTTPTool::instance();
 
@@ -38,9 +38,9 @@ if ( $http->hasPostVariable( 'OKButton' ) )
     $mail = new eZMail();
     $mail->setReceiver( $sub['email'] );
     $mail->setSender( $sender );
-    $mail->setSubject( ezi18n( 'newsletteraddons', "Your subscription removal" ) );
+    $mail->setSubject( ezpI18n::tr( 'newsletteraddons', "Your subscription removal" ) );
     $hostName = eZSys::hostname();
-    $mailtpl = templateInit();
+    $mailtpl = eZTemplate::instance();
     $mailtpl->setVariable( 'hostname', $hostName );
     $mailtpl->setVariable( 'siteaccess', $GLOBALS['eZCurrentAccess']['name'] );
     $mailtpl->setVariable( 'NewsletterItem', $NewsletterItem );
@@ -53,7 +53,7 @@ if ( $http->hasPostVariable( 'OKButton' ) )
     $Result = array();
     $Result['content'] = $tpl->fetch( "design:eznewsletter/unregister_subscription_success.tpl" );
     $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter', 'Remove subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter', 'Remove subscription' ) ) );
     return;
 }
 if ( $http->hasPostVariable( 'CancelButton' ) )
@@ -65,6 +65,6 @@ if ( $http->hasPostVariable( 'CancelButton' ) )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:eznewsletter/unregister_subscription.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'eznewsletter', 'Remove subscription' ) ) );
+                                'text' => ezpI18n::tr( 'eznewsletter', 'Remove subscription' ) ) );
 
 ?>

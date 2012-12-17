@@ -74,6 +74,6 @@ return $Module->redirectTo( "/content/edit/" . eZUser::currentUserID() . "/a/" .
 $Result = array();
 $Result['content'] =& $tpl->fetch( "design:eznewsletter/unregister_subscription.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'ezxnewsletter', 'Register subscription' ) ) );
+                                'text' => ezpI18n::tr( 'ezxnewsletter', 'Register subscription' ) ) );
 
 ?>

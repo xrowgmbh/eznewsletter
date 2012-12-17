@@ -5,7 +5,7 @@ class ImportNewsletterType extends eZWorkflowEventType
     const WORKFLOW_TYPE_STRING = "importnewsletter";
     function ImportNewsletterType()
     {
-    	$this->eZWorkflowEventType( ImportNewsletterType::WORKFLOW_TYPE_STRING, ezi18n( 'newsletteraddon/event', 'Newsletter import event' ));
+    	$this->eZWorkflowEventType( ImportNewsletterType::WORKFLOW_TYPE_STRING, ezpI18n::tr( 'newsletteraddon/event', 'Newsletter import event' ));
     	$this->setTriggerTypes( array( 'content' => array( 'publish' => array( 'after' ) ) ) );
     }
     function execute( $process, $event )
