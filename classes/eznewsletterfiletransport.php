@@ -57,7 +57,7 @@ class eZNewsletterFileTransport extends eZNewsletterMailTransport
         $sys = eZSys::instance();
 
         $fname = time().'-'.rand().'.mail';
-        $qdir = eZSys::siteDir() . eZSys::varDirectory() . '/mailq';
+        $qdir = eZSys::siteDir() . eZSys::varDirectory() . $separator . 'mailq';
 
         $data = $headers.ezcMailTools::lineBreak();
 
