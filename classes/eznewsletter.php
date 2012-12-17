@@ -671,7 +671,7 @@ class eZNewsletter extends eZPersistentObject
         }
         
         $tpl->setVariable( 'SkipMIMEPart', false );
-        $mail->htmlText = $tpl->fetch( 'design:' . $skin_prefix . '/sendout/html.tpl' ).'<img src="/var/ezflow_site/storage/images/hello/188-1-ger-DE/Hello_medium.jpg" />';
+        $mail->htmlText = $tpl->fetch( 'design:' . $skin_prefix . '/sendout/html.tpl' );
         $mail->htmlText = rtrim( preg_replace('/(\r\n|\r|\n)/', "\r\n", $mail->htmlText) );
 
         if ( $tpl->hasVariable( 'SkipMIMEPart' ) && $tpl->variable( 'SkipMIMEPart' ) === true )
