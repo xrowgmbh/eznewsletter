@@ -53,7 +53,7 @@ if ( $Module->hasActionParameter( 'ChoosenSubscriptions' ) )
         if ( !$subscriptionList )
         {
             eZDebug::writeError('ID "'.$sub.'" not found.', "" );
-            return $Module->handleError( EZ_ERROR_KERNEL_NOT_AVAILABLE, 'kernel' );
+            return $Module->handleError( 3, 'kernel' );
         }
         $subscriptions[] = $subscriptionList->attribute( 'id' );
         if ( $Module->isCurrentAction( 'Add' ) )
@@ -94,7 +94,7 @@ if ( $Module->isCurrentAction( 'Add' ) or $http->hasSessionVariable( "register_s
         $http->setSessionVariable( '$_POST_BeforeLogin', $_POST );
         eZSessionWrite( eZHTTPTool::sessionID(), session_encode() );
 
-        return $Module->handleError( EZ_ERROR_KERNEL_ACCESS_DENIED, 'kernel' );
+        return $Module->handleError( 1, 'kernel' );
     }
     $co = $currentUser->attribute( 'contentobject' );
     $version = $co->attribute( 'current' );
@@ -130,7 +130,7 @@ elseif ( $Module->isCurrentAction( 'Remove' )  or $http->hasSessionVariable( "un
             $http->setSessionVariable( "SubscriptionRedirectAfterUserRegister", $Module->actionParameter( 'RedirectURI' ) );
         }
         eZSessionWrite( eZHTTPTool::sessionID(), session_encode() );
-        return $Module->handleError( EZ_ERROR_KERNEL_ACCESS_DENIED, 'kernel' );
+        return $Module->handleError( 1, 'kernel' );
     }
     $co = $currentUser->attribute( 'contentobject' );
     $version = $co->attribute( 'current' );
@@ -184,6 +184,6 @@ if ( $Module->isCurrentAction( 'Cancel' ) )
 else
 {
     eZDebug::writeError('Missing action.' );
-    return $Module->handleError( EZ_ERROR_KERNEL_ACCESS_DENIED, 'kernel' );
+    return $Module->handleError( 1, 'kernel' );
 }
 ?>

@@ -44,7 +44,7 @@ $res->setKeys( array( array( 'newsletter_view', 'register_subscription' ) ) );
 
 if ( !$subscriptionList )
 {
-    return $Module->handleError( EZ_ERROR_KERNEL_NOT_AVAILABLE, 'kernel' );
+    return $Module->handleError( 3, 'kernel' );
 }
 $http->setSessionVariable( "register_subscription", $subscriptionList->attribute( 'id' ) );
 $user = false;
@@ -56,7 +56,7 @@ if ( $currentUser->isLoggedIn() )
 if ( !$user )
 {
     eZDebug::writeError('Missing parameter Object ID.', "Translation management" );
-    return $Module->handleError( EZ_ERROR_KERNEL_ACCESS_DENIED, 'kernel' );
+    return $Module->handleError( 1, 'kernel' );
 }
 
 $co = $currentUser->attribute( 'contentobject' );

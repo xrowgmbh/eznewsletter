@@ -21,7 +21,7 @@ $res->setKeys( array( array( 'newsletter_view', 'register_subscription' ) ) );
 $NewsletterItem = eZSendNewsletterItem::fetchByHash( $Params['UserHash'] );
 if ( !$NewsletterItem )
 {
-    return $Module->handleError( EZ_ERROR_KERNEL_NOT_AVAILABLE, 'kernel' );
+    return $Module->handleError( 3, 'kernel' );
 }
 $sub  = $NewsletterItem->userData();
 $subscription = eZSubscription::fetch( $NewsletterItem->attribute( 'subscription_id' ) );
