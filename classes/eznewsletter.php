@@ -333,6 +333,12 @@ class eZNewsletter extends eZPersistentObject
             {
                 foreach( $subscriptionArray as $subscription )
                 {
+                    //hotfix: prevent adding old bad subscription data(e-mails) to the subscription lists
+                    if ( $subscription->attribute( 'email' ) != $subscription->Email)
+                    {
+                        continue;
+                    }
+
                     if ( !eZRobinsonListEntry::inList( $subscription->attribute( 'email' ), eZRobinsonListEntry::EMAIL ) )
                     {
                             if ( in_array( $subscription->attribute( 'email' ), $bounceEmails ) )
