@@ -10,7 +10,7 @@ Part[eznewsletter_setup]=Newsletter setup
 [TopAdminMenu]
 # Activate the newsletter tab here to show the tab
 Tabs[]=eznewsletter
-Tabs[]=eznewsletter_setup
+#Tabs[]=eznewsletter_setup
 # Older layout tabs
 #Tabs[]=eznewsletterList
 #Tabs[]=eznewsletterSearch
