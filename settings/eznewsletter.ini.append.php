@@ -40,4 +40,12 @@ redirectTarget=newsletter
 [RecurrenceSettings]
 conditionExtensions[]
 
+[NotifySettings]
+Receivers[]
+#Receivers[]=
+ReceiversName[]
+#ReceiversName[]=
+Sender=
+SenderName=
+
 */ ?>

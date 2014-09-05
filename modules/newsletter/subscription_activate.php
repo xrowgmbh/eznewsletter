@@ -50,6 +50,52 @@ if ( $subscriptionList->attribute( 'auto_approve_registered' ) )
 }
 $subscription->store();
 
+//Check if we need to notify anyone
+$newsletterini = eZINI::instance( 'eznewsletter.ini' );
+if($newsletterini->hasVariable( 'NotifySettings', 'Receivers' ))
+{
+    if(count($newsletterini->variable( 'NotifySettings', 'Receivers' )) > 0 )
+    {
+        $receivers=$newsletterini->variable( 'NotifySettings', 'Receivers' );
+        $sender=$newsletterini->variable( 'NotifySettings', 'Sender' );
+        $sendername=$newsletterini->variable( 'NotifySettings', 'SenderName' );
+        $receivernames=$newsletterini->variable( 'NotifySettings', 'ReceiversName' );
+        foreach( $receivers as $receiver )
+        {
+            if( eZMail::validate( $receiver ) )
+            {
+                $mail = new eZMail();
+                $mail->setSender( $sender, $sendername );
+                $mail->setSubject( "Neue Newsletteranmeldung" );
+                // fetch text from mail template
+                $mailtpl = eZTemplate::factory();
+                $mailtext = "Ein Abonnent hat sich neu registriert. \n";
+                $mailtext .= "Liste: " . $subscriptionList->Name . " \n";
+                $mailtext .= "Email: " . $subscription->Email . "\n";
+
+                if($subscription->attribute("firstname") != " ")
+                {
+                    $mailtext .= "Vorname: " . trim($subscription->attribute("firstname")) . "\n";
+                }
+                if($subscription->attribute("name") != " ")
+                {
+                    $mailtext .= "Nachname: " . trim($subscription->attribute("name")) . "\n";
+                }
+                if( array_key_exists($receiver, $receivernames) )
+                {
+                    $mail->setReceiver( trim($receiver), trim($receivernames[trim($receiver)]));
+                }
+                else
+                {
+                    $mail->setReceiver( trim($receiver));
+                }
+                $mail->setBody( $mailtext );
+                // mail was sent ok
+                eZMailTransport::send( $mail );
+            }
+        }
+    }
+}
 $tpl = eZNewsletterTemplateWrapper::templateInit();
 $tpl->setVariable( 'subscription', $subscription );
 
