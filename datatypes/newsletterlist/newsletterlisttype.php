@@ -131,6 +131,11 @@ class newsletterlistType extends eZDataType
                 if ( !$userData )
                 {
                     $userData = eZUserSubscriptionData::create( '', '', '', $user->attribute( 'email' ) );
+                    //fix to avoid fatal error when there is no mail adress (which normally doesnt even happen)
+                    if(!$userData)
+                    {   
+                        return false;
+                    }
                 }
                 if( $user->attribute( 'email' ) )
                 {
