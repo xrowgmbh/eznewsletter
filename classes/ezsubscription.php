@@ -170,7 +170,22 @@ class eZSubscription extends eZPersistentObject
 
         $mail = new eZMail();
 
-        $mail->setSender( $ini->variable( 'MailSettings', 'EmailSender' ) );
+        $newsletterini = eZINI::instance( 'eznewsletter.ini' );
+        if($newsletterini->hasVariable( 'SendConfirmation', 'Sender' ))
+        {
+            if($newsletterini->hasVariable( 'SendConfirmation', 'SenderName' ))
+            {
+                $mail->setSender( $newsletterini->variable( 'SendConfirmation', 'Sender' ), $newsletterini->variable( 'SendConfirmation', 'SenderName' ) );
+            }
+            else
+            {
+                $mail->setSender( $newsletterini->variable( 'SendConfirmation', 'Sender' ) );
+            }
+        }
+        else
+        {
+            $mail->setSender( $ini->variable( 'MailSettings', 'EmailSender' ) );
+        }
         $mail->setReceiver( $this->attribute( 'email' ) );
         $mail->setBody( $templateResult );
         $mail->setSubject( $subject );
